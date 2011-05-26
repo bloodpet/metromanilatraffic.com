@@ -1,0 +1,3 @@
+#!/bin/bash
+
+LD_LIBRARY_PATH=/home/egcalso/webapps/road_grid/apache2/lib /home/egcalso/webapps/road_grid/apache2/bin/httpd.worker -f /home/egcalso/webapps/road_grid/apache2/conf/httpd.conf -k start

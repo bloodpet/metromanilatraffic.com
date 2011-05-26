@@ -1,0 +1,5 @@
+#!/bin/bash
+
+/home/egcalso/webapps/road_grid/apache2/bin/stop
+sleep 5
+/home/egcalso/webapps/road_grid/apache2/bin/start
