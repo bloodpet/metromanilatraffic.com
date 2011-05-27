@@ -14,14 +14,14 @@ DIRECTION_SETS = (
 DIRECTIONS = DIRECTION_SETS[0] + DIRECTION_SETS[1]
 
 TRAFFIC_RATINGS = (
-    (0, 'Clear'),
-    (1, 'Fast Moving'),
-    (2, 'Light'),
-    (3, 'Light to Moderate'),
-    (4, 'Moderate'),
-    (5, 'Moderate to Heavy'),
-    (6, 'Heavy'),
-    (7, 'Unpassable'),
+    (1, 'Clear'),
+    (2, 'Fast Moving'),
+    (3, 'Light'),
+    (4, 'Light to Moderate'),
+    (5, 'Moderate'),
+    (6, 'Moderate to Heavy'),
+    (7, 'Heavy'),
+    (8, 'Unpassable'),
 )
 
 
