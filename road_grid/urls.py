@@ -18,3 +18,8 @@ urlpatterns = patterns('',
     url(r'^', include('core.urls')),
     url(r'^accounts/', include('accounts.urls')),
 )
+
+try:
+    from local_urls import *
+except ImportError:
+    pass
