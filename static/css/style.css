@@ -304,3 +304,48 @@ header {
 nav {
 }
 
+.section {
+	display: inline-block;
+	height: 24px;
+	width: 24px;
+}
+.section0 {
+	background-color: rgb(128,192,192);
+}
+.section1 {
+	background-color: rgb(128,224,160);
+}
+.section2 {
+	background-color: rgb(128,256,128);
+}
+.section3 {
+	background-color: rgb(160,224,128);
+}
+.section4 {
+	background-color: rgb(192,192,128);
+}
+.section5 {
+	background-color: rgb(224,160,128);
+}
+.section6 {
+	background-color: rgb(256,128,128);
+}
+.section7 {
+	background-color: rgb(224,128,160);
+}
+.section8 {
+	background-color: rgb(192,128,192);
+}
+
+.road {
+}
+.road h3 {
+	text-align: center;
+}
+.traffic {
+	list-style-type: none;
+}
+
+#legend .section {
+	margin: 4px 4px 4px 4px;
+}

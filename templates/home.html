@@ -5,18 +5,38 @@ Home
 {% endblock %}
 
 {% block main %}
-	{% for subcategory in subcategory_list %}
-	<div class="grid_4 property">
-		<a title="{{ subcategory }}" href="{% url property_list subcategory.slug %}">
-			<img alt="{{ subcategory }}" src="{{ STATIC_URL }}img/clipart/property{{ forloop.counter }}.png" />
-			{{ subcategory }}
-		</a>
+	<div class="grid_6 road">
+		<h3>Northbound</h3>
+		<ul class="traffic">
+			{% for section in northbound %}
+			<li>
+				<span class="section section{{ section.latest_rate.rating }}">&nbsp;</span>
+				{{ section.name }}
+			</li>
+			{% endfor %}
+		</ul>
 	</div>
-	{% endfor %}
-	<div class="grid_4 property">
-		<a title="Company List" href="{% url company_list %}">
-			<img alt="{{ subcategory }}" src="{{ STATIC_URL }}img/clipart/property4.png" />
-			Companies
-		</a>
+	<div class="grid_6 road">
+		<h3>Southbound</h3>
+		<ul class="traffic">
+			{% for section in southbound %}
+			<li>
+				<span class="section section{{ section.latest_rate.rating }}">&nbsp;</span>
+				{{ section.name }}
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="grid_4" id="legend">
+		<h3>Legend</h3>
+		<!--<span class="section section0">&nbsp;</span>Clear<br />-->
+		<span class="section section1">&nbsp;</span>Clear<br />
+		<span class="section section2">&nbsp;</span>Light<br />
+		<span class="section section3">&nbsp;</span>Light to Moderate<br />
+		<span class="section section4">&nbsp;</span>Moderate<br />
+		<span class="section section5">&nbsp;</span>Moderate to Heavy<br />
+		<span class="section section6">&nbsp;</span>Heavy<br />
+		<span class="section section7">&nbsp;</span>Unpassable<br />
+		<!--<span class="section section8">&nbsp;</span>Clear<br />-->
 	</div>
 {% endblock %}

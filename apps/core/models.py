@@ -60,6 +60,9 @@ class Section(models.Model):
         else:
             return '%s %s' % (self.name, self.direction)
 
+    def latest_rate(self):
+        return self.situation_set.latest('id')
+
 
 class Situation(models.Model):
     section = models.ForeignKey(Section)
