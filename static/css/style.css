@@ -320,31 +320,31 @@ nav {
 	opacity: 1;
 }
 
-.section0 {
+.rate0 {
 	background-color: rgb(0,192,192);
 }
-.section1 {
+.rate1 {
 	background-color: rgb(0,224,160);
 }
-.section2 {
+.rate2 {
 	background-color: rgb(0,256,0);
 }
-.section3 {
+.rate3 {
 	background-color: rgb(200,224,0);
 }
-.section4 {
+.rate4 {
 	background-color: rgb(224,192,0);
 }
-.section5 {
+.rate5 {
 	background-color: rgb(224,160,0);
 }
-.section6 {
+.rate6 {
 	background-color: rgb(256,0,0);
 }
-.section7 {
+.rate7 {
 	background-color: rgb(224,0,160);
 }
-.section8 {
+.rate8 {
 	background-color: rgb(192,0,192);
 }
 
@@ -368,3 +368,21 @@ nav {
 	width: 24px;
 }
 
+.edit-traffic {
+}
+.edit-traffic {
+}
+.edit-traffic tbody th {
+	width: 80px;
+}
+.edit-traffic tbody tr {
+	border-bottom: 1px solid #000;
+}
+
+.td-section {
+	width: 32px;
+	text-align: center;
+	vertical-align: middle;
+	opacity: 0.7;
+}
+ 
