@@ -1,0 +1,14 @@
+{%load i18n%}{%autoescape off%}{%blocktrans%}
+
+Welcome to NREA Philipines.
+
+You are receiving this email because you have just signed up for an account with us. Before we can activate your account, we need to confirm your email address.{%endblocktrans%}
+
+{%trans "Please click on the link below to confirm your email address:"%}
+{%block reset_link%}
+{{protocol}}://{{domain}}{%url accounts-user-confirm-email useridb36=useridb36, token=token%}
+{%endblock%}
+
+{%trans "If you did not create an account on NREA Philippines, please disregard this email."%}
+
+{%blocktrans%}The {{site_name}} team{%endblocktrans%}{%endautoescape%}
