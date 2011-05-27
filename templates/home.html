@@ -10,8 +10,9 @@ Home
 		<ul class="traffic">
 			{% for section in northbound %}
 			<li>
-				<span class="section section{{ section.latest_rate.rating }}">&nbsp;</span>
+				<span class="section section{{ section.latest_rate.rating }}">
 				{{ section.name }}
+				</span>
 			</li>
 			{% endfor %}
 		</ul>
@@ -21,8 +22,9 @@ Home
 		<ul class="traffic">
 			{% for section in southbound %}
 			<li>
-				<span class="section section{{ section.latest_rate.rating }}">&nbsp;</span>
+				<span class="section section{{ section.latest_rate.rating }}">
 				{{ section.name }}
+				</span>
 			</li>
 			{% endfor %}
 		</ul>

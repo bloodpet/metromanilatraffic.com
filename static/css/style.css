@@ -306,8 +306,10 @@ nav {
 
 .section {
 	display: inline-block;
-	height: 24px;
-	width: 24px;
+	height: 32px;
+	width: 256px;
+	text-align: center;
+	vertical-align: middle;
 }
 .section0 {
 	background-color: rgb(128,192,192);
@@ -342,10 +344,18 @@ nav {
 .road h3 {
 	text-align: center;
 }
+
 .traffic {
 	list-style-type: none;
+}
+.traffic .section {
+	padding-top: 8px;
+	padding-bottom: 0px;
+	border-top: 0.25px solid #ededed;
 }
 
 #legend .section {
 	margin: 4px 4px 4px 4px;
+	width: 24px;
 }
+
