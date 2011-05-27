@@ -66,10 +66,10 @@
 				<div class="topnav">
 				<ul>
 					{% if user.is_anonymous %}
-					<li><a href="" title="Login">Login</a></li>
+					<li><a href="{% url accounts-login %}?next={{ request.path }}" title="Login">Login</a></li>
 					{% else %}
-					<li>Welcome <a href="" title="Edit Account">{{ user }}</a></li>
-					<li><a href="" title="Logout">Logout</a></li>
+					<li>Welcome <a href="{% url accounts-edit %}" title="Edit Account">{{ user }}</a></li>
+					<li><a href="{% url accounts-logout %}?next={{ request.path }}" title="Logout">Logout</a></li>
 					{% endif %}
 				</ul>
 				</div>
