@@ -39,7 +39,11 @@ class Node(models.Model):
     longitude = models.IntegerField(default=0, blank=True)
 
     def __unicode__(self):
-        return '%s in %s' % (self.name, self.road)
+        roads = self.road.all()
+        if roads:
+            return '%s in %s' % (self.name, ', '.join([road.name for road in roads]))
+        else:
+            return '%s' % (self.name)
 
 
 class Section(models.Model):
@@ -47,15 +51,21 @@ class Section(models.Model):
     name = models.CharField(max_length=128)
     start = models.ForeignKey(Node, related_name='start_section')
     end = models.ForeignKey(Node, related_name='end_section')
+    direction = models.CharField(max_length=1, choices=DIRECTIONS)
 
     def __unicode__(self):
-        return '%s in %s' % (self.name, self.road)
+        roads = self.road.all()
+        if roads:
+            return '%s %s in %s' % (self.name, self.direction, ', '.join([road.name for road in roads]))
+        else:
+            return '%s %s' % (self.name, self.direction)
 
 
 class Situation(models.Model):
     section = models.ForeignKey(Section)
-    direction = models.CharField(max_length=1, choices=DIRECTIONS)
     rating = models.SmallIntegerField(choices=TRAFFIC_RATINGS)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    status_at = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return '%s %s - %s' % (self.section, self.direction, self.rating)
+        return '%s %s - %s' % (self.section, self.section.direction, self.rating)
