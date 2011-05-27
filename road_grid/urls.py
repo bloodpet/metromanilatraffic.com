@@ -16,6 +16,5 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
 
     url(r'^', include('core.urls')),
-    url(r'^road/', include('core.generator.urls')),
     url(r'^accounts/', include('accounts.urls')),
 )
