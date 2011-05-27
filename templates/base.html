@@ -54,27 +54,8 @@
 					<a href="#" onclick="$('#messages').fadeOut(); return false;"><small>{% trans "clear all" %}</small></a>
 				</span>
 			</div>
+			<div class="clear">&nbsp;</div>
 			{% endif %}
-			<div class="clear">&nbsp;</div>
-			<div class="grid_6">
-				<h1><a href="" title="Home"><img src="{{ STATIC_URL }}img/logo.png" alt="Home" /></a></h1>
-			</div>
-			<div class="grid_4">
-				&nbsp;
-			</div>
-			<div class="grid_6">
-				<div class="topnav">
-				<ul>
-					{% if user.is_anonymous %}
-					<li><a href="{% url accounts-login %}?next={{ request.path }}" title="Login">Login</a></li>
-					{% else %}
-					<li>Welcome <a href="{% url accounts-edit %}" title="Edit Account">{{ user }}</a></li>
-					<li><a href="{% url accounts-logout %}?next={{ request.path }}" title="Logout">Logout</a></li>
-					{% endif %}
-				</ul>
-				</div>
-			</div>
-			<div class="clear">&nbsp;</div>
 		</header>
 	</div> <!--! end of #header-container -->
 	<div id="nav-container" class="container_16">
@@ -89,9 +70,21 @@
 	<div id="content-container" class="container_16">
 		<div class="clear">&nbsp;</div>
 		{% block main %}
-		<div id="main" class="grid_16 content">
 		{% block content %}
 		{% endblock %}
+		<div class="grid_3" id="legend">
+			<h1><a href="" title="Home"><img src="{{ STATIC_URL }}img/logo.png" alt="Home" /></a></h1>
+			<div class="topnav">
+				<ul>
+					{% if user.is_anonymous %}
+					<li><a href="{% url accounts-login %}?next={{ request.path }}" title="Login">Login</a></li>
+					{% else %}
+					<li>Welcome <a href="{% url accounts-edit %}" title="Edit Account">{{ user }}</a></li>
+					<li><a href="{% url accounts-logout %}?next={{ request.path }}" title="Logout">Logout</a></li>
+					{% endif %}
+				</ul>
+			</div>
+		<div class="clear">&nbsp;</div>
 		</div>
 		{% endblock %}
 		<div class="clear">&nbsp;</div>

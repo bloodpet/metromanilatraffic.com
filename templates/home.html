@@ -4,8 +4,8 @@
 Home
 {% endblock %}
 
-{% block main %}
-	<div class="grid_6 road">
+{% block content %}
+	<div class="grid_5 road">
 		<h3>Northbound</h3>
 		<ul class="traffic">
 			{% for section in northbound %}
@@ -17,7 +17,7 @@ Home
 			{% endfor %}
 		</ul>
 	</div>
-	<div class="grid_6 road">
+	<div class="grid_5 road">
 		<h3>Southbound</h3>
 		<ul class="traffic">
 			{% for section in southbound %}
@@ -29,7 +29,7 @@ Home
 			{% endfor %}
 		</ul>
 	</div>
-	<div class="grid_4" id="legend">
+	<div class="grid_3" id="legend">
 		<h3>Legend</h3>
 		<!--<span class="section section0">&nbsp;</span>Clear<br />-->
 		<span class="section section1">&nbsp;</span>Clear<br />
