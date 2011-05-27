@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+	{{ company }} 
+    Company Details
+{% endblock %}
+
+{% block content %}
+    <h2>{{ company }}</h2>
+
+	<a href="{{ MEDIA_URL }}{{ company.image }}" title="{{ company }}" class="shadowbox">
+		<img src="{{ company.image.thumbnail }}" alt="{{ company }}" />
+	</a>
+	<div>
+		<a href="{% url company_edit company.pk %}" title="Edit Company">Edit</a>
+		<a href="{% url company_delete company.pk %}" title="Delete Company">Delete</a>
+		<a href="{% url company_list %}" title="Company List">Back to List</a>
+	</div>
+{% endblock %}

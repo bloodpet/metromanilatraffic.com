@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block main %}
+	{% for subcategory in subcategory_list %}
+	<div class="grid_4 property">
+		<a title="{{ subcategory }}" href="{% url property_list subcategory.slug %}">
+			<img alt="{{ subcategory }}" src="{{ STATIC_URL }}img/clipart/property{{ forloop.counter }}.png" />
+			{{ subcategory }}
+		</a>
+	</div>
+	{% endfor %}
+	<div class="grid_4 property">
+		<a title="Company List" href="{% url company_list %}">
+			<img alt="{{ subcategory }}" src="{{ STATIC_URL }}img/clipart/property4.png" />
+			Companies
+		</a>
+	</div>
+{% endblock %}
