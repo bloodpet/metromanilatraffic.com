@@ -29,16 +29,21 @@ TRAFFIC_RATINGS = (
 
 class Road(models.Model):
     name = models.CharField(max_length=128)
+    slug = models.SlugField(unique=True, editable=False)
 
     def __unicode__(self):
         return self.name
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('show_road', [self.slug, ])
 
 
 class Node(models.Model):
     road = models.ManyToManyField(Road)
     name = models.CharField(max_length=256)
-    lattitude = models.IntegerField(default=0, blank=True)
-    longitude = models.IntegerField(default=0, blank=True)
+    latitude = models.FloatField(default=0, blank=True)
+    longitude = models.FloatField(default=0, blank=True)
 
     def __unicode__(self):
         roads = self.road.all()

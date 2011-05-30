@@ -1,5 +1,5 @@
 #from django.views.generic import DetailView, ListView, CreateView, DeleteView, UpdateView
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, simple
 from django.utils.decorators import method_decorator
 from accounts.decorators import require_login
 from core.models import *
@@ -12,7 +12,20 @@ class HomeView(TemplateView):
         result = super(HomeView, self).get_context_data(**kwargs)
         result['northbound'] = Section.objects.filter(direction='n')
         result['southbound'] = Section.objects.filter(direction='s')
-        result['ratings'] = TRAFFIC_RATINGS
+        result['ratings'] = TRAFFIC_RATINGS[1:]
+        return result
+
+
+class RoadView(TemplateView):
+    template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        result = super(RoadView, self).get_context_data(**kwargs)
+        road_slug = kwargs['road']
+        result['ratings'] = TRAFFIC_RATINGS[1:]
+        result['road'] = road = Road.objects.get(slug=road_slug)
+        result['northbound'] = Section.objects.filter(direction='n')
+        result['southbound'] = Section.objects.filter(direction='s')
         return result
 
 
@@ -27,7 +40,7 @@ class EditView(TemplateView):
         result = super(EditView, self).get_context_data(**kwargs)
         result['northbound'] = Section.objects.filter(direction='n')
         result['southbound'] = Section.objects.filter(direction='s')
-        result['ratings'] = TRAFFIC_RATINGS
+        result['ratings'] = TRAFFIC_RATINGS[1:]
         return result
 
     def post(self, request, *args, **kwargs):
@@ -38,4 +51,4 @@ class EditView(TemplateView):
                 continue
             else:
                 situation = Situation.objects.create(section=section, rating=rating)
-        return super(EditView, self).get(request, *args, **kwargs)
+        return simple.redirect_to(request.path)
