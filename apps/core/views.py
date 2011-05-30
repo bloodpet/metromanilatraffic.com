@@ -10,22 +10,21 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         result = super(HomeView, self).get_context_data(**kwargs)
-        result['northbound'] = Section.objects.filter(direction='n')
-        result['southbound'] = Section.objects.filter(direction='s')
+        result['roads'] = Road.objects.all()
         result['ratings'] = TRAFFIC_RATINGS[1:]
         return result
 
 
 class RoadView(TemplateView):
-    template_name = 'home.html'
+    template_name = 'road.html'
 
     def get_context_data(self, **kwargs):
         result = super(RoadView, self).get_context_data(**kwargs)
         road_slug = kwargs['road']
         result['ratings'] = TRAFFIC_RATINGS[1:]
         result['road'] = road = Road.objects.get(slug=road_slug)
-        result['northbound'] = Section.objects.filter(direction='n')
-        result['southbound'] = Section.objects.filter(direction='s')
+        result['northbound'] = road.section_set.filter(direction='n').order_by('position')
+        result['southbound'] = road.section_set.filter(direction='s').order_by('position')
         return result
 
 

@@ -1,19 +1,33 @@
 {% extends "base.html" %}
 
 {% block title %}
-Home
+{{ road.name }}
 {% endblock %}
 
 {% block content %}
-	<div class="grid_10 road">
-		<h3>Choose a Road</h3>
-		<div class="road-block">
-			{% for road in roads %}
-			<a class="road-link" href="{% url show_road road.slug %}">
-				{{ road.name }}
-			</a>
+	<div class="grid_5 road">
+		<h3>Northbound</h3>
+		<ul class="traffic">
+			{% for section in northbound %}
+			<li>
+				<a class="section rate{{ section.get_latest_rate.rating }}">
+				{{ section.name }}
+				</a>
+			</li>
 			{% endfor %}
-		</div>
+		</ul>
+	</div>
+	<div class="grid_5 road">
+		<h3>Southbound</h3>
+		<ul class="traffic">
+			{% for section in southbound %}
+			<li>
+				<a class="section rate{{ section.get_latest_rate.rating }}">
+				{{ section.name }}
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
 	</div>
 	<div class="grid_3" id="legend">
 		<h3>Legend</h3>

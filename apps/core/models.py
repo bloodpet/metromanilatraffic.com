@@ -44,6 +44,7 @@ class Node(models.Model):
     name = models.CharField(max_length=256)
     latitude = models.FloatField(default=0, blank=True)
     longitude = models.FloatField(default=0, blank=True)
+    position = models.PositiveSmallIntegerField()
 
     def __unicode__(self):
         roads = self.road.all()
@@ -59,6 +60,7 @@ class Section(models.Model):
     start = models.ForeignKey(Node, related_name='start_section')
     end = models.ForeignKey(Node, related_name='end_section')
     direction = models.CharField(max_length=1, choices=DIRECTIONS)
+    position = models.PositiveSmallIntegerField()
 
     def __unicode__(self):
         roads = self.road.all()
@@ -71,7 +73,6 @@ class Section(models.Model):
         latest_update = self.situation_set.latest('status_at')
         earliest_hour = 3
         earliest_time = datetime.datetime.now() - datetime.timedelta(0, earliest_hour * 60 * 60)
-        #return latest_update
         if latest_update.status_at > earliest_time:
             return latest_update
         else:

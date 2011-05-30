@@ -304,6 +304,34 @@ header {
 nav {
 }
 
+.road-block {
+	text-align: center;
+}
+.road-link {
+	display: inline-block;
+	height: 128px;
+	line-height: 128px;
+	width: 160px;
+	text-align: center;
+	vertical-align: middle;
+	opacity: 0.7;
+	font-weight: bold;
+	font-size: 12pt;
+	color: #000;
+	border: 1px solid #000;
+	margin: 4px 4px 4px 4px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+}
+.road-link:link, .road-link:visited, .road-link:active, .road-link:hover {
+	color: #000;
+}
+.road-link:hover {
+	background-color: #cefece;
+	color: #000;
+}
+
 .section {
 	display: inline-block;
 	height: 32px;
