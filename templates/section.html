@@ -1,0 +1,13 @@
+			<li>
+				<a class="section rate{{ section.get_latest_rate.rating }}">
+				{{ section.name }}
+					<p class="rate-info">
+						{% if section.get_latest_rate %}
+						{{ section.get_latest_rate.get_rate_name }} at
+						{{ section.get_latest_rate.status_at|time }}
+						{% else %}
+						No recent updates.
+						{% endif %}
+					</p>
+				</a>
+			</li>

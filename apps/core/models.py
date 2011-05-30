@@ -25,6 +25,7 @@ TRAFFIC_RATINGS = (
     (7, 'Heavy'),
     (8, 'Unpassable'),
 )
+TRAFFIC_DICT = dict(TRAFFIC_RATINGS)
 
 
 class Road(models.Model):
@@ -40,11 +41,15 @@ class Road(models.Model):
 
 
 class Node(models.Model):
-    road = models.ManyToManyField(Road)
-    name = models.CharField(max_length=256)
+    road = models.ForeignKey(Road)
+    name = models.CharField(max_length=128)
     latitude = models.FloatField(default=0, blank=True)
     longitude = models.FloatField(default=0, blank=True)
     position = models.PositiveSmallIntegerField()
+
+    class Meta:
+        ordering = ['position', ]
+        unique_together = ('road',  'position')
 
     def __unicode__(self):
         roads = self.road.all()
@@ -55,12 +60,20 @@ class Node(models.Model):
 
 
 class Section(models.Model):
-    road = models.ManyToManyField(Road)
-    name = models.CharField(max_length=128)
+    road = models.ForeignKey(Road)
+    name = models.CharField(max_length=256)
     start = models.ForeignKey(Node, related_name='start_section')
     end = models.ForeignKey(Node, related_name='end_section')
     direction = models.CharField(max_length=1, choices=DIRECTIONS)
     position = models.PositiveSmallIntegerField()
+
+    class Meta:
+        ordering = ['position', ]
+        unique_together = (
+            ('road', 'direction', 'position'),
+            ('road', 'direction', 'start'),
+            ('road', 'direction', 'end'),
+        )
 
     def __unicode__(self):
         roads = self.road.all()
@@ -87,3 +100,6 @@ class Situation(models.Model):
 
     def __unicode__(self):
         return '%s %s - %s' % (self.section, self.section.direction, self.rating)
+
+    def get_rate_name(self):
+        return TRAFFIC_DICT[self.rating]

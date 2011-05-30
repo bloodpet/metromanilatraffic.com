@@ -23,23 +23,25 @@ class RoadView(TemplateView):
         road_slug = kwargs['road']
         result['ratings'] = TRAFFIC_RATINGS[1:]
         result['road'] = road = Road.objects.get(slug=road_slug)
-        result['northbound'] = road.section_set.filter(direction='n').order_by('position')
-        result['southbound'] = road.section_set.filter(direction='s').order_by('position')
+        result['northbound'] = road.section_set.filter(direction='n')
+        result['southbound'] = road.section_set.filter(direction='s')
         return result
 
 
-class EditView(TemplateView):
+class EditRoad(TemplateView):
     template_name = 'edit.html'
 
     @method_decorator(require_login)
     def dispatch(self, *args, **kwargs):
-        return super(EditView, self).dispatch(*args, **kwargs)
+        return super(EditRoad, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        result = super(EditView, self).get_context_data(**kwargs)
-        result['northbound'] = Section.objects.filter(direction='n')
-        result['southbound'] = Section.objects.filter(direction='s')
+        result = super(EditRoad, self).get_context_data(**kwargs)
+        road_slug = kwargs['road']
         result['ratings'] = TRAFFIC_RATINGS[1:]
+        result['road'] = road = Road.objects.get(slug=road_slug)
+        result['northbound'] = road.section_set.filter(direction='n')
+        result['southbound'] = road.section_set.filter(direction='s')
         return result
 
     def post(self, request, *args, **kwargs):
@@ -50,4 +52,4 @@ class EditView(TemplateView):
                 continue
             else:
                 situation = Situation.objects.create(section=section, rating=rating)
-        return simple.redirect_to(request.path)
+        return simple.redirect_to(request, request.path)

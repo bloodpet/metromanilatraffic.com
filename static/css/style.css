@@ -348,6 +348,14 @@ nav {
 	opacity: 1;
 }
 
+.section .rate-info {
+	display: none;
+	font-size: 8pt;
+}
+.section:hover .rate-info {
+	display: block;
+}
+
 .rate0 {
 	background-color: rgb(192,192,192);
 }

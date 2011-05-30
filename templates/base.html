@@ -81,7 +81,9 @@
 					{% else %}
 					<li>Welcome <a href="{% url accounts-edit %}" title="Edit Account">{{ user }}</a></li>
 					<li><a href="{% url accounts-logout %}?next={{ request.path }}" title="Logout">Logout</a></li>
-					<li><a href="{% url edit %}" title="Edit page">Edit page</a></li>
+					{% if road %}
+					<li><a href="{% url edit_road road.slug %}" title="Update Traffic">Update</a></li>
+					{% endif %}
 					{% endif %}
 				</ul>
 			</div>
