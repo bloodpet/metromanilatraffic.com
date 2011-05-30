@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 
 DIRECTION_SETS = (
@@ -14,6 +15,7 @@ DIRECTION_SETS = (
 DIRECTIONS = DIRECTION_SETS[0] + DIRECTION_SETS[1]
 
 TRAFFIC_RATINGS = (
+    (0, 'No Update'),
     (1, 'Clear'),
     (2, 'Fast Moving'),
     (3, 'Light'),
@@ -60,8 +62,15 @@ class Section(models.Model):
         else:
             return '%s %s' % (self.name, self.direction)
 
-    def latest_rate(self):
-        return self.situation_set.latest('id')
+    def get_latest_rate(self):
+        latest_update = self.situation_set.latest('status_at')
+        earliest_hour = 3
+        earliest_time = datetime.datetime.now() - datetime.timedelta(0, earliest_hour * 60 * 60)
+        #return latest_update
+        if latest_update.status_at > earliest_time:
+            return latest_update
+        else:
+            return None
 
 
 class Situation(models.Model):
