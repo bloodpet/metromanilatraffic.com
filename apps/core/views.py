@@ -25,6 +25,8 @@ class RoadView(TemplateView):
         result['road'] = road = Road.objects.get(slug=road_slug)
         result['northbound'] = road.section_set.filter(direction='n')
         result['southbound'] = road.section_set.filter(direction='s')
+        result['westbound'] = road.section_set.filter(direction='e')
+        result['eastbound'] = road.section_set.filter(direction='w')
         return result
 
 
@@ -42,6 +44,8 @@ class EditRoad(TemplateView):
         result['road'] = road = Road.objects.get(slug=road_slug)
         result['northbound'] = road.section_set.filter(direction='n')
         result['southbound'] = road.section_set.filter(direction='s')
+        result['westbound'] = road.section_set.filter(direction='e')
+        result['eastbound'] = road.section_set.filter(direction='w')
         return result
 
     def post(self, request, *args, **kwargs):
