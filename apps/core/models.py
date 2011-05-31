@@ -42,8 +42,9 @@ class Road(models.Model):
     def get_rate_median(self):
         rates = []
         for section in self.section_set.all():
-            rate_obj = section.get_latest_rate()
-            if not rate_obj:
+            try:
+                rate_obj = section.get_latest_rate()
+            except Exception:
                 continue
             rate = rate_obj.rating
             if rate > 0:
