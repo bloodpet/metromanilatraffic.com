@@ -66,11 +66,7 @@ class Node(models.Model):
         unique_together = ('road',  'position')
 
     def __unicode__(self):
-        roads = self.road.all()
-        if roads:
-            return '%s in %s' % (self.name, ', '.join([road.name for road in roads]))
-        else:
-            return '%s' % (self.name)
+        return '%s in %s' % (self.name, self.road.name)
 
 
 class Section(models.Model):
@@ -90,11 +86,7 @@ class Section(models.Model):
         )
 
     def __unicode__(self):
-        roads = self.road.all()
-        if roads:
-            return '%s %s in %s' % (self.name, self.direction, ', '.join([road.name for road in roads]))
-        else:
-            return '%s %s' % (self.name, self.direction)
+        return '%s %s in %s' % (self.name, self.direction, self.road.name)
 
     def get_latest_rate(self):
         latest_update = self.situation_set.latest('status_at')
