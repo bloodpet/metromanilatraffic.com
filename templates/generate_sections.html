@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+Road Grid
+{% endblock %}
+
+{% block page_title %}
+Create Sections of a Road
+{% endblock %}
+
+{% block content %}
+	<div class="grid_16 road">
+		<div class="road-block">
+			{% for road in roads %}
+			<a class="road-link rate{{ road.get_rate_median }}" href="{% url generate_sections %}?slug={{ road.slug }}&direction=ns" title="north-south {{ road.name }}">
+				{{ road.name }}<span>(ns)</span>
+			</a>
+			<a class="road-link rate{{ road.get_rate_median }}" href="{% url generate_sections %}?slug={{ road.slug }}&direction=ew" title="east-west {{ road.name }}">
+				{{ road.name }}<span>(ew)</span>
+			</a>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block legend %}
+{% endblock legend %}

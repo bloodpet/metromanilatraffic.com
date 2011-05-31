@@ -1,4 +1,5 @@
 import datetime
+from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
 
@@ -53,6 +54,7 @@ class Road(models.Model):
         # Get the upper median
         if len(rates) == 0:
             return None
+        rates.sort()
         median = rates[len(rates)/2]
         return median
 
@@ -107,9 +109,12 @@ class Section(models.Model):
 
 class Situation(models.Model):
     section = models.ForeignKey(Section)
+    user = models.ForeignKey(User, blank=True, null=True, editable=False)
+    is_from_user = models.BooleanField(default=False)
     rating = models.SmallIntegerField(choices=TRAFFIC_RATINGS)
     updated_at = models.DateTimeField(auto_now_add=True)
     status_at = models.DateTimeField(auto_now_add=True)
+    reason = models.TextField(blank=True)
 
     def __unicode__(self):
         return '%s %s - %s' % (self.section, self.section.direction, self.rating)

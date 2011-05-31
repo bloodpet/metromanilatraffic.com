@@ -1,8 +1,10 @@
 #from django.views.generic import DetailView, ListView, CreateView, DeleteView, UpdateView
 from django.views.generic import TemplateView, ListView, simple
 from django.utils.decorators import method_decorator
+from django.contrib import messages
 from accounts.decorators import require_login
 from core.models import *
+from core.backend import generate_sections
 
 
 class HomeView(TemplateView):
@@ -57,3 +59,28 @@ class EditRoad(TemplateView):
             else:
                 situation = Situation.objects.create(section=section, rating=rating)
         return simple.redirect_to(request, request.path)
+
+
+class GenerateSections(TemplateView):
+    template_name = 'generate_sections.html'
+
+    @method_decorator(require_login)
+    def dispatch(self, *args, **kwargs):
+        return super(GenerateSections, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        result = super(GenerateSections, self).get_context_data(**kwargs)
+        result['roads'] = Road.objects.all()
+        return result
+
+    def get(self, request, *args, **kwargs):
+        result = super(GenerateSections, self).get(request, *args, **kwargs)
+        if request.GET.has_key('slug'):
+            road_slug = request.GET['slug']
+            direction = request.GET['direction']
+            result['road'] = road = Road.objects.get(slug=road_slug)
+            generate_sections(road, direction)
+            messages.success(self.request, 'Successfully created Sections')
+            return simple.redirect_to(request, request.path_info)
+        else:
+            return result
