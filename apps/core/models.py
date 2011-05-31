@@ -1,5 +1,6 @@
 import datetime
 from django.db import models
+from django.template.defaultfilters import slugify
 
 DIRECTION_SETS = (
     (
@@ -50,8 +51,14 @@ class Road(models.Model):
             if rate > 0:
                 rates.append(rate)
         # Get the upper median
+        if len(rates) == 0:
+            return None
         median = rates[len(rates)/2]
         return median
+
+    def save(self):
+        self.slug = slugify(self.name)
+        return super(Road, self).save()
 
 
 class Node(models.Model):
