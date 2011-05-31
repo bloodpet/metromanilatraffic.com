@@ -98,9 +98,11 @@
 	</div> <!--! end of #content-container -->
 	<div id="footer-container" class="container_16">
 		<footer>
+			{% block legend %}
 			<div class="grid_16" id="legend">
 				{% include 'legend.html' %}
 			</div>
+			{% endblock legend %}
 			<div id="footer" class="grid_16">
 			{% block footer %}
 			{% endblock %}
