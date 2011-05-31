@@ -13,10 +13,10 @@ Create Sections of a Road
 		<div class="road-block">
 			{% for road in roads %}
 			<a class="road-link rate{{ road.get_rate_median }}" href="{% url generate_sections %}?slug={{ road.slug }}&direction=ns" title="north-south {{ road.name }}">
-				{{ road.name }}<span>(ns)</span>
+				{{ road.name }} <span>(ns) {{road.section_set.count }}</span>
 			</a>
 			<a class="road-link rate{{ road.get_rate_median }}" href="{% url generate_sections %}?slug={{ road.slug }}&direction=ew" title="east-west {{ road.name }}">
-				{{ road.name }}<span>(ew)</span>
+				{{ road.name }} <span>(ew) {{road.section_set.count }}</span>
 			</a>
 			{% endfor %}
 		</div>
