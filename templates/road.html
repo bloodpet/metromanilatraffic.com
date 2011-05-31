@@ -4,8 +4,12 @@
 {{ road.name }}
 {% endblock %}
 
+{% block page_title %}
+{{ road.name }}
+{% endblock %}
+
 {% block content %}
-	<div class="grid_5 road">
+	<div class="grid_8 road">
 		<h3>Northbound</h3>
 		<ul class="traffic">
 			{% for section in northbound %}
@@ -13,15 +17,12 @@
 			{% endfor %}
 		</ul>
 	</div>
-	<div class="grid_5 road">
+	<div class="grid_8 road">
 		<h3>Southbound</h3>
 		<ul class="traffic">
 			{% for section in southbound %}
 			{% include 'section.html' %}
 			{% endfor %}
 		</ul>
-	</div>
-	<div class="grid_3" id="legend">
-		{% include 'legend.html' %}
 	</div>
 {% endblock %}

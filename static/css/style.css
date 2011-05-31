@@ -293,6 +293,11 @@ button {  width: auto; overflow: visible; }
 
 #main {
 }
+#footer-container {
+	margin-top: 16px;
+	position: relative;
+	bottom: 0px;
+}
 
 a {
     text-decoration: none;
@@ -302,6 +307,37 @@ header {
 }
 
 nav {
+}
+
+.topnav {
+	background-color: #cccccc;
+	border: 1px solid #333333;
+	border-top: 0;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	margin-bottom: 4px;
+}
+.topnav a {
+	background-color: #ffffff;
+	border: 1px solid #333333;
+	border-radius: 4px;
+	display: inline-table;
+	height: 32px;
+	line-height: 32px;
+	padding-right: 6px;
+	padding-left: 6px;
+	margin: 2px 4px 6px 4px;
+}
+.topnav h2 {
+	height: 32px;
+	line-height: 32px;
+	vertical-align: middle;
+}
+.center {
+	text-align: center;
+}
+.right {
+	text-align: right;
 }
 
 .road-block {
@@ -385,6 +421,7 @@ nav {
 }
 
 .road {
+	text-align: center;
 }
 .road h3 {
 	text-align: center;

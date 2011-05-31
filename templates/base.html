@@ -41,8 +41,28 @@
 
 <body>
 
-	<div id="header-container" class="container_16">
+	<div id="header-container" class="container_16 topnav">
 		<header>
+			<div class="grid_6">
+				<a href="{% url home %}">Roads</a>
+			</div>
+			<div class="grid_4 center">
+				<h2>
+				{% block page_title %}Roads{% endblock %}
+				</h2>
+			</div>
+			<div class="grid_6 right">
+				{% if user.is_anonymous %}
+				<a href="{% url accounts-login %}?next={{ request.path }}" title="Login">Login</a></li>
+				{% else %}
+				{% if road %}
+				<a href="{% url edit_road road.slug %}" title="Update Traffic">Update</a></li>
+				{% endif %}
+				<a href="{% url accounts-edit %}" title="Profile for {{ user }}">Profile</a></li>
+				<a href="{% url accounts-logout %}?next={{ request.path }}" title="Logout">Logout</a></li>
+				{% endif %}
+			</div>
+			<div class="clear">&nbsp;</div>
 			{% if messages %}
 			<div id="messages">
 				<ul>
@@ -72,28 +92,15 @@
 		{% block main %}
 		{% block content %}
 		{% endblock %}
-		<div class="grid_3" id="legend">
-			<h1><a href="{% url home %}" title="Home"><img src="{{ STATIC_URL }}img/logo.png" alt="Home" /></a></h1>
-			<div class="topnav">
-				<ul>
-					{% if user.is_anonymous %}
-					<li><a href="{% url accounts-login %}?next={{ request.path }}" title="Login">Login</a></li>
-					{% else %}
-					<li>Welcome <a href="{% url accounts-edit %}" title="Edit Account">{{ user }}</a></li>
-					<li><a href="{% url accounts-logout %}?next={{ request.path }}" title="Logout">Logout</a></li>
-					{% if road %}
-					<li><a href="{% url edit_road road.slug %}" title="Update Traffic">Update</a></li>
-					{% endif %}
-					{% endif %}
-				</ul>
-			</div>
 		<div class="clear">&nbsp;</div>
-		</div>
 		{% endblock %}
 		<div class="clear">&nbsp;</div>
 	</div> <!--! end of #content-container -->
 	<div id="footer-container" class="container_16">
 		<footer>
+			<div class="grid_16" id="legend">
+				{% include 'legend.html' %}
+			</div>
 			<div id="footer" class="grid_16">
 			{% block footer %}
 			{% endblock %}

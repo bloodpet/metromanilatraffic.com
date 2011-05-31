@@ -1,6 +1,6 @@
-		Current time: {% now "H:i" %}
-		<h3>Legend</h3>
+		<p>Current time: {% now "H:i" %}</p>
+		<strong>Legend:</strong>
 		<!--<span class="section section0">&nbsp;</span>Clear<br />-->
 		{% for rate in ratings %}
-		<span class="section rate{{ rate.0 }}">&nbsp;</span>{{ rate.1 }}<br />
+		<span class="section rate{{ rate.0 }}">&nbsp;</span>{{ rate.1 }}
 		{% endfor %}

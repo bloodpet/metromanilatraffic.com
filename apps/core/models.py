@@ -19,9 +19,9 @@ TRAFFIC_RATINGS = (
     (1, 'Clear'),
     (2, 'Fast Moving'),
     (3, 'Light'),
-    (4, 'Light to Moderate'),
+    (4, 'Light - Moderate'),
     (5, 'Moderate'),
-    (6, 'Moderate to Heavy'),
+    (6, 'Moderate - Heavy'),
     (7, 'Heavy'),
     (8, 'Unpassable'),
 )

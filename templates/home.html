@@ -4,9 +4,12 @@
 Home
 {% endblock %}
 
+{% block page_title %}
+Choose a Road
+{% endblock %}
+
 {% block content %}
-	<div class="grid_10 road">
-		<h3>Choose a Road</h3>
+	<div class="grid_16 road">
 		<div class="road-block">
 			{% for road in roads %}
 			<a class="road-link" href="{% url show_road road.slug %}">
@@ -14,8 +17,5 @@ Home
 			</a>
 			{% endfor %}
 		</div>
-	</div>
-	<div class="grid_3" id="legend">
-		{% include 'legend.html' %}
 	</div>
 {% endblock %}
