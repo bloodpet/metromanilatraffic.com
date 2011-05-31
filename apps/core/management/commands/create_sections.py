@@ -1,6 +1,7 @@
 from optparse import make_option
 from django.core.management.base import LabelCommand
-from core.models import Road, Section
+from core.models import Road
+from core.backend import generate_sections
 
 
 class Command(LabelCommand):
@@ -17,14 +18,13 @@ class Command(LabelCommand):
     )
 
     def handle(self, *labels, **options):
-        self.direction = options['direction']
         if not labels:
             labels = ['all',]
         if 'all' in labels:
             roads = Road.objects.all()
             result = ''
             for road in roads:
-                result += self.generate_sections(road)
+                result += generate_sections(road, options['direction'])
         else:
             result = super(Command, self).handle(*labels, **options)
         return result
@@ -35,20 +35,4 @@ class Command(LabelCommand):
         except Road.DoesNotExist:
             return "Road %s not found.\n" % label
         else:
-            return self.generate_sections(road)
-
-    def generate_sections(self, road):
-        if self.direction == 'ns':
-            dir1 = 's'
-            dir2 = 'n'
-        else:
-            dir1 = 'w'
-            dir2 = 'e'
-        nodes = road.node_set.all().order_by('position')
-        node_count = nodes.count()
-        for count, node1, node2 in zip(range(node_count), nodes[:node_count], nodes[1:]):
-            section1 = road.section_set.create(name='%s to %s' % (node1.name, node2.name), start=node1, end=node2, direction=dir1, position=count)
-            section1.save()
-            section2 = road.section_set.create(name='%s to %s' % (node2.name, node1.name), start=node2, end=node1, direction=dir2, position=count)
-            section2.save()
-        return ''
+            return generate_sections(road, options['direction'])
