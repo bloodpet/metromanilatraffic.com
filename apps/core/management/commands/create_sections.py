@@ -39,11 +39,11 @@ class Command(LabelCommand):
 
     def generate_sections(self, road):
         if self.direction == 'ns':
-            dir1 = 'n'
-            dir2 = 's'
+            dir1 = 's'
+            dir2 = 'n'
         else:
-            dir1 = 'e'
-            dir2 = 'w'
+            dir1 = 'w'
+            dir2 = 'e'
         nodes = road.node_set.all().order_by('position')
         node_count = nodes.count()
         for count, node1, node2 in zip(range(node_count), nodes[:node_count], nodes[1:]):
