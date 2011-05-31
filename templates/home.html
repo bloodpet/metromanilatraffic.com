@@ -12,7 +12,7 @@ Choose a Road
 	<div class="grid_16 road">
 		<div class="road-block">
 			{% for road in roads %}
-			<a class="road-link" href="{% url show_road road.slug %}">
+			<a class="road-link rate{{ road.get_rate_median }}" href="{% url show_road road.slug %}">
 				{{ road.name }}
 			</a>
 			{% endfor %}

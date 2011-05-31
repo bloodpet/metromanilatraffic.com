@@ -39,6 +39,19 @@ class Road(models.Model):
     def get_absolute_url(self):
         return ('show_road', [self.slug, ])
 
+    def get_rate_median(self):
+        rates = []
+        for section in self.section_set.all():
+            rate_obj = section.get_latest_rate()
+            if not rate_obj:
+                continue
+            rate = rate_obj.rating
+            if rate > 0:
+                rates.append(rate)
+        # Get the upper median
+        median = rates[len(rates)/2]
+        return median
+
 
 class Node(models.Model):
     road = models.ForeignKey(Road)
