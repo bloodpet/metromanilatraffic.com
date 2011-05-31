@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Section List
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>Section</h2>
+
+        {% if object_list %}
+        <form method="post" action="">
+            {% csrf_token %}
+            <ul class="object_list">
+            {% for section in section_list %}
+                <li>
+                <input type="checkbox" name="section" value="{{ section.pk }}" />
+                {{ section }}
+                <a href="{% url section_show section.pk %}" title="Show Details">Show</a>
+                <a href="{% url section_edit section.pk %}" title="Edit Section">Edit</a>
+                <a href="{% url section_delete section.pk %}" title="Delete Section">Delete</a>
+                </li>
+            {% endfor %}
+            </ul>
+            <div>
+            <input type="hidden" name="action" value="delete" />
+            <input type="submit" value="Delete Selected" />
+            </div>
+        </form>
+        {% endif %}
+    </div>
+    <div class="grid_5 content">
+        {% if paginator.num_pages > 1 %}
+        <h3>Pages</h3>
+        {% include 'pagination.html' %}
+        {% endif %}
+        {% if search_form %}
+        <h3>Search</h3>
+        <form class="search-form">
+        {{ search_form.as_p }}
+        <p>
+            <input type="submit" name="action" value="Search" />
+        </p>
+        </form>
+        {% endif %}
+        <a href="{% url section_new %}" title="Create New Section">New Section</a>
+    </div>
+{% endblock %}

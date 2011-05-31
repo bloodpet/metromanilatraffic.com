@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Node List
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>Node</h2>
+
+        {% if object_list %}
+        <form method="post" action="">
+            {% csrf_token %}
+            <ul class="object_list">
+            {% for node in node_list %}
+                <li>
+                <input type="checkbox" name="node" value="{{ node.pk }}" />
+                {{ node }}
+                <a href="{% url node_show node.pk %}" title="Show Details">Show</a>
+                <a href="{% url node_edit node.pk %}" title="Edit Node">Edit</a>
+                <a href="{% url node_delete node.pk %}" title="Delete Node">Delete</a>
+                </li>
+            {% endfor %}
+            </ul>
+            <div>
+            <input type="hidden" name="action" value="delete" />
+            <input type="submit" value="Delete Selected" />
+            </div>
+        </form>
+        {% endif %}
+    </div>
+    <div class="grid_5 content">
+        {% if paginator.num_pages > 1 %}
+        <h3>Pages</h3>
+        {% include 'pagination.html' %}
+        {% endif %}
+        {% if search_form %}
+        <h3>Search</h3>
+        <form class="search-form">
+        {{ search_form.as_p }}
+        <p>
+            <input type="submit" name="action" value="Search" />
+        </p>
+        </form>
+        {% endif %}
+        <a href="{% url node_new %}" title="Create New Node">New Node</a>
+    </div>
+{% endblock %}

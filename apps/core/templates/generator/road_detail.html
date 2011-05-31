@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Road Details
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>{{ road }}</h2>
+        {# Details here. #}
+        <ul>
+            <li>
+            {{ road }}
+            </li>
+        </ul>
+    </div>
+    <div class="grid_5 content">
+        <a href="{% url road_edit road.pk %}" title="Edit Road">Edit</a>
+        <a href="{% url road_delete road.pk %}" title="Delete Road">Delete</a>
+        <a href="{% url road_list %}" title="Road List">Back to List</a>
+    </div>
+{% endblock %}

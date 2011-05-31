@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Delete section
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>{{ section }}</h2>
+        {# Details here. #}
+        <ul>
+            <li>
+            {{ section }}
+            </li>
+        </ul>
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="submit" value="Delete" />
+        </form>
+    </div>
+    <div class="grid_5 content">
+        <a href="{% url section_edit section.pk %}" title="Edit Section">Edit</a>
+        <a href="{% url section_list %}" title="Section List">Back to List</a>
+    </div>
+{% endblock %}

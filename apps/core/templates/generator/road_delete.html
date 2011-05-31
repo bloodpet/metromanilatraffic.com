@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Delete road
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>{{ road }}</h2>
+        {# Details here. #}
+        <ul>
+            <li>
+            {{ road }}
+            </li>
+        </ul>
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="submit" value="Delete" />
+        </form>
+    </div>
+    <div class="grid_5 content">
+        <a href="{% url road_edit road.pk %}" title="Edit Road">Edit</a>
+        <a href="{% url road_list %}" title="Road List">Back to List</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Situation Details
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>{{ situation }}</h2>
+        {# Details here. #}
+        <ul>
+            <li>
+            {{ situation }}
+            </li>
+        </ul>
+    </div>
+    <div class="grid_5 content">
+        <a href="{% url situation_edit situation.pk %}" title="Edit Situation">Edit</a>
+        <a href="{% url situation_delete situation.pk %}" title="Delete Situation">Delete</a>
+        <a href="{% url situation_list %}" title="Situation List">Back to List</a>
+    </div>
+{% endblock %}

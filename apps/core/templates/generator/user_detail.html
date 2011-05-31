@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+    User Details
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>{{ user }}</h2>
+        {# Details here. #}
+        <ul>
+            <li>
+            {{ user }}
+            </li>
+        </ul>
+    </div>
+    <div class="grid_5 content">
+        <a href="{% url user_edit user.pk %}" title="Edit User">Edit</a>
+        <a href="{% url user_delete user.pk %}" title="Delete User">Delete</a>
+        <a href="{% url user_list %}" title="User List">Back to List</a>
+    </div>
+{% endblock %}

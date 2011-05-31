@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if section %}
+    Update {{ section }}
+    {% else %}
+    Create New Section
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>
+            {% if section %}
+            Update {{ section }}
+            {% else %}
+            Create New Section
+            {% endif %}
+        </h2>
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <ul>
+                {{ form.as_ul }}
+            </ul>
+            <input type="submit" value="Save" />
+        </form>
+    </div>
+    <div class="grid_5 content">
+        {% if section %}
+        <a href="{% url section_delete section.pk %}" title="Delete Section">Delete</a>
+        {% endif %}
+        <a href="{% url section_list %}" title="Section List">Back to List</a>
+    </div>
+{% endblock %}

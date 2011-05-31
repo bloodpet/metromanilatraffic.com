@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if user %}
+    Update {{ user }}
+    {% else %}
+    Create New User
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>
+            {% if user %}
+            Update {{ user }}
+            {% else %}
+            Create New User
+            {% endif %}
+        </h2>
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <ul>
+                {{ form.as_ul }}
+            </ul>
+            <input type="submit" value="Save" />
+        </form>
+    </div>
+    <div class="grid_5 content">
+        {% if user %}
+        <a href="{% url user_delete user.pk %}" title="Delete User">Delete</a>
+        {% endif %}
+        <a href="{% url user_list %}" title="User List">Back to List</a>
+    </div>
+{% endblock %}

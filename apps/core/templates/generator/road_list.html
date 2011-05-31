@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Road List
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>Road</h2>
+
+        {% if object_list %}
+        <form method="post" action="">
+            {% csrf_token %}
+            <ul class="object_list">
+            {% for road in road_list %}
+                <li>
+                <input type="checkbox" name="road" value="{{ road.pk }}" />
+                {{ road }}
+                <a href="{% url road_show road.pk %}" title="Show Details">Show</a>
+                <a href="{% url road_edit road.pk %}" title="Edit Road">Edit</a>
+                <a href="{% url road_delete road.pk %}" title="Delete Road">Delete</a>
+                </li>
+            {% endfor %}
+            </ul>
+            <div>
+            <input type="hidden" name="action" value="delete" />
+            <input type="submit" value="Delete Selected" />
+            </div>
+        </form>
+        {% endif %}
+    </div>
+    <div class="grid_5 content">
+        {% if paginator.num_pages > 1 %}
+        <h3>Pages</h3>
+        {% include 'pagination.html' %}
+        {% endif %}
+        {% if search_form %}
+        <h3>Search</h3>
+        <form class="search-form">
+        {{ search_form.as_p }}
+        <p>
+            <input type="submit" name="action" value="Search" />
+        </p>
+        </form>
+        {% endif %}
+        <a href="{% url road_new %}" title="Create New Road">New Road</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if node %}
+    Update {{ node }}
+    {% else %}
+    Create New Node
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>
+            {% if node %}
+            Update {{ node }}
+            {% else %}
+            Create New Node
+            {% endif %}
+        </h2>
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <ul>
+                {{ form.as_ul }}
+            </ul>
+            <input type="submit" value="Save" />
+        </form>
+    </div>
+    <div class="grid_5 content">
+        {% if node %}
+        <a href="{% url node_delete node.pk %}" title="Delete Node">Delete</a>
+        {% endif %}
+        <a href="{% url node_list %}" title="Node List">Back to List</a>
+    </div>
+{% endblock %}

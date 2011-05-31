@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Node Details
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>{{ node }}</h2>
+        {# Details here. #}
+        <ul>
+            <li>
+            {{ node }}
+            </li>
+        </ul>
+    </div>
+    <div class="grid_5 content">
+        <a href="{% url node_edit node.pk %}" title="Edit Node">Edit</a>
+        <a href="{% url node_delete node.pk %}" title="Delete Node">Delete</a>
+        <a href="{% url node_list %}" title="Node List">Back to List</a>
+    </div>
+{% endblock %}
