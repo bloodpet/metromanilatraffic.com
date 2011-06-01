@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Update {{ road }}
+Update {{ road_name }}
 {% endblock %}
 
 {% block content %}
@@ -14,9 +14,10 @@ Update {{ road }}
 			{% for section in northbound %}
 				<tr>
 					<th>{{ section.name }}</th>
-					{% for r_id, name in ratings %}
+					{% for r_id, r_name in ratings %}
 					<td class="rate{{ r_id }} td-section">
-						<input type="radio" id="rate-{{ section.id }}" name="rate-{{ section.id }}" value="{{ r_id }}" />
+						<label for="rate-{{ section.id }}-{{ r_id }}">{{ r_name }}</label>
+						<input type="radio" id="rate-{{ section.id }}-{{ r_id }}" name="rate-{{ section.id }}" value="{{ r_id }}" />
 					</td>
 					{% endfor %}
 				</tr>
@@ -31,9 +32,10 @@ Update {{ road }}
 			{% for section in southbound %}
 				<tr>
 					<th>{{ section.name }}</th>
-					{% for r_id, name in ratings %}
+					{% for r_id, r_name in ratings %}
 					<td class="rate{{ r_id }} td-section">
-						<input type="radio" id="rate-{{ section.id }}" name="rate-{{ section.id }}" value="{{ r_id }}" />
+						<label for="rate-{{ section.id }}-{{ r_id }}">{{ r_name }}</label>
+						<input type="radio" id="rate-{{ section.id }}-{{ r_id }}" name="rate-{{ section.id }}" value="{{ r_id }}" />
 					</td>
 					{% endfor %}
 				</tr>
@@ -42,7 +44,21 @@ Update {{ road }}
 			</table>
 		</div>
 		<div class="grid_2" id="legend">
-			<input type="submit" value="Update" />
+			<label id="update-button-label" for="update-button">Update</label>
+			<input type="submit" id="update-button" name="update" value="Update" />
 		</div>
 	</form>
+{% endblock %}
+
+{% block extrascripts %}
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('input[type=radio]').click(function () {
+				var parent_td = $(this).parent();
+				var parent_th = $(parent_td).siblings('th');
+				// Assign new class to th
+				$(parent_th).attr('class', parent_td.attr('class'));
+			});
+		});
+	</script>
 {% endblock %}

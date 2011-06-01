@@ -1,3 +1,5 @@
+import re
+from django.core.urlresolvers import reverse
 #from django.views.generic import DetailView, ListView, CreateView, DeleteView, UpdateView
 from django.views.generic import TemplateView, ListView, simple
 from django.utils.decorators import method_decorator
@@ -6,6 +8,7 @@ from accounts.decorators import require_login
 from core.models import *
 from core.backend import generate_sections
 
+NONCAPS = re.compile('[^A-Z]')
 
 class HomeView(TemplateView):
     template_name = 'home.html'
@@ -42,8 +45,13 @@ class EditRoad(TemplateView):
     def get_context_data(self, **kwargs):
         result = super(EditRoad, self).get_context_data(**kwargs)
         road_slug = kwargs['road']
-        result['ratings'] = TRAFFIC_RATINGS[1:]
-        result['road'] = road = Road.objects.get(slug=road_slug)
+        ratings = []
+        for rating in TRAFFIC_RATINGS[1:]:
+            rating = (rating[0], NONCAPS.sub('', rating[1]))
+            ratings.append(rating)
+        result['ratings'] = ratings
+        road = Road.objects.get(slug=road_slug)
+        result['road_name'] = road.name
         result['northbound'] = road.section_set.filter(direction='n')
         result['southbound'] = road.section_set.filter(direction='s')
         result['westbound'] = road.section_set.filter(direction='e')
@@ -58,7 +66,7 @@ class EditRoad(TemplateView):
                 continue
             else:
                 situation = Situation.objects.create(section=section, rating=rating)
-        return simple.redirect_to(request, request.path)
+        return simple.redirect_to(request, reverse('show_road', args=[kwargs['road'], ]))
 
 
 class GenerateSections(TemplateView):
