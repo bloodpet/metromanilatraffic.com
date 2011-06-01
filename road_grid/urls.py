@@ -17,6 +17,7 @@ urlpatterns = patterns('',
 
     url(r'^', include('core.urls')),
     url(r'^accounts/', include('accounts.urls')),
+    url(r'^road_grid/', include('core.generator.urls')),
 )
 
 try:

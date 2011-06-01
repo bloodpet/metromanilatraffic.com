@@ -74,13 +74,12 @@ class GenerateSections(TemplateView):
         return result
 
     def get(self, request, *args, **kwargs):
-        result = super(GenerateSections, self).get(request, *args, **kwargs)
         if request.GET.has_key('slug'):
             road_slug = request.GET['slug']
             direction = request.GET['direction']
-            result['road'] = road = Road.objects.get(slug=road_slug)
+            road = Road.objects.get(slug=road_slug)
             generate_sections(road, direction)
             messages.success(self.request, 'Successfully created Sections')
             return simple.redirect_to(request, request.path_info)
         else:
-            return result
+            return super(GenerateSections, self).get(request, *args, **kwargs)
