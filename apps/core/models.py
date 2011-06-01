@@ -48,7 +48,10 @@ class Road(models.Model):
                 rate_obj = section.get_latest_rate()
             except Exception:
                 continue
-            rate = rate_obj.rating
+            if rate_obj:
+                rate = rate_obj.rating
+            else:
+                continue
             if rate > 0:
                 rates.append(rate)
         # Get the upper median
