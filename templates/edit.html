@@ -7,7 +7,7 @@ Update {{ road_name }}
 {% block content %}
 	<form method="post">
 		{% csrf_token %}
-		<div class="grid_7 road">
+		<div class="grid_8 road">
 			<h3>Northbound</h3>
 			<table class="edit-traffic">
 			<tbody>
@@ -25,7 +25,7 @@ Update {{ road_name }}
 			</tbody>
 			</table>
 		</div>
-		<div class="grid_7 road">
+		<div class="grid_8 road">
 			<h3>Southbound</h3>
 			<table class="edit-traffic">
 			<tbody>
@@ -43,7 +43,8 @@ Update {{ road_name }}
 			</tbody>
 			</table>
 		</div>
-		<div class="grid_2" id="legend">
+		<div class="clear">&nbsp;</div>
+		<div class="grid_16" id="form-submit">
 			<label id="update-button-label" for="update-button">Update</label>
 			<input type="submit" id="update-button" name="update" value="Update" />
 		</div>

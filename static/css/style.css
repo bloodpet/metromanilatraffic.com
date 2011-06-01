@@ -464,6 +464,9 @@ nav {
 .edit-traffic tbody td input[type=radio] {
 	display: none;
 }
+#form-submit {
+	margin-top: 8px;
+}
 #update-button {
 	display: none;
 }
@@ -471,8 +474,8 @@ nav {
 	display: table-cell;
 	border-radius: 4px;
 	border: 1px solid #333333;
-	height: 64px;
-	line-height: 64px;
+	height: 32px;
+	line-height: 32px;
 	width: 64px;
 	text-align: center;
 }
