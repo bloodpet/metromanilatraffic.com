@@ -16,6 +16,8 @@ DIRECTION_SETS = (
 
 DIRECTIONS = DIRECTION_SETS[0] + DIRECTION_SETS[1]
 
+EARLIEST_HOUR = 3
+
 TRAFFIC_RATINGS = (
     (0, 'No Update'),
     (1, 'Clear'),
@@ -41,17 +43,25 @@ class Road(models.Model):
     def get_absolute_url(self):
         return ('show_road', [self.slug, ])
 
+    def get_latest_status(self):
+        try:
+            latest_update = self.section_set.latest('situation__status_at').situation_set.latest('status_at')
+        except models.exceptions.ObjectDoesNotExist:
+            return False
+        earliest_time = datetime.datetime.now() - datetime.timedelta(0, EARLIEST_HOUR * 60 * 60)
+        if latest_update.status_at > earliest_time:
+            return latest_update
+        else:
+            return None
+
     def get_rate_median(self):
         rates = []
         for section in self.section_set.all():
             try:
                 rate_obj = section.get_latest_rate()
-            except Exception:
+            except models.exceptions.ObjectDoesNotExist:
                 continue
-            if rate_obj:
-                rate = rate_obj.rating
-            else:
-                continue
+            rate = rate_obj.rating
             if rate > 0:
                 rates.append(rate)
         # Get the upper median
@@ -102,12 +112,11 @@ class Section(models.Model):
 
     def get_latest_rate(self):
         latest_update = self.situation_set.latest('status_at')
-        earliest_hour = 3
-        earliest_time = datetime.datetime.now() - datetime.timedelta(0, earliest_hour * 60 * 60)
+        earliest_time = datetime.datetime.now() - datetime.timedelta(0, EARLIEST_HOUR * 60 * 60)
         if latest_update.status_at > earliest_time:
             return latest_update
         else:
-            return None
+            raise Situation.DoesNotExist
 
 
 class Situation(models.Model):

@@ -6,6 +6,9 @@
 
 {% block page_title %}
 {{ road.name }}
+{% if road.get_latest_status %}
+(as off {{ road.get_latest_status.status_at|time }})
+{% endif %}
 {% endblock %}
 
 {% block content %}
