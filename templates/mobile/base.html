@@ -1,0 +1,110 @@
+﻿<!doctype html>
+<!-- Conditional comment for mobile ie7 http://blogs.msdn.com/b/iemobile/ -->
+<!-- Appcache Facts http://appcachefacts.info/ -->
+<!--[if IEMobile 7 ]>    <html class="no-js iem7" manifest="default.appcache?v=1"> <![endif]-->
+<!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js" manifest="default.appcache?v=1"> <!--<![endif]-->
+
+<head>
+	<meta charset="utf-8">
+
+	<title>{% block title %}Road Grid{% endblock %} | Metro Manila Traffic</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Home screen icon  Mathias Bynens http://goo.gl/6nVq0 -->
+	<!-- For iPhone 4 with high-resolution Retina display: -->
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}m/img/h/apple-touch-icon.png">
+	<!-- For first-generation iPad: -->
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}m/img/m/apple-touch-icon.png">
+	<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+	<link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}m/img/l/apple-touch-icon-precomposed.png">
+	<!-- For nokia devices: -->
+	<link rel="shortcut icon" href="{{ STATIC_URL }}m/img/l/apple-touch-icon.png">
+
+	<!--iOS web app, deletable if not needed -->
+	<!--<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="apple-touch-startup-image" href="{{ STATIC_URL }}m/img/l/splash.png">-->
+
+	<!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+	<meta http-equiv="cleartype" content="on">
+
+	<!-- more tags for your 'head' to consider https://gist.github.com/849231 -->
+
+	<!-- Main Stylesheet -->
+	<link rel="stylesheet" href="{{ STATIC_URL }}m/css/style.css?v=1">
+
+	<!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
+	<script src="{{ STATIC_URL }}m/js/libs/modernizr-custom.js"></script>
+
+	<!-- jQuery Mobile http://jquerymobile.com/ -->
+	<!--<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a4/jquery.mobile-1.0a4.min.css" />-->
+	<link rel="stylesheet" href="{{ STATIC_URL }}m/jquery.mobile-1.0a4.1.min.css" />
+</head>
+
+<body class="ui-mobile-viewport">
+	<div data-role="page" id="home">
+	{% block container %}
+		{% block header %}
+		<div data-role="header">
+			{% block page_title %}<h1>Roads</h1>{% endblock %}
+		</div>
+		{% endblock %}
+		<div id="main" role="main" data-role="content">
+		{% block main %}
+				<p>Content goes here</p>
+		{% endblock main %}
+		</div>
+		<div data-role="footer">
+		{% block footer %}
+			<h4>Footer</h4>
+		{% endblock footer %}
+		</div>
+	{% endblock container %}
+	</div>
+
+  <!-- JavaScript at the bottom for fast page loading -->
+
+  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
+  <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>-->
+  <!--<script>window.jQuery || document.write("<script src='{{ STATIC_URL }}js/libs/jquery-1.6.1.min.js'>\x3C/script>")</script>-->
+  <script src="{{ STATIC_URL }}js/libs/jquery-1.6.1.min.js"></script>
+  <!-- jQuery Mobile http://jquerymobile.com/ -->
+  <!--<script type="text/javascript" src="http://code.jquery.com/mobile/1.0a4/jquery.mobile-1.0a4.min.js"></script>-->
+  <script type="text/javascript" src="{{ STATIC_URL }}m/jquery.mobile-1.0a4.1.min.js"></script>
+  
+  <!-- scripts concatenated and minified via ant build script -->
+  <script src="{{ STATIC_URL }}m/js/mylibs/helper.js"></script>
+  <!-- end concatenated and minified scripts-->
+  
+  <script>
+    // iPhone Scale Bug Fix, read this when using http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
+    MBP.scaleFix();
+    
+    // Media Queries Polyfill https://github.com/shichuan/mobile-html5-boilerplate/wiki/Media-Queries-Polyfill
+    yepnope({
+      test : Modernizr.mq('(min-width)'),
+	  nope : ['{{ STATIC_URL }}m/js/libs/respond.min.js']
+    });
+  </script>
+  
+  <!-- Debugger - remove for production -->
+  <!-- <script src="https://getfirebug.com/firebug-lite.js"></script> -->
+  
+  <!-- mathiasbynens.be/notes/async-analytics-snippet Change UA-XXXXX-X to be your site's ID -->
+  <script>
+    var _gaq=[["_setAccount","UA-XXXXX-X"],["_trackPageview"]];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+    g.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";
+    s.parentNode.insertBefore(g,s)}(document,"script"));
+  </script>
+	{% block extrascripts %}
+	{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends "mobile/base.html" %}
+
+{% block title %}{{ road.name }} {{ direction }}{% endblock %}
+
+{% block page_title %}
+	<h2>{{ road.name }} {{ direction }}</h2>
+	<a href="{% url mobile-home %}" data-icon="arrow-l">Back</a>
+{% endblock %}
+
+{% block main %}
+	<ul data-role="listview">
+	{% for section in sections %}
+	<li><a href="#">{{ section.name }}</a>
+	<ul>
+		<li>
+			{% if section.get_latest_rate %}
+			{{ section.get_latest_rate.get_rate_name }} at
+			{{ section.get_latest_rate.status_at|time }}
+			{% else %}
+			No recent updates.
+			{% endif %}
+		</li>
+		<li><p>Info Here</p></li>
+	</ul>
+	</li>
+	{% endfor %}
+	</ul>
+{% endblock %}
+
+{% block footer %}
+	<div data-role="navbar">
+		<ul>
+			<!--<li><a href="{% url accounts-login %}?next={{ request.path }}" class="ui-btn-active">One</a></li>-->
+			<li><a href="{% url accounts-login %}?next={{ request.path }}">Login</a></li>
+			<!--<li><a href="{% url accounts-login %}?next={{ request.path }}">Login</a></li>-->
+		</ul>
+	</div><!-- /navbar -->
+{% endblock %}

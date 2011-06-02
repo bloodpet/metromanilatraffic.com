@@ -15,6 +15,7 @@ DIRECTION_SETS = (
 )
 
 DIRECTIONS = DIRECTION_SETS[0] + DIRECTION_SETS[1]
+DIRECTION_DICT = dict(DIRECTIONS)
 
 EARLIEST_HOUR = 3
 
@@ -42,6 +43,9 @@ class Road(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('show_road', [self.slug, ])
+
+    def get_directions(self):
+        pass
 
     def get_latest_status(self):
         try:
@@ -109,6 +113,9 @@ class Section(models.Model):
 
     def __unicode__(self):
         return '%s %s in %s' % (self.name, self.direction, self.road.name)
+
+    def get_direction_name(self):
+        return DIRECTION_DICT[direction]
 
     def get_latest_rate(self):
         latest_update = self.situation_set.latest('status_at')

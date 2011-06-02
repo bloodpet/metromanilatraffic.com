@@ -23,6 +23,13 @@ class HomeView(TemplateView):
 class RoadView(TemplateView):
     template_name = 'road.html'
 
+    def get(self, request, *args, **kwargs):
+        if request.GET.has_key('d'):
+            self.direction = request.GET['d']
+        else:
+            self.direction = None
+        return super(RoadView, self).get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         result = super(RoadView, self).get_context_data(**kwargs)
         road_slug = kwargs['road']
@@ -32,6 +39,9 @@ class RoadView(TemplateView):
         result['southbound'] = road.section_set.filter(direction='s')
         result['westbound'] = road.section_set.filter(direction='e')
         result['eastbound'] = road.section_set.filter(direction='w')
+        if self.direction:
+            result['sections'] = road.section_set.filter(direction=self.direction)
+            result['direction'] = DIRECTION_DICT[self.direction]
         return result
 
 
@@ -66,7 +76,13 @@ class EditRoad(TemplateView):
                 continue
             else:
                 reason = request.POST.get('info-%s' % section.id, '')
-                situation = Situation.objects.create(section=section, rating=rating, reason=reason)
+                situation = Situation.objects.create(
+                    user=request.user,
+                    is_from_user=True,
+                    section=section,
+                    rating=rating,
+                    reason=reason
+                )
                 messages.success(self.request, 'Successfully posted update for %s.' % section.name)
         return simple.redirect_to(request, reverse('show_road', args=[kwargs['road'], ]))
 

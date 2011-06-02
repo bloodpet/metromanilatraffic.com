@@ -1,0 +1,28 @@
+﻿{% extends "mobile/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block page_title %}
+	<h1>Roads</h1>
+	<a href="#" data-icon="arrow-l">Back</a>
+{% endblock %}
+
+{% block main %}
+		<ul data-role="listview" data-inset="false" data-theme="b">
+	{% for road in roads %}
+			<li><a href="#">{{ road.name }}</a></li>
+			<li data-theme="c"><a href="{% url mobile-show_road road.slug %}?d=n">Northbound</a></li>
+			<li data-theme="c"><a href="{% url mobile-show_road road.slug %}?d=s">Southbound</a></li>
+	{% endfor %}
+		</ul>
+{% endblock %}
+
+{% block footer %}
+	<div data-role="navbar">
+		<ul>
+			<!--<li><a href="{% url accounts-login %}?next={{ request.path }}" class="ui-btn-active">One</a></li>-->
+			<li><a href="{% url accounts-login %}?next={{ request.path }}">Login</a></li>
+			<!--<li><a href="{% url accounts-login %}?next={{ request.path }}">Login</a></li>-->
+		</ul>
+	</div><!-- /navbar -->
+{% endblock %}
