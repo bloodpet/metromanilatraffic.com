@@ -19,6 +19,16 @@
 					<p>
 						{{ section.get_latest_rate.reason }}
 					</p>
+					{% if section.get_latest_rate.user %}
+					<p>
+						Updated by
+						{% if section.get_latest_rate.user.get_full_name %}
+						{{ section.get_latest_rate.user.get_full_name }}
+						{% else %}
+						{{ section.get_latest_rate.user }}
+						{% endif %}
+					</p>
+					{% endif %}
 					{% else %}
 					No recent updates.
 					{% endif %}

@@ -62,7 +62,13 @@
 		</div>
 		<div data-role="footer">
 		{% block footer %}
-			<h4>Footer</h4>
+			<div data-role="navbar">
+				<ul>
+					<!--<li><a href="{% url mobile-accounts-login %}?next={{ request.path }}" class="ui-btn-active">One</a></li>-->
+					<li><a href="{% url mobile-accounts-login %}?next={{ request.path }}">Login</a></li>
+					<!--<li><a href="{% url mobile-accounts-login %}?next={{ request.path }}">Login</a></li>-->
+				</ul>
+			</div><!-- /navbar -->
 		{% endblock footer %}
 		</div>
 	{% endblock container %}

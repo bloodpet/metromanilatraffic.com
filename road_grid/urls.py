@@ -15,6 +15,8 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
 
+    url(r'^m/login/$', 'accounts.views.login', {'template_name': 'mobile/signin.html'}, name='mobile-accounts-login'),
+
     url(r'^', include('core.urls')),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^road_grid/', include('core.generator.urls')),
