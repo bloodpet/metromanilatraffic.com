@@ -40,7 +40,6 @@
 </head>
 
 <body>
-
 	<div id="header-container" class="container_16 topnav">
 		<header>
 			<div class="grid_6">
@@ -63,20 +62,22 @@
 				{% endif %}
 			</div>
 			<div class="clear">&nbsp;</div>
+		</header>
+	</div>
+	<div id="message-container" class="container_16">
 			{% if messages %}
 			<div id="messages">
+				<span id="clear-all-messages">
+					<a href="#"><small>{% trans "clear all" %}</small></a>
+				</span>
 				<ul>
 					{% for message in messages %}
-					<li id="message_{{ forloop.counter }}"><a href="#" onclick="$('#message_{{ forloop.counter }}').fadeOut(); return false;"><small>{% trans "clear" %}</small></a> {{ message }}</li>
+					<li id="message_{{ forloop.counter }}" class="message"><a href="#"><small>{% trans "clear" %}</small></a> {{ message }}</li>
 					{% endfor %}
 				</ul>
-				<span id="clear-all-messages">
-					<a href="#" onclick="$('#messages').fadeOut(); return false;"><small>{% trans "clear all" %}</small></a>
-				</span>
 			</div>
 			<div class="clear">&nbsp;</div>
 			{% endif %}
-		</header>
 	</div> <!--! end of #header-container -->
 	<div id="nav-container" class="container_16">
 		<nav>
@@ -156,6 +157,24 @@
 	</script>
 	-->
 
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#clear-all-messages a').click(function () {
+				$('#messages').fadeOut();
+				return false;
+			});
+			$('li.message a').click(function () {
+				var parent_li = $(this).parent();
+				var parent_ul = parent_li.parent();
+				parent_li.fadeOut();
+				var siblings_li = parent_li.siblings('li');
+				if (siblings_li.length == 0) {
+					$('#messages').fadeOut();
+				}
+				return false;
+			});
+		});
+	</script>
 	{% block extrascripts %}
 	{% endblock %}
 </body>

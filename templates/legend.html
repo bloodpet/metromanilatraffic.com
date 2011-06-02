@@ -1,5 +1,7 @@
+	{% if rate %}
 		<strong>Legend:</strong>
 		<!--<span class="section section0">&nbsp;</span>Clear<br />-->
 		{% for rate in ratings %}
 		<span class="section rate{{ rate.0 }}">&nbsp;</span>{{ rate.1 }}
 		{% endfor %}
+	{% endif %}
