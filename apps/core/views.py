@@ -65,7 +65,9 @@ class EditRoad(TemplateView):
             except KeyError:
                 continue
             else:
-                situation = Situation.objects.create(section=section, rating=rating)
+                reason = request.POST.get('info-%s' % section.id, '')
+                situation = Situation.objects.create(section=section, rating=rating, reason=reason)
+                messages.success(self.request, 'Successfully posted update for %s.' % section.name)
         return simple.redirect_to(request, reverse('show_road', args=[kwargs['road'], ]))
 
 

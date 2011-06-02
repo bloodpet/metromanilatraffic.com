@@ -12,15 +12,7 @@ Update {{ road_name }}
 			<table class="edit-traffic">
 			<tbody>
 			{% for section in northbound %}
-				<tr>
-					<th>{{ section.name }}</th>
-					{% for r_id, r_name in ratings %}
-					<td class="rate{{ r_id }} td-section">
-						<label for="rate-{{ section.id }}-{{ r_id }}">{{ r_name }}</label>
-						<input type="radio" id="rate-{{ section.id }}-{{ r_id }}" name="rate-{{ section.id }}" value="{{ r_id }}" />
-					</td>
-					{% endfor %}
-				</tr>
+			{% include 'section-edit.html' %}
 			{% endfor %}
 			</tbody>
 			</table>
@@ -30,15 +22,7 @@ Update {{ road_name }}
 			<table class="edit-traffic">
 			<tbody>
 			{% for section in southbound %}
-				<tr>
-					<th>{{ section.name }}</th>
-					{% for r_id, r_name in ratings %}
-					<td class="rate{{ r_id }} td-section">
-						<label for="rate-{{ section.id }}-{{ r_id }}">{{ r_name }}</label>
-						<input type="radio" id="rate-{{ section.id }}-{{ r_id }}" name="rate-{{ section.id }}" value="{{ r_id }}" />
-					</td>
-					{% endfor %}
-				</tr>
+			{% include 'section-edit.html' %}
 			{% endfor %}
 			</tbody>
 			</table>
@@ -59,6 +43,12 @@ Update {{ road_name }}
 				var parent_th = $(parent_td).siblings('th');
 				// Assign new class to th
 				$(parent_th).attr('class', parent_td.attr('class'));
+			});
+			$('.more-info').click(function () {
+				var s_id = $(this).attr('relid');
+				$('#info-row-' + s_id).fadeIn();
+				$(this).fadeOut();
+				return false;
 			});
 		});
 	</script>

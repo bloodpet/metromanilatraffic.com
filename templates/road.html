@@ -53,3 +53,15 @@
 		</div>
 	{% endif %}
 {% endblock %}
+
+{% block extrascripts %}
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('a.section').click(function () {
+				var s_id = $(this).attr('relid');
+				$('#section-info-' + s_id).fadeIn();
+				return false;
+			});
+		});
+	</script>
+{% endblock %}

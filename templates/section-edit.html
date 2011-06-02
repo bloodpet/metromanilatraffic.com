@@ -1,0 +1,17 @@
+				<tr id="rate-row-{{ section.id }}" class="rate-row">
+					<th>
+						{{ section.name }}
+						<a href="#" class="more-info" id="more-info-{{ section.id }}" relid="{{ section.id }}">More Info</a>
+					</th>
+					{% for r_id, r_name in ratings %}
+					<td class="rate{{ r_id }} td-section">
+						<label for="rate-{{ section.id }}-{{ r_id }}">{{ r_name }}</label>
+						<input type="radio" id="rate-{{ section.id }}-{{ r_id }}" name="rate-{{ section.id }}" value="{{ r_id }}" />
+					</td>
+					{% endfor %}
+				</tr>
+				<tr id="info-row-{{ section.id }}" class="info-row">
+					<td colspan="8">
+						<textarea id="info-{{ section.id}}" name="info-{{ section.id}}" placeholder="Additional Information for {{section.name }}"></textarea>
+					<td>
+				</tr>

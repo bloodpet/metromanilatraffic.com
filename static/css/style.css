@@ -390,6 +390,9 @@ nav {
 .section:hover .rate-info {
 	display: block;
 }
+.section-info {
+	display: none;
+}
 
 .rate0 {
 	background-color: rgb(192,192,192);
@@ -442,8 +445,15 @@ nav {
 
 .edit-traffic {
 }
-.edit-traffic tbody tr {
-	border-bottom: 1px solid #000;
+.edit-traffic tbody tr.rate-row {
+	border-top: 1px solid #000;
+}
+.edit-traffic tbody tr.info-row {
+	display: none;
+	text-align: left;
+}
+.edit-traffic tbody tr.info-row textarea {
+	width: 90%;
 }
 .edit-traffic tbody th {
 	width: 80px;
