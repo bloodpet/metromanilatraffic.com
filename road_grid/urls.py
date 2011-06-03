@@ -17,9 +17,9 @@ urlpatterns = patterns('',
 
     url(r'^m/login/$', 'accounts.views.login', {'template_name': 'mobile/signin.html'}, name='mobile-accounts-login'),
 
-    url(r'^', include('core.urls')),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^road_grid/', include('core.generator.urls')),
+    url(r'^', include('core.urls')),
 )
 
 try:
