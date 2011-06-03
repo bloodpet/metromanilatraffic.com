@@ -111,7 +111,7 @@ class EditRoad(TemplateView, MobileBase):
                     reason=reason
                 )
                 messages.success(self.request, 'Successfully posted update for %s.' % section.name)
-        return simple.redirect_to(request, reverse('show_road', args=[kwargs['road'], ]))
+        return simple.redirect_to(request, request.path)
 
 
 class GenerateSections(TemplateView):
