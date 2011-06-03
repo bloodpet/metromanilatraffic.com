@@ -10,7 +10,7 @@
 {% block main %}
 	<ul data-role="listview">
 	{% for section in sections %}
-	<li><a href="#" class="rate{{ section.get_latest_rate.rating }}">{{ section.name }}</a>
+	<li><a href="#" class="rate{{ section.get_latest_rate.rating }}">{{ section.name }} {% if section.get_latest_rate %}({{ section.get_latest_rate.get_rate_name }}){% endif %}</a>
 	<ul>
 		<li>
 			{% if section.get_latest_rate %}
