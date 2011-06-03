@@ -7,11 +7,11 @@
 {% endblock %}
 
 {% block main %}
-		<ul data-role="listview" data-inset="false" data-theme="b">
 	{% for road in roads %}
-			<li><a href="#">{{ road.name }}</a></li>
-			<li data-theme="c"><a href="{% url mobile-show_road road.slug %}?d=n">Northbound</a></li>
-			<li data-theme="c"><a href="{% url mobile-show_road road.slug %}?d=s">Southbound</a></li>
+	<ul data-role="listview" data-inset="true" data-theme="b">
+		<li><a href="#">{{ road.name }}</a></li>
+		<li data-theme="c"><a href="{% url mobile-show_road road.slug %}?d=n">Northbound</a></li>
+		<li data-theme="c"><a href="{% url mobile-show_road road.slug %}?d=s">Southbound</a></li>
 	{% endfor %}
-		</ul>
+	</ul>
 {% endblock %}
