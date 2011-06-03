@@ -60,8 +60,16 @@ class RoadView(TemplateView, MobileBase):
         return result
 
 
-class EditRoad(TemplateView):
+class EditRoad(TemplateView, MobileBase):
     template_name = 'edit.html'
+
+    def get(self, request, *args, **kwargs):
+        self.check_for_mobile(request)
+        if request.GET.has_key('d'):
+            self.direction = request.GET['d']
+        else:
+            self.direction = None
+        return super(EditRoad, self).get(request, *args, **kwargs)
 
     @method_decorator(require_login)
     def dispatch(self, *args, **kwargs):
@@ -81,6 +89,10 @@ class EditRoad(TemplateView):
         result['southbound'] = road.section_set.filter(direction='s')
         result['westbound'] = road.section_set.filter(direction='e')
         result['eastbound'] = road.section_set.filter(direction='w')
+        if self.direction:
+            result['road'] = road
+            result['sections'] = road.section_set.filter(direction=self.direction)
+            result['direction'] = DIRECTION_DICT[self.direction]
         return result
 
     def post(self, request, *args, **kwargs):

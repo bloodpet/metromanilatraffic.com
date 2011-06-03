@@ -1,0 +1,25 @@
+{% extends "mobile/base.html" %}
+
+{% block page_title %}
+	<h2>Update {{ road.name }} {{ direction }}</h2>
+	<a href="{% url mobile-show_road road.slug %}?d={{ request.GET.d }}" data-icon="arrow-l">Back</a>
+{% endblock %}
+
+{% block main %}
+	<form>
+		{% for section in sections %}
+		<!--<a href="#" class="rate{{ section.get_latest_rate.rating }}">{{ section.name }} {% if section.get_latest_rate %}({{ section.get_latest_rate.get_rate_name }}){% endif %}</a>-->
+		<fieldset class="rate{{ section.get_latest_rate.rating }}" data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">
+			<legend>
+				{{ section.name }}
+			</legend>
+			{% for r_id, r_name in ratings %}
+			<input class="rate{{ r_id }}" type="radio" id="rate-{{ section.id }}-{{ r_id }}" name="rate-{{ section.id }}" value="{{ r_id }}" />
+			<label class="rate{{ r_id }}" for="rate-{{ section.id }}-{{ r_id }}">
+				{{ r_name }}
+			</label>
+			{% endfor %}
+		</fieldset>
+		{% endfor %}
+	</form>
+{% endblock %}
