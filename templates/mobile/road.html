@@ -12,15 +12,17 @@
 	{% for section in sections %}
 	<li><a href="#" class="rate{{ section.get_latest_rate.rating }}">{{ section.name }} {% if section.get_latest_rate %}({{ section.get_latest_rate.get_rate_name }}){% endif %}</a>
 	<ul>
+		{% if section.get_latest_rate %}
 		<li>
-			{% if section.get_latest_rate %}
-			{{ section.get_latest_rate.get_rate_name }} at
+			{{ section.get_latest_rate.get_rate_name }} as of
 			{{ section.get_latest_rate.status_at|time }}
-			{% else %}
-			No recent updates.
-			{% endif %}
 		</li>
-		<li><p>Info Here</p></li>
+		{% if section.get_latest_rate.reason %}
+		<li><p>{{ section.get_latest_rate.reason }}</p></li>
+		{% endif %}
+		{% else %}
+		<li><p>No recent updates.</p></li>
+		{% endif %}
 	</ul>
 	</li>
 	{% endfor %}
