@@ -1,5 +1,5 @@
 				<tr id="rate-row-{{ section.id }}" class="rate-row">
-					<th>
+					<th class="rate{{ section.get_latest_rate.rating }} td-section">
 						{{ section.name }}
 						<a href="#" class="more-info" id="more-info-{{ section.id }}" relid="{{ section.id }}">More Info</a>
 					</th>
