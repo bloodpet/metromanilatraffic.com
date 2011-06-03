@@ -24,8 +24,8 @@
 	<link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico">
 	<link rel="apple-touch-icon" href="{{ STATIC_URL }}apple-touch-icon.png">
 
-    <!--Load Ubuntu font family-->
-    <!--<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'/>-->
+	<!--Load Ubuntu font family-->
+	<!--<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'/>-->
 
 	<!-- CSS : implied media="all" -->
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/960.css?v=0">
@@ -43,7 +43,8 @@
 	<div id="header-container" class="container_16 topnav">
 		<header>
 			<div class="grid_6">
-				<a href="{% url home %}">Roads</a>
+				<a href="{% url home %}" title="Metro Manila Traffic Home">Roads</a>
+				<a href="{% url mobile-home %}" title="Mobile Home">Mobile</a>
 			</div>
 			<div class="grid_4 center">
 				<h2>
