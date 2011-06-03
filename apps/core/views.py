@@ -10,8 +10,22 @@ from core.backend import generate_sections
 
 NONCAPS = re.compile('[^A-Z]')
 
-class HomeView(TemplateView):
+class MobileBase(object):
+
+    def check_for_mobile(self, request):
+        host_name = request.get_host()
+        if host_name.startswith('m.') or host_name.startswith('mobile.'):
+            self.is_mobile = True
+            if not self.template_name.startswith('mobile'):
+                self.template_name = 'mobile/' + self.template_name
+
+
+class HomeView(TemplateView, MobileBase):
     template_name = 'home.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.check_for_mobile(request)
+        return super(HomeView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         result = super(HomeView, self).get_context_data(**kwargs)
@@ -20,10 +34,11 @@ class HomeView(TemplateView):
         return result
 
 
-class RoadView(TemplateView):
+class RoadView(TemplateView, MobileBase):
     template_name = 'road.html'
 
     def get(self, request, *args, **kwargs):
+        self.check_for_mobile(request)
         if request.GET.has_key('d'):
             self.direction = request.GET['d']
         else:
