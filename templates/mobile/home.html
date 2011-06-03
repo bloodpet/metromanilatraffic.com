@@ -12,6 +12,15 @@
 		<li><a href="#">{{ road.name }}</a></li>
 		<li data-theme="c"><a href="{% url mobile-show_road road.slug %}?d=n">Northbound</a></li>
 		<li data-theme="c"><a href="{% url mobile-show_road road.slug %}?d=s">Southbound</a></li>
-	{% endfor %}
 	</ul>
+	{% endfor %}
+{% endblock %}
+
+{% block extrascripts %}
+	<script type="text/javascript">
+	$(document).ready(function() {
+		// disable ajax nav
+		$.mobile.ajaxLinksEnabled = false;
+	});
+	</script>
 {% endblock %}
