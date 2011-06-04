@@ -90,7 +90,6 @@
   <script src="{{ STATIC_URL }}js/libs/jquery-1.6.1.min.js"></script>
   <!-- jQuery Mobile http://jquerymobile.com/ -->
   <!--<script type="text/javascript" src="http://code.jquery.com/mobile/1.0a4/jquery.mobile-1.0a4.min.js"></script>-->
-  <script type="text/javascript" src="{{ STATIC_URL }}m/jquery.mobile-1.0a4.1.min.js"></script>
   <script>
 	$(document).bind("mobileinit", function(){
 		//Disable ajax link
@@ -99,10 +98,12 @@
 			$.mobile.ajaxFormsEnabled = false;
 		});
 		$('.enable-ajax').click(function(event){
+			$.mobile.ajaxLinksEnabled = true;
 			$.mobile.ajaxFormsEnabled = true;
 		});
 	});
   </script>
+  <script type="text/javascript" src="{{ STATIC_URL }}m/jquery.mobile-1.0a4.1.min.js"></script>
   
   <!-- scripts concatenated and minified via ant build script -->
   <script src="{{ STATIC_URL }}m/js/mylibs/helper.js"></script>
