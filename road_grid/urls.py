@@ -16,6 +16,8 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
 
     url(r'^m/login/$', 'accounts.views.login', {'template_name': 'mobile/signin.html'}, name='mobile-accounts-login'),
+    #url(r'^m/logout/$', 'accounts.views.logout', {'template_name': 'mobile/signout.html'}, name='mobile-accounts-logout'),
+    url(r'^m/logout/$', 'accounts.views.logout', name='mobile-accounts-logout'),
 
     url(r'^accounts/', include('accounts.urls')),
     url(r'^road_grid/', include('core.generator.urls')),

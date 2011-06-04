@@ -64,9 +64,17 @@
 		{% block footer %}
 			<div data-role="navbar">
 				<ul>
+					{% block nav_items %}
 					<!--<li><a href="{% url mobile-accounts-login %}?next={{ request.path }}" class="ui-btn-active">One</a></li>-->
-					<li><a href="{% url mobile-accounts-login %}?next={{ request.path }}">Login</a></li>
-					<!--<li><a href="{% url mobile-accounts-login %}?next={{ request.path }}">Login</a></li>-->
+					{% if user.is_authenticated %}
+					<li><a class="disable-ajax" href="{% url mobile-accounts-logout %}?next={{ request.get_full_path }}">Logout</a></li>
+					{% if road %}
+					<li><a href="{% url mobile-edit_road road.slug %}?d={{ request.GET.d }}">Edit</a></li>
+					{% endif %}
+					{% else %}
+					<li><a href="{% url mobile-accounts-login %}?next={{ request.get_full_path }}">Login</a></li>
+					{% endif %}
+					{% endblock nav_items %}
 				</ul>
 			</div><!-- /navbar -->
 		{% endblock footer %}
@@ -83,6 +91,18 @@
   <!-- jQuery Mobile http://jquerymobile.com/ -->
   <!--<script type="text/javascript" src="http://code.jquery.com/mobile/1.0a4/jquery.mobile-1.0a4.min.js"></script>-->
   <script type="text/javascript" src="{{ STATIC_URL }}m/jquery.mobile-1.0a4.1.min.js"></script>
+  <script>
+	$(document).bind("mobileinit", function(){
+		//Disable ajax link
+		$('.disable-ajax').click(function(event){
+			$.mobile.ajaxLinksEnabled = false;
+			$.mobile.ajaxFormsEnabled = false;
+		});
+		$('.enable-ajax').click(function(event){
+			$.mobile.ajaxFormsEnabled = true;
+		});
+	});
+  </script>
   
   <!-- scripts concatenated and minified via ant build script -->
   <script src="{{ STATIC_URL }}m/js/mylibs/helper.js"></script>

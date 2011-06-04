@@ -24,6 +24,8 @@ class HomeView(TemplateView, MobileBase):
     template_name = 'home.html'
 
     def dispatch(self, request, *args, **kwargs):
+        print request.get_full_path()
+        print dir(request)
         self.check_for_mobile(request)
         return super(HomeView, self).dispatch(request, *args, **kwargs)
 

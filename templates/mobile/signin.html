@@ -1,7 +1,13 @@
 {% extends "mobile/base.html" %}
 
 {% block main %}
-<p>
-Cannot login on mobile yet.
-</p>
+<form method="post" action="{% url mobile-accounts-login %}?next={{ request.GET.next }}">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="Login" />
+</form>
 {% endblock %}
+
+{% block nav_items %}
+	<li><a href="{% url mobile-accounts-login %}?next={{ request.path }}" class="ui-btn-active">Login</a></li>
+{% endblock nav_items %}
