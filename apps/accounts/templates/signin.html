@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="grid_16">
+<div class="grid_4">
+	&nbsp;
+</div>
+<div class="grid_8">
 <h2>Login</h2>
 
 <form method="post" action="">
 {% csrf_token %}
 {{ form.as_p }}
-<input type="submit" value="Save" />
+<input type="submit" value="Login" />
 </form>
 </div>
 {% endblock %}
