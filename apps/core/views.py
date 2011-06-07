@@ -94,7 +94,11 @@ class EditRoad(TemplateView, MobileBase):
             result['road'] = road
             result['sections'] = road.section_set.filter(direction=self.direction)
             result['direction'] = DIRECTION_DICT[self.direction]
-        result['status_updates'] = get_statuses('MMDA', road=road.name)
+        # Try to get twitter updates if we have the correct libraries
+        try:
+            result['status_updates'] = get_statuses('MMDA', road=road.name)
+        except Exception:
+            pass
         return result
 
     def post(self, request, *args, **kwargs):
