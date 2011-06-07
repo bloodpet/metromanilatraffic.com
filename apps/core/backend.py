@@ -28,6 +28,6 @@ def get_statuses(twitter_name='MMDA', road=None):
     if road is None:
         entries = soup.findAll('span', *{'class': 'entry-content'})
     else:
-        entries = soup.findAll('span', text=re.compile('.*EDSA.*'), *{'class': 'entry-content'})
+        entries = soup.findAll('span', text=re.compile('.*%s.*' % road, re.IGNORECASE), *{'class': 'entry-content'})
     # Return the 10 most recent entries (the ten topmost entries)
     return entries[:10]
