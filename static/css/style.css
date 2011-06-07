@@ -507,3 +507,7 @@ nav {
 	float: right;
 	display: block-inline;
 }
+
+#status-updates {
+	border: 1px solid #cccccc;
+}

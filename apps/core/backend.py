@@ -15,3 +15,19 @@ def generate_sections(road, direction):
         section2 = road.section_set.create(name='%s to %s' % (node2.name, node1.name), start=node2, end=node1, direction=dir2, position=(node_count+1-count))
         section2.save()
     return ''
+
+def get_statuses(twitter_name='MMDA', road=None):
+    '''A very basic twitter client to get traffic updates from MMDA by default.
+    '''
+    import re
+    import httplib2
+    from BeautifulSoup import BeautifulSoup
+    h = httplib2.Http()
+    resp, content = h.request('http://twitter.com/%s' % twitter_name, 'GET')
+    soup = BeautifulSoup(content)
+    if road is None:
+        entries = soup.findAll('span', *{'class': 'entry-content'})
+    else:
+        entries = soup.findAll('span', text=re.compile('.*EDSA.*'), *{'class': 'entry-content'})
+    # Return the 10 most recent entries (the ten topmost entries)
+    return entries[:10]

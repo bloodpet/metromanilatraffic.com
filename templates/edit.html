@@ -5,6 +5,17 @@ Update {{ road_name }}
 {% endblock %}
 
 {% block content %}
+	<div class="grid_3">
+		&nbsp;
+	</div>
+	<div id="status-updates" class="grid_10">
+		{% for status in status_updates %}
+		<p>
+		{{ status }}
+		</p>
+		{% endfor %}
+	</div>
+	<div class="clear">&nbsp;</div>
 	<form method="post">
 		{% csrf_token %}
 		<div class="grid_8 road">

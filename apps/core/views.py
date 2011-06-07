@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 from django.contrib import messages
 from accounts.decorators import require_login
 from core.models import *
-from core.backend import generate_sections
+from core.backend import generate_sections, get_statuses
 
 NONCAPS = re.compile('[^A-Z]')
 
@@ -94,6 +94,7 @@ class EditRoad(TemplateView, MobileBase):
             result['road'] = road
             result['sections'] = road.section_set.filter(direction=self.direction)
             result['direction'] = DIRECTION_DICT[self.direction]
+        result['status_updates'] = get_statuses('MMDA', road=road.name)
         return result
 
     def post(self, request, *args, **kwargs):
