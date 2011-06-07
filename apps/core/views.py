@@ -10,6 +10,7 @@ from core.backend import generate_sections
 
 NONCAPS = re.compile('[^A-Z]')
 
+
 class MobileBase(object):
 
     def check_for_mobile(self, request):
