@@ -76,9 +76,9 @@ class Road(models.Model):
         median = rates[len(rates)/2]
         return median
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        return super(Road, self).save()
+        return super(Road, self).save(*args, **kwargs)
 
 
 class Node(models.Model):
@@ -86,7 +86,7 @@ class Node(models.Model):
     name = models.CharField(max_length=128)
     latitude = models.FloatField(default=0, blank=True)
     longitude = models.FloatField(default=0, blank=True)
-    position = models.PositiveSmallIntegerField()
+    position = models.SmallIntegerField()
 
     class Meta:
         ordering = ['position', ]
