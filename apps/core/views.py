@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from django.contrib import messages
 from accounts.decorators import require_login
 from core.models import *
+from core.forms import *
 from core.backend import generate_sections, get_statuses
 
 NONCAPS = re.compile('[^A-Z]')
@@ -142,3 +143,28 @@ class GenerateSections(TemplateView):
             return simple.redirect_to(request, request.path_info)
         else:
             return super(GenerateSections, self).get(request, *args, **kwargs)
+
+
+class CreateRoad(TemplateView, MobileBase):
+    template_name = 'create-road.html'
+    form_class = CreateRoadForm
+    data = {}
+
+    @method_decorator(require_login)
+    def dispatch(self, *args, **kwargs):
+        self.form = CreateRoadForm()
+        return super(CreateRoad, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        result = super(CreateRoad, self).get_context_data(**kwargs)
+        result['form'] = self.form
+        return result
+
+    def post(self, request, *args, **kwargs):
+        form = self.form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(self.request, 'Successfully created new road')
+            return simple.redirect_to(request, request.get_full_path())
+        else:
+            return super(CreateRoad, self).get(request, *args, **kwargs)
