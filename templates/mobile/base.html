@@ -69,7 +69,7 @@
 					{% if user.is_authenticated %}
 					<li><a class="disable-ajax" href="{% url mobile-accounts-logout %}?next={{ request.get_full_path }}">Logout</a></li>
 					{% if road %}
-					<li><a href="{% url mobile-edit_road road.slug %}?d={{ request.GET.d }}">Edit</a></li>
+					<li><a href="{% url mobile-edit_road road.slug %}?d={{ request.GET.d }}" class="disable-ajax">Edit</a></li>
 					{% endif %}
 					{% else %}
 					<li><a href="{% url mobile-accounts-login %}?next={{ request.get_full_path }}">Login</a></li>
