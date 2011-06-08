@@ -14,6 +14,9 @@ Choose a Road
 			{% for road in roads %}
 			<a class="road-link rate{{ road.get_rate_median }}" href="{% url show_road road.slug %}">
 				{{ road.name }}
+				{% if road.get_latest_status %}
+				as of {{ road.get_latest_status.status_at|time }}
+				{% endif %}
 			</a>
 			{% endfor %}
 		</div>

@@ -345,9 +345,9 @@ nav {
 }
 .road-link {
 	display: inline-block;
-	height: 128px;
-	line-height: 128px;
-	width: 160px;
+	height: 80px;
+	line-height: 80px;
+	width: 288px;
 	text-align: center;
 	vertical-align: middle;
 	opacity: 0.85;
