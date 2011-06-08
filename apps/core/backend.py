@@ -24,7 +24,7 @@ def get_statuses(twitter_name='MMDA', road_names=[], limit=10):
     '''
     import httplib2
     from BeautifulSoup import BeautifulSoup
-    h = httplib2.Http('.cache')
+    h = httplib2.Http()
     tmp_url = 'http://search.twitter.com/search?&ors=%(roads)s&lang=all&from=%(user)s&rpp=%(limit)i'
     url = tmp_url % dict(
         user = twitter_name,
