@@ -1,7 +1,11 @@
 import datetime
-from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
+
+from django.contrib.auth.models import User
+from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.models import ContentType
+
 
 DIRECTION_SETS = (
     (
@@ -34,9 +38,22 @@ TRAFFIC_RATINGS = (
 TRAFFIC_DICT = dict(TRAFFIC_RATINGS)
 
 
+class Alias(models.Model):
+    '''Use alias to specify alternate names for roads, sections and nodes.
+    '''
+    name = models.CharField(max_length=128)
+    orig_object_type = models.ForeignKey(ContentType, related_name='alias', blank=True, null=True)
+    orig_object_id = models.PositiveIntegerField()
+    orig = generic.GenericForeignKey('orig_object_type','orig_object_id')
+
+    def __unicode__(self):
+        return self.name
+
+
 class Road(models.Model):
     name = models.CharField(max_length=128)
     slug = models.SlugField(unique=True, editable=False)
+    alias = generic.GenericRelation(Alias)
 
     def __unicode__(self):
         return self.name
@@ -87,6 +104,7 @@ class Node(models.Model):
     latitude = models.FloatField(default=0, blank=True)
     longitude = models.FloatField(default=0, blank=True)
     position = models.SmallIntegerField()
+    alias = generic.GenericRelation(Alias)
 
     class Meta:
         ordering = ['position', ]
@@ -103,6 +121,7 @@ class Section(models.Model):
     end = models.ForeignKey(Node, related_name='end_section')
     direction = models.CharField(max_length=1, choices=DIRECTIONS)
     position = models.PositiveSmallIntegerField()
+    alias = generic.GenericRelation(Alias)
 
     class Meta:
         ordering = ['position', ]
