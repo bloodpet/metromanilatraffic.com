@@ -459,6 +459,12 @@ nav {
 	width: 80px;
 	vertical-align: middle;
 }
+.edit-traffic tbody th.old {
+	color: #000000;
+}
+.edit-traffic tbody th.new {
+	color: #ffffff;
+}
 .edit-traffic tbody td {
 	width: 48px;
 	height: 48px;

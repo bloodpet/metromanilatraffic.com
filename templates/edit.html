@@ -54,6 +54,7 @@ Update {{ road_name }}
 				var parent_th = $(parent_td).siblings('th');
 				// Assign new class to th
 				$(parent_th).attr('class', parent_td.attr('class'));
+				$(parent_th).addClass('new');
 			});
 			$('.more-info').click(function () {
 				var s_id = $(this).attr('relid');
