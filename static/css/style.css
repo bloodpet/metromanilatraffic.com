@@ -517,3 +517,7 @@ nav {
 #status-updates {
 	border: 1px solid #cccccc;
 }
+#status-updates p {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
