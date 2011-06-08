@@ -6,7 +6,8 @@ Update {{ road_name }}
 
 {% block content %}
 	<div class="grid_3">
-		&nbsp;
+		<label id="update-button-label" class="update-button-label" for="update-button1">Update</label>
+		<input type="submit" name="update" class="update-button" id="update-button1" value="Update" />
 	</div>
 	<div id="status-updates" class="grid_10">
 		{% for status in status_updates %}
@@ -14,6 +15,9 @@ Update {{ road_name }}
 		{{ status }}
 		</p>
 		{% endfor %}
+	</div>
+	<div class="grid_3">
+		&nbsp;
 	</div>
 	<div class="clear">&nbsp;</div>
 	<form method="post">
@@ -40,8 +44,8 @@ Update {{ road_name }}
 		</div>
 		<div class="clear">&nbsp;</div>
 		<div class="grid_16" id="form-submit">
-			<label id="update-button-label" for="update-button">Update</label>
-			<input type="submit" id="update-button" name="update" value="Update" />
+			<label id="update-button2-label" class="update-button-label" for="update-button2">Update</label>
+			<input type="submit" name="update" class="update-button" id="update-button2" value="Update" />
 		</div>
 	</form>
 {% endblock %}
