@@ -65,10 +65,11 @@ class Road(models.Model):
         return ('show_road', [self.slug, ])
 
     def get_directions(self):
-        if self.section_set.latest('pk').direction in DIRECTIONS_CHOICES[0][0]:
-            return DIRECTION_SETS[0]
-        elif self.section_set.latest('pk').direction in DIRECTIONS_CHOICES[1][0]:
+        if self.section_set.latest('pk').direction in DIRECTIONS_CHOICES[1][0]:
             return DIRECTION_SETS[1]
+        else self.section_set.latest('pk').direction in DIRECTIONS_CHOICES[0][0]:
+            # Use the first choice by default
+            return DIRECTION_SETS[0]
 
     def get_latest_status(self):
         try:
