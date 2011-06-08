@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /accounts/
+Disallow: /login/
+Disallow: /m/login/
+Disallow: /logout/
+Disallow: /m/logout/

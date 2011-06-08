@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
+from django.views.generic.simple import direct_to_template
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -14,6 +15,10 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^d-admin/', include(admin.site.urls)),
+
+    (r'^robots\.txt$', direct_to_template,
+        {'template': 'robots.txt', 'mimetype': 'text/plain'}
+    ),
 
     url(r'^m/login/$', 'accounts.views.login', {'template_name': 'mobile/signin.html'}, name='mobile-accounts-login'),
     #url(r'^m/logout/$', 'accounts.views.logout', {'template_name': 'mobile/signout.html'}, name='mobile-accounts-logout'),
