@@ -5,18 +5,20 @@ Update {{ road_name }}
 {% endblock %}
 
 {% block content %}
-	<div class="grid_3">
+	<div class="grid_2">
 		<label id="update-button-label" class="update-button-label" for="update-button1">Update</label>
 		<input type="submit" name="update" class="update-button" id="update-button1" value="Update" />
 	</div>
-	<div id="status-updates" class="grid_10">
+	{% if status_updates %}
+	<div id="status-updates" class="grid_12">
 		{% for status in status_updates %}
 		<p>
 		{{ status }}
 		</p>
 		{% endfor %}
 	</div>
-	<div class="grid_3">
+	{% endif %}
+	<div class="grid_2">
 		&nbsp;
 	</div>
 	<div class="clear">&nbsp;</div>

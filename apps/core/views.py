@@ -97,8 +97,8 @@ class EditRoad(TemplateView, MobileBase):
             result['direction'] = DIRECTION_DICT[self.direction]
         # Try to get twitter updates if we have the correct libraries
         try:
-            result['status_updates'] = get_statuses('MMDA', road=road.name)
-        except Exception:
+            result['status_updates'] = get_statuses('MMDA', road_names=[road.name])
+        except ImportError:
             pass
         return result
 

@@ -1,3 +1,6 @@
+import re
+
+PATTERN_ALL = re.compile('')
 
 def generate_sections(road, direction):
     if direction == 'ns':
@@ -16,18 +19,27 @@ def generate_sections(road, direction):
         section2.save()
     return ''
 
-def get_statuses(twitter_name='MMDA', road=None):
+def get_statuses(twitter_name='MMDA', road_names=[], limit=10):
     '''A very basic twitter client to get traffic updates from MMDA by default.
     '''
-    import re
     import httplib2
     from BeautifulSoup import BeautifulSoup
-    h = httplib2.Http()
-    resp, content = h.request('http://twitter.com/%s' % twitter_name, 'GET')
+    h = httplib2.Http('.cache')
+    tmp_url = 'http://search.twitter.com/search?&ors=%(roads)s&lang=all&from=%(user)s&rpp=%(limit)i'
+    url = tmp_url % dict(
+        user = twitter_name,
+        roads = '+'.join(road_names),
+        limit = limit,
+    )
+    try:
+        resp, content = h.request(url, 'GET')
+    except AttributeError, e:
+        return []
+    except httplib2.ServerNotFoundError, e:
+        return []
     soup = BeautifulSoup(content)
-    if road is None:
-        entries = soup.findAll('span', *{'class': 'entry-content'})
-    else:
-        entries = soup.findAll('span', text=re.compile('.*%s.*' % road, re.IGNORECASE), *{'class': 'entry-content'})
-    # Return the 10 most recent entries (the ten topmost entries)
-    return entries[:10]
+    all_entries = soup.findAll('span', **{'class': re.compile('msgtxt.*')})
+    entries = []
+    for entry in all_entries:
+        entries.append(''.join(entry.fetchText(PATTERN_ALL)))
+    return entries
