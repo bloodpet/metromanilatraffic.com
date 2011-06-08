@@ -4,6 +4,13 @@ from core.generator.views import *
 
 urlpatterns = patterns('core.generator.views',
 
+    url(r'^alias/new/$', AliasCreateView.as_view(), name='alias_new'),
+    url(r'^alias/$', AliasListView.as_view(), name='alias_list'),
+    url(r'^alias/show/(?P<pk>[\d]+)/$', AliasDetailView.as_view(), name='alias_show'),
+    url(r'^alias/edit/(?P<pk>[\d]+)/$', AliasUpdateView.as_view(), name='alias_edit'),
+    url(r'^alias/delete/(?P<pk>[\d]+)/$', AliasDeleteView.as_view(), name='alias_delete'),
+
+
     url(r'^node/new/$', NodeCreateView.as_view(), name='node_new'),
     url(r'^node/$', NodeListView.as_view(), name='node_list'),
     url(r'^node/show/(?P<pk>[\d]+)/$', NodeDetailView.as_view(), name='node_show'),

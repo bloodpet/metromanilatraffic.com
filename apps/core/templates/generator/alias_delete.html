@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Delete alias
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>{{ alias }}</h2>
+        {# Details here. #}
+        <ul>
+            <li>
+            {{ alias }}
+            </li>
+        </ul>
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="submit" value="Delete" />
+        </form>
+    </div>
+    <div class="grid_5 content">
+        <a href="{% url alias_edit alias.pk %}" title="Edit Alias">Edit</a>
+        <a href="{% url alias_list %}" title="Alias List">Back to List</a>
+    </div>
+{% endblock %}

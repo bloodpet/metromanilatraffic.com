@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if alias %}
+    Update {{ alias }}
+    {% else %}
+    Create New Alias
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>
+            {% if alias %}
+            Update {{ alias }}
+            {% else %}
+            Create New Alias
+            {% endif %}
+        </h2>
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <ul>
+                {{ form.as_ul }}
+            </ul>
+            <input type="submit" value="Save" />
+        </form>
+    </div>
+    <div class="grid_5 content">
+        {% if alias %}
+        <a href="{% url alias_delete alias.pk %}" title="Delete Alias">Delete</a>
+        {% endif %}
+        <a href="{% url alias_list %}" title="Alias List">Back to List</a>
+    </div>
+{% endblock %}

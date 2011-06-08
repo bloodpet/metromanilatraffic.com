@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Alias Details
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>{{ alias }}</h2>
+        {# Details here. #}
+        <ul>
+            <li>
+            {{ alias }}
+            </li>
+        </ul>
+    </div>
+    <div class="grid_5 content">
+        <a href="{% url alias_edit alias.pk %}" title="Edit Alias">Edit</a>
+        <a href="{% url alias_delete alias.pk %}" title="Delete Alias">Delete</a>
+        <a href="{% url alias_list %}" title="Alias List">Back to List</a>
+    </div>
+{% endblock %}

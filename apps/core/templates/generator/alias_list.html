@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Alias List
+{% endblock %}
+
+{% block main %}
+    <div id="main" class="grid_11 content">
+        <h2>Alias</h2>
+
+        {% if object_list %}
+        <form method="post" action="">
+            {% csrf_token %}
+            <ul class="object_list">
+            {% for alias in alias_list %}
+                <li>
+                <input type="checkbox" name="alias" value="{{ alias.pk }}" />
+                {{ alias }}
+                <a href="{% url alias_show alias.pk %}" title="Show Details">Show</a>
+                <a href="{% url alias_edit alias.pk %}" title="Edit Alias">Edit</a>
+                <a href="{% url alias_delete alias.pk %}" title="Delete Alias">Delete</a>
+                </li>
+            {% endfor %}
+            </ul>
+            <div>
+            <input type="hidden" name="action" value="delete" />
+            <input type="submit" value="Delete Selected" />
+            </div>
+        </form>
+        {% endif %}
+    </div>
+    <div class="grid_5 content">
+        {% if paginator.num_pages > 1 %}
+        <h3>Pages</h3>
+        {% include 'pagination.html' %}
+        {% endif %}
+        {% if search_form %}
+        <h3>Search</h3>
+        <form class="search-form">
+        {{ search_form.as_p }}
+        <p>
+            <input type="submit" name="action" value="Search" />
+        </p>
+        </form>
+        {% endif %}
+        <a href="{% url alias_new %}" title="Create New Alias">New Alias</a>
+    </div>
+{% endblock %}

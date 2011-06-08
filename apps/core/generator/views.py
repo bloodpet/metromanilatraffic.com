@@ -10,6 +10,115 @@ from core.models import *
 from core.generator.forms import *
 
 
+class AliasListView(ListView):
+    queryset = Alias.objects.all()
+    template_name = 'generator/alias_list.html'
+    context_object_name = 'alias_list'
+    paginate_by = 10
+    filters = {}
+
+    def delete(self, alias):
+        alias.delete()
+
+    def get(self, request, *args, **kwargs):
+        """Function for get requests."""
+        search_class = AliasSearchForm
+        if search_class._meta.fields:
+            # Create search_form only if there are search fields
+            if request.GET.get('action', '').lower() == 'search':
+                self.search_form = search_class(request.GET)
+                self.get_search_filters(request)
+            else:
+                self.search_form = search_class()
+        else:
+            self.search_form = None
+        result = super(AliasListView, self).get(request, *args, **kwargs)
+        return result
+
+    def get_queryset(self):
+        """Custom queryset for Alias."""
+        queryset = super(AliasListView, self).get_queryset()
+        return queryset.filter(**self.filters)
+
+    def get_search_filters(self, request, *args, **kwargs):
+        """Filter the queryset depending on the search parameters."""
+        for k, v in request.GET.iteritems():
+            if v and k in Alias._meta.get_all_field_names():
+                if Alias._meta.get_field(k).get_internal_type() == 'CharField':
+                    self.filters[k + '__contains'] = v
+                else:
+                    self.filters[k] = v
+        return
+
+    def post(self, request, *args, **kwargs):
+        action = request.POST.get('action', '')
+        try:
+            action_func = getattr(self, action)
+        except AttributeError:
+            pass
+        else:
+            alias_list = self.queryset.filter(pk__in=request.POST.getlist('alias'))
+            for alias in alias_list:
+                action_func(alias)
+        return self.get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        """Custom get_context_data to insert search form it the context."""
+        result = super(AliasListView, self).get_context_data(**kwargs)
+        result['search_form'] = self.search_form
+        return result
+
+
+class AliasDetailView(DetailView):
+    queryset = Alias.objects.all()
+    template_name = 'generator/alias_detail.html'
+    context_object_name = 'alias'
+
+
+class AliasCreateView(CreateView):
+    model = Alias
+    form_class = AliasForm
+    template_name = 'generator/alias_create.html'
+    context_object_name = 'alias'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(AliasCreateView, self).dispatch(*args, **kwargs)
+
+    def get_success_url(self):
+        messages.success(self.request, 'Successfully created Alias')
+        return reverse('alias_show', args=[self.object.pk, ])
+
+
+class AliasUpdateView(UpdateView):
+    model = Alias
+    form_class = AliasForm
+    template_name = 'generator/alias_update.html'
+    context_object_name = 'alias'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(AliasUpdateView, self).dispatch(*args, **kwargs)
+
+    def get_success_url(self):
+        messages.success(self.request, 'Successfully updated Alias')
+        return reverse('alias_show', args=[self.object.pk, ])
+
+
+class AliasDeleteView(DeleteView):
+    model = Alias
+    template_name = 'generator/alias_delete.html'
+    context_object_name = 'alias'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(AliasDeleteView, self).dispatch(*args, **kwargs)
+
+    def get_success_url(self):
+        messages.success(self.request, 'Successfully deleted Alias')
+        return reverse('alias_list')
+
+
 class NodeListView(ListView):
     queryset = Node.objects.all()
     template_name = 'generator/node_list.html'

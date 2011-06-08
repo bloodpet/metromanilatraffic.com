@@ -53,6 +53,34 @@ class SearchForm(forms.ModelForm):
                 self.fields[field_name].empty_label = '- %s -' % self.fields[field_name].label
 
 
+class AliasForm(ContentForm):
+    class Meta:
+        model = Alias
+        fields = ("name", "content_type", "object_id", )
+
+    def __init__(self, *args, **kwargs):
+        """Custom __init__ for AliasForm"""
+        super(AliasForm, self).__init__(*args, **kwargs)
+        self.customize_fields()
+
+
+class AliasSearchForm(SearchForm):
+    class Meta:
+        model = Alias
+        fields = ("name", "content_type", "object_id", )
+
+    def __init__(self, *args, **kwargs):
+        """Custom __init__ for Alias"""
+        # Ignore the data
+        args = list(args)
+        try:
+            data = args.pop(0)
+        except IndexError:
+            data = {}
+        super(AliasSearchForm, self).__init__(*args, **kwargs)
+        self.customize_fields(data)
+
+
 class NodeForm(ContentForm):
     class Meta:
         model = Node
