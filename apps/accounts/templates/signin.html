@@ -5,12 +5,13 @@
 	&nbsp;
 </div>
 <div class="grid_8">
-<h2>Login</h2>
+	<h2>Login</h2>
 
-<form method="post" action="">
-{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Login" />
-</form>
+	<form method="post" action="">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="Login" />
+	</form>
+	<a href="{% url password-reset %}" title="Reset my password">Forgot Password</a>
 </div>
 {% endblock %}
