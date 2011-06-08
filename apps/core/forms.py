@@ -3,8 +3,6 @@ from django import forms
 from core.backend import generate_sections
 from core.models import *
 
-DIRECTIONS_CHOICES = [(d[0][0]+d[1][0], d[0][1]+'-'+d[1][1]) for d in DIRECTION_SETS]
-
 
 class CreateRoadForm(forms.Form):
     name = forms.CharField(required=True)

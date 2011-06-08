@@ -10,8 +10,8 @@
 	{% for road in roads %}
 	<ul data-role="listview" data-inset="true" data-theme="b">
 		<li><a href="#">{{ road.name }}</a></li>
-		<li data-theme="c"><a href="{% url mobile-show_road road.slug %}?d=n">Northbound</a></li>
-		<li data-theme="c"><a href="{% url mobile-show_road road.slug %}?d=s">Southbound</a></li>
+		<li data-theme="c"><a href="{% url mobile-show_road road.slug %}?d={{ road.get_directions.0.0 }}">{{ road.get_directions.0.1 }}</a></li>
+		<li data-theme="c"><a href="{% url mobile-show_road road.slug %}?d={{ road.get_directions.1.0 }}">{{ road.get_directions.1.1 }}</a></li>
 	</ul>
 	{% endfor %}
 {% endblock %}

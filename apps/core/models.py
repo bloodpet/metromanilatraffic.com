@@ -21,6 +21,8 @@ DIRECTION_SETS = (
 DIRECTIONS = DIRECTION_SETS[0] + DIRECTION_SETS[1]
 DIRECTION_DICT = dict(DIRECTIONS)
 
+DIRECTIONS_CHOICES = [(d[0][0]+d[1][0], d[0][1]+'-'+d[1][1]) for d in DIRECTION_SETS]
+
 # Number of hours to accept updates from
 EARLIEST_HOUR = 2
 
@@ -63,7 +65,10 @@ class Road(models.Model):
         return ('show_road', [self.slug, ])
 
     def get_directions(self):
-        pass
+        if self.section_set.latest('pk').direction in DIRECTIONS_CHOICES[0][0]:
+            return DIRECTION_SETS[0]
+        elif self.section_set.latest('pk').direction in DIRECTIONS_CHOICES[1][0]:
+            return DIRECTION_SETS[1]
 
     def get_latest_status(self):
         try:
