@@ -42,9 +42,9 @@ class Alias(models.Model):
     '''Use alias to specify alternate names for roads, sections and nodes.
     '''
     name = models.CharField(max_length=128)
-    orig_object_type = models.ForeignKey(ContentType, related_name='alias', blank=True, null=True)
-    orig_object_id = models.PositiveIntegerField()
-    orig = generic.GenericForeignKey('orig_object_type','orig_object_id')
+    content_type = models.ForeignKey(ContentType, related_name='alias', blank=True, null=True)
+    object_id = models.PositiveIntegerField()
+    orig = generic.GenericForeignKey('content_type', 'object_id')
 
     def __unicode__(self):
         return self.name
