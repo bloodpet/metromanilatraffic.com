@@ -31,7 +31,7 @@ class HomeView(TemplateView, MobileBase):
 
     def get_context_data(self, **kwargs):
         result = super(HomeView, self).get_context_data(**kwargs)
-        result['roads'] = Road.objects.all()
+        result['roads'] = Road.objects.annotate(latest_order=models.Max('section__situation__status_at')).order_by('-latest_order')
         result['ratings'] = TRAFFIC_RATINGS[1:]
         return result
 
