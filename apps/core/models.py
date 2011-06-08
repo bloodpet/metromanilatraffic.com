@@ -67,7 +67,7 @@ class Road(models.Model):
     def get_directions(self):
         if self.section_set.latest('pk').direction in DIRECTIONS_CHOICES[1][0]:
             return DIRECTION_SETS[1]
-        else self.section_set.latest('pk').direction in DIRECTIONS_CHOICES[0][0]:
+        else:
             # Use the first choice by default
             return DIRECTION_SETS[0]
 
