@@ -16,6 +16,9 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^d-admin/', include(admin.site.urls)),
 
+    # About pages
+    (r'^eman$', direct_to_template, {'template': 'about/eman.html'}),
+
     (r'^robots\.txt$', direct_to_template,
         {'template': 'robots.txt', 'mimetype': 'text/plain'}
     ),
