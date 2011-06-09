@@ -398,27 +398,33 @@ nav {
 	background-color: rgb(192,192,192);
 }
 .rate1 {
-	background-color: rgb(0,224,160);
+	background-color: rgb(192,192,192);
 }
 .rate2 {
-	background-color: rgb(0,256,0);
+	background-color: rgb(192,192,192);
 }
 .rate3 {
-	background-color: rgb(200,224,0);
+	/* light */
+	background-color: rgb(0,224,160);
 }
 .rate4 {
-	background-color: rgb(224,192,0);
+	/* light/moderate */
+	background-color: rgb(0,256,0);
 }
 .rate5 {
-	background-color: rgb(224,160,0);
+	/* moderate */
+	background-color: rgb(200,224,0);
 }
 .rate6 {
+	/* moderate/heavy */
 	background-color: rgb(244,140,0);
 }
 .rate7 {
+	/* heavy */
 	background-color: rgb(256,0,0);
 }
 .rate8 {
+	/* unpassable */
 	background-color: rgb(224,0,160);
 }
 
@@ -466,13 +472,13 @@ nav {
 	color: #ffffff;
 }
 .edit-traffic tbody td {
-	width: 48px;
-	height: 48px;
+	width: 80px;
+	height: 64px;
 	overflow: hidden;
 	font-weight: bolder;
 }
 .edit-traffic tbody td label {
-	width: 64px;
+	width: 80px;
 	height: 64px;
 	display: table-cell;
 	line-height: 64px;

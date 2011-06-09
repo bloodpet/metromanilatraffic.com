@@ -32,7 +32,7 @@ class HomeView(TemplateView, MobileBase):
     def get_context_data(self, **kwargs):
         result = super(HomeView, self).get_context_data(**kwargs)
         result['roads'] = Road.objects.annotate(latest_order=models.Max('section__situation__status_at')).order_by('-latest_order')
-        result['ratings'] = TRAFFIC_RATINGS[1:]
+        result['ratings'] = TRAFFIC_RATINGS[3:]
         return result
 
 
@@ -50,7 +50,7 @@ class RoadView(TemplateView, MobileBase):
     def get_context_data(self, **kwargs):
         result = super(RoadView, self).get_context_data(**kwargs)
         road_slug = kwargs['road']
-        result['ratings'] = TRAFFIC_RATINGS[1:]
+        result['ratings'] = TRAFFIC_RATINGS[3:]
         result['road'] = road = Road.objects.get(slug=road_slug)
         result['northbound'] = road.section_set.filter(direction='n')
         result['southbound'] = road.section_set.filter(direction='s')
@@ -81,7 +81,7 @@ class EditRoad(TemplateView, MobileBase):
         result = super(EditRoad, self).get_context_data(**kwargs)
         road_slug = kwargs['road']
         ratings = []
-        for rating in TRAFFIC_RATINGS[1:]:
+        for rating in TRAFFIC_RATINGS[3:]:
             rating = (rating[0], NONCAPS.sub('', rating[1]))
             ratings.append(rating)
         result['ratings'] = ratings
