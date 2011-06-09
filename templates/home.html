@@ -5,11 +5,12 @@ Home
 {% endblock %}
 
 {% block page_title %}
-Choose a Road
+Metro Manila Traffic
 {% endblock %}
 
 {% block content %}
 	<div class="grid_16 road">
+        <p>Choose a road.</p>
 		<div class="road-block">
 			{% for road in roads %}
 			<a class="road-link rate{{ road.get_rate_median }}" href="{% url show_road road.slug %}">
