@@ -159,12 +159,6 @@
 	-->
 
 	<script type="text/javascript">
-		if (Modernizr.touch){
-			// bind to touchstart, touchmove, etc and watch `event.streamId`
-			window.location = '{% url mobile-home %}';
-		} else {
-			// bind to normal click, mousemove, etc
-		}
 		$(document).ready(function () {
 			$('#clear-all-messages a').click(function () {
 				$('#messages').fadeOut();

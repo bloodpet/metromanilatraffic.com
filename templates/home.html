@@ -25,3 +25,15 @@ Choose a Road
 
 {% block legend %}
 {% endblock legend %}
+
+{% block extrascripts %}
+	<script type="text/javascript">
+		if (Modernizr.touch){
+			// bind to touchstart, touchmove, etc and watch `event.streamId`
+			window.location = '{% url mobile-home %}';
+		} else {
+			// bind to normal click, mousemove, etc
+		}
+	</script>
+{% endblock %}
+
