@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'core',
     'accounts',
+    'parse_tweet',
 )
 
 # A sample logging configuration. The only tangible logging
