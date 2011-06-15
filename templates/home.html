@@ -28,6 +28,7 @@ Metro Manila Traffic
 {% endblock legend %}
 
 {% block extrascripts %}
+	{% if not request.GET.full %}
 	<script type="text/javascript">
 		if (Modernizr.touch){
 			// bind to touchstart, touchmove, etc and watch `event.streamId`
@@ -36,5 +37,6 @@ Metro Manila Traffic
 			// bind to normal click, mousemove, etc
 		}
 	</script>
+	{% endif %}
 {% endblock %}
 
