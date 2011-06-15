@@ -1,6 +1,7 @@
 from core.models import Road
 from django.db import models
 from django.db import utils
+from django.contrib import admin
 
 STAT_ALIASES = (
     ('l', 'light', 'fast moving', ),
@@ -31,3 +32,6 @@ class Tweet(models.Model):
 
     def __unicode__(self):
         return self.content
+
+
+admin.site.register(Tweet)
