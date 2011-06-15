@@ -1,4 +1,5 @@
 import re
+import datetime
 
 PATTERN_ALL = re.compile('')
 
@@ -19,17 +20,21 @@ def generate_sections(road, direction):
         section2.save()
     return ''
 
-def get_statuses(twitter_name='MMDA', road_names=[], limit=10):
+def get_statuses(twitter_name='MMDA', road_names=[], limit=5):
     '''A very basic twitter client to get traffic updates from MMDA by default.
     '''
     import httplib2
     from BeautifulSoup import BeautifulSoup
+    now = datetime.datetime.now()
+    since = now - datetime.timedelta(0, 120)
+    now = datetime.datetime.now()
     h = httplib2.Http()
-    tmp_url = 'http://search.twitter.com/search?&ors=%(roads)s&lang=all&from=%(user)s&rpp=%(limit)i'
+    tmp_url = 'http://search.twitter.com/search?&ors=%(roads)s&lang=all&from=%(user)s&rpp=%(limit)i&%(since)s'
     url = tmp_url % dict(
         user = twitter_name,
         roads = '+'.join(road_names),
         limit = limit,
+        since = '%s-%s-%s' % (since.year, since.month, since.day),
     )
     try:
         resp, content = h.request(url, 'GET')

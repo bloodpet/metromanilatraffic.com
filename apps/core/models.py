@@ -5,6 +5,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
+from django.contrib import admin
 
 
 DIRECTION_SETS = (
@@ -166,3 +167,10 @@ class Situation(models.Model):
 
     def get_rate_name(self):
         return TRAFFIC_DICT[self.rating]
+
+
+admin.site.register(Road)
+admin.site.register(Node)
+admin.site.register(Section)
+admin.site.register(Alias)
+admin.site.register(Situation)
