@@ -114,7 +114,7 @@ class Node(models.Model):
     alias = generic.GenericRelation(Alias)
 
     class Meta:
-        ordering = ['position', ]
+        ordering = ['road', 'position', ]
         unique_together = ('road',  'position')
 
     def __unicode__(self):
@@ -131,7 +131,7 @@ class Section(models.Model):
     alias = generic.GenericRelation(Alias)
 
     class Meta:
-        ordering = ['position', ]
+        ordering = ['road', 'position', ]
         unique_together = (
             ('road', 'direction', 'position'),
             ('road', 'direction', 'start'),
