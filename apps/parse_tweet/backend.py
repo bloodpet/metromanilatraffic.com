@@ -103,6 +103,7 @@ class Parser(object):
         now = datetime.datetime.now()
         for full_txt in entry.fetchText(PATTERN_ALL):
             txt = full_txt.strip()
+            txt = re.sub('[ns]b[ ,-] ', '', txt, re.IGNORECASE)
             if re.match('.*as of.*', txt, re.IGNORECASE):
                 time_txt = PATTERN_TIME.sub('\\1 \\2', txt, re.IGNORECASE)
                 try:
