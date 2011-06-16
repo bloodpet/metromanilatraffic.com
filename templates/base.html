@@ -90,7 +90,6 @@
 		</nav>
 	</div> <!--! end of #nav-container -->
 	<div id="content-container" class="container_16">
-		<div class="clear">&nbsp;</div>
 		{% block main %}
 		{% block content %}
 		{% endblock %}
@@ -105,10 +104,14 @@
 				{% include 'legend.html' %}
 			</div>
 			{% endblock legend %}
-			<div id="footer" class="grid_16">
+			<div class="grid_12" id="footer">
 			{% block footer %}
 			{% endblock %}
 			<p id="copyright">© Metro Manila Traffic. Some rights reserved.</p>
+			</div>
+			<div class="grid_4" id="legend">
+				<a href="http://flattr.com/thing/312392/Metro-Manila-Traffic" target="_blank">
+				<img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a>
 			</div>
 			<div class="clear">&nbsp;</div>
 		</footer>
