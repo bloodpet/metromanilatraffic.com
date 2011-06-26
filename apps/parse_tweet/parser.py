@@ -23,6 +23,8 @@ patterns = dict(
 main_patterns = [
     'as of {{ time }}, {{ info }}; {{ section }}',
     'as of {{ time }}, {{ info }}: {{ section }}',
+    'as of {{ time }}: {{ info }}: {{ section }}',
+    'as of {{ time }}: {{ section }}',
     'as of {{ time }}, {{ section }}',
     '{{ info }}; {{ section }}',
     '{{ info }}: {{ section }}',
@@ -162,7 +164,10 @@ def parse_entry(entry):
             add12 = False
         try:
             stat_time = datetime.datetime.strptime(stat_time.replace(' ', ''), '%H:%M%p')
-        except KeyError:
+        except KeyError, e:
+            stat_time = updated_at
+        except ValueError, e:
+            print stat_time.replace(' ', ''), e
             stat_time = updated_at
         if add12 and stat_time.hour < 12:
             stat_time = stat_time + datetime.timedelta(0, 12 * 60 * 60)
@@ -179,11 +184,11 @@ def parse_entry(entry):
             section_data = parse_section(section)
             if 'stat' in section_data:
                 rate = get_rate(section_data['stat'])
-                sections = get_sections(section_data['start'], section_data['end'], entry)
+                road_sections = get_sections(section_data['start'], section_data['end'], entry)
                 data_set.append(section_data)
-                for section in sections:
+                for road_section in road_sections:
                     situation = Situation(
-                            section = section,
+                            section = road_section,
                             rating = rate,
                         )
                     situation.save()
@@ -240,8 +245,8 @@ def get_rate(stat):
                 return rate
 
 def get_sections(start, end, entry):
-    start = re.sub('[NESW]B;? ?', '', start, re.IGNORECASE)
-    end = re.sub('[NESW]B;? ?', '', end, re.IGNORECASE)
+    start = re.sub('[neswNESW][bB][:;]? ?', '', start, re.IGNORECASE)
+    end = re.sub('[neswNESW][bB][:;]? ?', '', end, re.IGNORECASE)
     direction = None
     if not start or not end:
         info = entry.info.lower()
