@@ -37,7 +37,6 @@ class Tweet(models.Model):
 
 class TweetAdmin(admin.ModelAdmin):
     list_display = ['road', 'updated_at', 'text', ]
-    fields = ['road', 'text', ]
 
 
 admin.site.register(Tweet, TweetAdmin)
