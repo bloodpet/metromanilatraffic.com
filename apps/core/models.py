@@ -49,6 +49,9 @@ class Alias(models.Model):
     object_id = models.PositiveIntegerField()
     orig = generic.GenericForeignKey('content_type', 'object_id')
 
+    class Meta:
+        verbose_name_plural = 'Aliases'
+
     def __unicode__(self):
         return self.name
 
@@ -177,7 +180,15 @@ class MainAdmin(admin.ModelAdmin):
             AliasInline,
         ]
 
+class StatAdmin(admin.ModelAdmin):
+    list_display = (
+            '__unicode__',
+            'status_at',
+            'updated_at',
+        )
+
+
 admin.site.register(Road, MainAdmin)
 admin.site.register(Node, MainAdmin)
 admin.site.register(Section, MainAdmin)
-admin.site.register(Situation)
+admin.site.register(Situation, StatAdmin)

@@ -17,21 +17,27 @@ STAT_RATE = range(3, 9)
 
 
 class Tweet(models.Model):
+    tweet_id = models.IntegerField(unique=True)
     road = models.ForeignKey(Road)
-    content = models.TextField()
+    text = models.TextField()
+    info = models.TextField()
     updated_at = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateField(auto_now_add=True)
     status_at = models.DateTimeField(auto_now_add=True)
     is_parsed = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
 
     class Meta:
         unique_together = (
-            ('road', 'updated_date', 'content'),
+            ('road', 'updated_at', 'text'),
         )
 
     def __unicode__(self):
-        return self.content
+        return self.text
 
 
-admin.site.register(Tweet)
+class TweetAdmin(admin.ModelAdmin):
+    list_display = ['road', 'updated_at', 'text', ]
+    fields = ['road', 'text', ]
+
+
+admin.site.register(Tweet, TweetAdmin)
