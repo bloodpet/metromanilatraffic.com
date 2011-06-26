@@ -169,8 +169,15 @@ class Situation(models.Model):
         return TRAFFIC_DICT[self.rating]
 
 
-admin.site.register(Road)
-admin.site.register(Node)
-admin.site.register(Section)
-admin.site.register(Alias)
+class AliasInline(generic.GenericTabularInline):
+    model = Alias
+
+class MainAdmin(admin.ModelAdmin):
+    inlines = [
+            AliasInline,
+        ]
+
+admin.site.register(Road, MainAdmin)
+admin.site.register(Node, MainAdmin)
+admin.site.register(Section, MainAdmin)
 admin.site.register(Situation)
