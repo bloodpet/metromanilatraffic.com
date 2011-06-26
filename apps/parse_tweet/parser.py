@@ -138,7 +138,7 @@ def scrape_road(road, twitter_name='MMDA'):
 def parse_entry(entry):
     updated_at = entry.updated_at
     # Add 8 hours to consider Asia/Manila timezone
-    updated_at = updated_at + datetime.timedelta(0, 8 * 60 * 60)
+    #updated_at = updated_at + datetime.timedelta(0, 8 * 60 * 60)
     now = datetime.datetime.now()
     if updated_at.day > now.day:
         updated_at = updated_at - datetime.timedelta(1)
@@ -158,7 +158,7 @@ def parse_entry(entry):
     #print entry.road, updated_at.strftime('%d-%H:%M'),
     stat_time = data.get('time', None)
     if stat_time:
-        if stat_time.lower().find('pm'):
+        if 'pm' in stat_time.lower():
             add12 = True
         else:
             add12 = False
@@ -167,7 +167,7 @@ def parse_entry(entry):
         except KeyError, e:
             stat_time = updated_at
         except ValueError, e:
-            print stat_time.replace(' ', ''), e
+            #print stat_time.replace(' ', ''), e
             stat_time = updated_at
         if add12 and stat_time.hour < 12:
             stat_time = stat_time + datetime.timedelta(0, 12 * 60 * 60)
@@ -185,6 +185,8 @@ def parse_entry(entry):
             if 'stat' in section_data:
                 rate = get_rate(section_data['stat'])
                 road_sections = get_sections(section_data['start'], section_data['end'], entry)
+                #print rate, actual_update, updated_at, road_sections
+                #print section_data
                 data_set.append(section_data)
                 for road_section in road_sections:
                     situation = Situation(
