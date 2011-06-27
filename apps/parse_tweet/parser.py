@@ -112,6 +112,14 @@ def scrape_all(twitter_name='MMDA'):
         data = scrape_road(road, twitter_name,)
         yield data
 
+def parse_all_tweets():
+    results = []
+    for tweet in Tweet.objects.filter(is_parsed=False):
+        results.append(parse_entry(tweet))
+        tweet.is_parsed = True
+        tweet.save()
+    return results
+
 
 # Scrapemark specific methods
 
@@ -202,8 +210,6 @@ def parse_entry(entry):
                 if road_sections:
                     entry.is_verified = True
             #print entry.road, section_data
-    entry.is_parsed = True
-    entry.save()
     return data_set
 
 def parse_section(section):
@@ -378,6 +384,4 @@ def get_section_candidates(name, road, direction):
 if __name__ == '__main__':
     for res in scrape_all():
         print res
-    for tweet in Tweet.objects.filter(is_parsed=False):
-        parse_entry(tweet)
-
+    print parse_all_tweets()
