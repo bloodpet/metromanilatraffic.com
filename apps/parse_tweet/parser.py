@@ -11,7 +11,7 @@ from fuzzy import Soundex
 from core.models import *
 from parse_tweet.models import *
 
-soundex = Soundex(4)
+soundex = Soundex(6)
 
 hours_ago = 2
 
@@ -238,12 +238,14 @@ def get_rate(stat):
         alias_str = '^(%s)$' % '|'.join(aliases)
         if re.match(alias_str, stat_alias):
             stat = aliases[0]
+            print rate, aliases
             return rate
         # If no match is found, try using soundex to find a match
         given = soundex(stat_alias)
         for alias in aliases:
             test = soundex(alias)
             if given == test:
+                print rate, 'soundex', alias
                 return rate
 
 def get_sections(start, end, entry):
