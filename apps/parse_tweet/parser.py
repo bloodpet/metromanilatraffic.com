@@ -229,7 +229,7 @@ def parse_section(section):
                 section_data['start'].lower().endswith('san') and \
                 section_data['end'].lower().startswith('lan to '):
             section_data['start'] = 'Santolan'
-            section_data['end'].lower().replace('lan to ', '')
+            section_data['end'] = section_data['end'].lower().replace('lan to ', '')
     if isinstance(section_data['stat'], list):
         section_data['stat'] = '-'.join(section_data['stat'])
     is_saved = False
