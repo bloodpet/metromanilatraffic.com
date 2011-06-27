@@ -184,7 +184,7 @@ def parse_entry(entry):
             section_data = parse_section(section)
             if 'stat' in section_data:
                 rate = get_rate(section_data['stat'])
-                road_sections = get_sections(section_data['start'], section_data['end'], entry)
+                road_sections = get_sections(section_data.get('start', None), section_data.get('end', None), entry)
                 print rate, actual_update, updated_at, road_sections
                 print section_data
                 data_set.append(section_data)
