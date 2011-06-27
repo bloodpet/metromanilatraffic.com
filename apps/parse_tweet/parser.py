@@ -322,7 +322,11 @@ def get_section_candidates(name, road, direction):
         if entries:
             return entries
     entries = []
-    name_snd = soundex(name)
+    #TODO create a proper fix
+    try:
+        name_snd = soundex(name)
+    except Exception:
+        return entries
     for q in nq, sq:
         for entry in q:
             entry_snd = soundex(entry.name)
@@ -330,7 +334,11 @@ def get_section_candidates(name, road, direction):
                 entries.append(entry)
             else:
                 for alias in entry.alias.all():
-                    alias_snd = soundex(alias.name)
+                    #TODO create a proper fix
+                    try:
+                        alias_snd = soundex(alias.name)
+                    except Exception:
+                        return entries
                     if name_snd == alias_snd:
                         entries.append(entry)
                         break
