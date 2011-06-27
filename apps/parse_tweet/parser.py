@@ -30,6 +30,7 @@ main_patterns = [
     '{{ info }}: {{ section }}',
 ]
 
+#TODO section_patterns: Fix these patterns to avoid separating Santolan to: San lan
 section_patterns = [
     '{{ start }} to {{ end }}-{{ stat }}',
     '{{ start }} - {{ end }}({{ stat }})',
@@ -198,7 +199,8 @@ def parse_entry(entry):
                     situation.save()
                     situation.status_at = actual_update
                     situation.save()
-                entry.is_verified = True
+                if road_sections:
+                    entry.is_verified = True
             #print entry.road, section_data
     entry.is_parsed = True
     entry.save()
@@ -222,6 +224,12 @@ def parse_section(section):
     else:
         if ' to ' in section_data['start']:
             section_data['start'], section_data['end'] = section_data['start'].split(' to ')
+        #TODO section_patterns: Fix the patterns above to avoid doing this hack
+        if 'end' in section_data and \
+                section_data['start'].lower().endswith('san') and \
+                section_data['end'].lower().startswith('lan to '):
+            section['start'] = 'Santolan'
+            section['end'].lower().replace('lan to ', '')
     if isinstance(section_data['stat'], list):
         section_data['stat'] = '-'.join(section_data['stat'])
     is_saved = False
@@ -253,6 +261,7 @@ def get_rate(stat):
             if given == test:
                 print rate, 'soundex', alias
                 return rate
+    print stat_alias, '-- NO RATE FOUND'
 
 def get_sections(start, end, entry):
     start = re.sub('[neswNESW][bB][:;]? ?', '', start, re.IGNORECASE)
