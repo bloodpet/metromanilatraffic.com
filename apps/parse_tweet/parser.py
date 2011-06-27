@@ -236,7 +236,7 @@ def get_rate(stat):
         # First, find out if the given stat is in the alias list
         # This means that there are no typos.
         alias_str = '^(%s)$' % '|'.join(aliases)
-        if re.match(alias_str, stat_alias):
+        if re.match(alias_str.lower(), stat_alias.lower()):
             stat = aliases[0]
             print rate, aliases
             return rate
