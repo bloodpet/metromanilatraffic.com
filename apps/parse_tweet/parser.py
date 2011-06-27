@@ -322,14 +322,25 @@ def get_section_candidates(name, road, direction):
         if entries:
             return entries
     entries = []
-    #TODO create a proper fix
     try:
         name_snd = soundex(name)
-    except Exception:
-        return entries
+    except UnicodeEncodeError:
+        #TODO test this fix properly
+        try:
+            name_snd = soundex(name.encode('utf-8'))
+        except Exception:
+            print name
+            return entries
     for q in nq, sq:
         for entry in q:
-            entry_snd = soundex(entry.name)
+            try:
+                entry_snd = soundex(entry.name)
+            except UnicodeEncodeError:
+                #TODO test this fix properly
+                try:
+                    entry_snd = soundex(entry.name.encode('utf-8'))
+                except Exception:
+                    continue
             if name_snd == entry_snd:
                 entries.append(entry)
             else:
@@ -337,8 +348,12 @@ def get_section_candidates(name, road, direction):
                     #TODO create a proper fix
                     try:
                         alias_snd = soundex(alias.name)
-                    except Exception:
-                        return entries
+                    except UnicodeEncodeError:
+                        #TODO test this fix properly
+                        try:
+                            alias_snd = soundex(alias.name.encode('utf-8'))
+                        except Exception:
+                            continue
                     if name_snd == alias_snd:
                         entries.append(entry)
                         break
