@@ -184,6 +184,8 @@ def parse_entry(entry):
             section_data = parse_section(section)
             if 'stat' in section_data:
                 rate = get_rate(section_data['stat'])
+                if not rate:
+                    continue
                 road_sections = get_sections(section_data.get('start', ''), section_data.get('end', ''), entry)
                 print rate, actual_update, updated_at, road_sections
                 print section_data
@@ -231,6 +233,9 @@ def parse_section(section):
 
 def get_rate(stat):
     stat_alias = stat.lower()
+    # Fix for some weird format by mmda
+    # There has got to be a better way to do this!
+    stat_alias = re.sub('\.\.\..*', '', stat_alias)
     for rate, aliases in zip(STAT_RATE, STAT_ALIASES):
         stat = None
         # First, find out if the given stat is in the alias list
