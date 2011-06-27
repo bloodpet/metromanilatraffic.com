@@ -37,7 +37,7 @@ class Tweet(models.Model):
 
 class TweetAdmin(admin.ModelAdmin):
     list_display = ('road', 'status_at', 'updated_at', 'text', )
-    list_filter = ('road', )
+    list_filter = ('road', 'is_parsed', 'is_verified', )
 
 
 admin.site.register(Tweet, TweetAdmin)
