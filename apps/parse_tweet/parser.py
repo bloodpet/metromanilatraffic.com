@@ -240,6 +240,7 @@ def get_rate(stat):
             stat = aliases[0]
             print rate, aliases
             return rate
+    for rate, aliases in zip(STAT_RATE, STAT_ALIASES):
         # If no match is found, try using soundex to find a match
         given = soundex(stat_alias)
         for alias in aliases:
