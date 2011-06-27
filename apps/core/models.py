@@ -180,6 +180,24 @@ class MainAdmin(admin.ModelAdmin):
             AliasInline,
         ]
 
+class PartAdmin(MainAdmin):
+    list_display = (
+            '__unicode__',
+            'road',
+            'position',
+        )
+
+class NodeAdmin(PartAdmin):
+    list_filter = (
+            'road',
+        )
+
+class SectionAdmin(PartAdmin):
+    list_filter = (
+            'road',
+            'direction',
+        )
+
 class StatAdmin(admin.ModelAdmin):
     list_display = (
             '__unicode__',
@@ -189,6 +207,6 @@ class StatAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Road, MainAdmin)
-admin.site.register(Node, MainAdmin)
-admin.site.register(Section, MainAdmin)
+admin.site.register(Node, NodeAdmin)
+admin.site.register(Section, SectionAdmin)
 admin.site.register(Situation, StatAdmin)
