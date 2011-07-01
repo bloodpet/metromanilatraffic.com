@@ -139,6 +139,7 @@ INSTALLED_APPS = (
     'core',
     'accounts',
     'parse_tweet',
+    'tv5',
 )
 
 # A sample logging configuration. The only tangible logging
