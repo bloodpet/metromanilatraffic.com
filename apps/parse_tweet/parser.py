@@ -190,7 +190,11 @@ def parse_entry(entry):
     if sections:
         data_set = []
         for section in sections:
-            section_data = parse_section(section)
+            try:
+                section_data = parse_section(section)
+            except Exception, e:
+                print section, e
+                continue
             if 'stat' in section_data:
                 rate = get_rate(section_data['stat'])
                 if not rate:
