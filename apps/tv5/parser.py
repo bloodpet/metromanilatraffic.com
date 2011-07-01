@@ -32,10 +32,10 @@ patterns = [
 
 road_urls = [
     (1, ['edsa', ]),
-    #(6, ['quezon-ave', 'españa',]),
-    #(2, ['c5', ]),
-    #(4, ['roxas-blvd', ]),
-    #(5, ['slex', ]),
+    (6, ['quezon-ave', 'españa',]),
+    (2, ['c5', ]),
+    (4, ['roxas-blvd', ]),
+    (5, ['slex', ]),
 ]
 
 url_tmp = u'http://mmdatraffic.interaksyon.com/line-view-%s.php'
@@ -165,8 +165,8 @@ def parse_site():
     #parser.post_situations()
     ##print parser.section_status
     #return
-    #h = httplib2.Http()
-    h = httplib2.Http('.cache')
+    h = httplib2.Http()
+    #h = httplib2.Http('.cache')
     for road_id, slugs in road_urls:
         road = Road.objects.get(id=road_id)
         parser = RoadParser(road)
