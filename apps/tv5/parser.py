@@ -62,13 +62,17 @@ class SectionStatus(object):
         return u'%s' % self.d
     __repr__ = __unicode__
 
-    def add(self, section, rate):
+    def add(self, section, rate, time):
         if section not in self.d.keys():
-            self.d[section] = []
-        self.d[section].append(rate)
+            self.d[section] = {}
+            self.d[section]['time'] = time
+            self.d[section]['rates'] = []
+        self.d[section]['rates'].append(rate)
+        if self.d[section]['time'] < time:
+            self.d[section]['time'] = time
 
     def get_middle(self, section):
-        rates = self.d[section]
+        rates = self.d[section]['rates']
         rates.sort()
         mean = int(math.ceil( sum(rates) / float(len(rates)) ))
         #median = rates[int(math.ceil(len(rates)/2.0))]
@@ -76,7 +80,7 @@ class SectionStatus(object):
 
     def get_rates(self):
         for section in self.d.keys():
-            yield section, self.get_middle(section)
+            yield section, self.get_middle(section), self.d[section]['time']
 
 
 class RoadParser(object):
@@ -84,9 +88,11 @@ class RoadParser(object):
     def __init__(self, road):
         self.lines = []
         self.section_status = SectionStatus()
+        self.now = datetime.datetime.now()
         self.road = road
 
     def parse_line(self, line):
+        now = datetime.datetime.now()
         for ind, dirs in directions.iteritems():
             rate = status_rate[line['status%s' % ind]]
             # figure out the direction of the sections
@@ -94,8 +100,23 @@ class RoadParser(object):
                 if self.road.section_set.filter(direction=tmp_dir).count() > 0:
                     direction = tmp_dir
                     break
-            # Get sections & nodes
             name = line['name']
+            # Get time
+            update_ago = line['update_ago%s' % ind]
+            value, unit, _ = update_ago.split(' ')
+            if unit.find('hr') > -1:
+                delta = datetime.timedelta(0, int(value) * 60 * 60)
+            elif unit.find('min') > -1:
+                delta = datetime.timedelta(0, int(value) * 60)
+            elif unit.find('sec') > -1:
+                delta = datetime.timedelta(0, int(value))
+            else:
+                continue
+            # Ignore updates 2 hrs ago
+            if delta > datetime.timedelta(0, 2 * 60 * 60):
+                continue
+            time = now - delta
+            # Get sections & nodes
             nodes = set()
             nodes.update(self.road.node_set.filter(name__iexact=name), self.road.node_set.filter(alias__name__iexact=name))
             sections = set()
@@ -110,19 +131,22 @@ class RoadParser(object):
                 #print name
                 pass
             for section in sections:
-                self.section_status.add(section, rate)
+                self.section_status.add(section, rate, time)
 
     def parse_lines(self):
         for line in self.lines:
             self.parse_line(line)
 
     def post_situations(self):
-        for section, rate in self.section_status.get_rates():
+        for section, rate, time in self.section_status.get_rates():
             situation = Situation(
                 section = section,
                 rating = rate,
                 reason = u'From MMDA Traffic',
+                status_at = time,
             )
+            situation.save()
+            situation.status_at = time
             situation.save()
 
     def scrape(self, content):
