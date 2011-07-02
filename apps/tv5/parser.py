@@ -150,7 +150,7 @@ class RoadParser(object):
             situation.save()
 
     def scrape(self, content):
-        self.content = content
+        self.content = content.decode('latin')
         for pattern in patterns:
             data = scrape(pattern, html=self.content)
             self.lines = self.lines + data['line']
@@ -171,7 +171,7 @@ def parse_site():
         road = Road.objects.get(id=road_id)
         parser = RoadParser(road)
         for slug in slugs:
-            url = url_tmp % slug
+            url = url_tmp % slug.decode('latin')
             resp, content = h.request(url, 'GET')
             parser.scrape(content)
             parser.scrape(content)
