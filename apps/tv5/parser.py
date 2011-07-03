@@ -184,7 +184,7 @@ def parse_site():
             if situations:
                 result = '\n'.join('%s' % s for s in situations)
             else:
-                result 'None'
+                result = 'None'
             yield result
 
 if __name__ == '__main__':
