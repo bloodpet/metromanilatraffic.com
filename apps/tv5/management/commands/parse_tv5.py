@@ -5,4 +5,4 @@ class Command(NoArgsCommand):
 
     def handle_noargs(self, **options):
         results = parse_site()
-        return '\n'.join(['%s' for result in results])
+        return '\n'.join(['%s' % (result,) for result in results]) + '\n'

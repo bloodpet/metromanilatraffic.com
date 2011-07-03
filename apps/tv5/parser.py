@@ -101,6 +101,7 @@ class RoadParser(object):
                     direction = tmp_dir
                     break
             name = line['name']
+            print name
             # Get time
             update_ago = line['update_ago%s' % ind]
             value, unit, _ = update_ago.split(' ')
@@ -111,9 +112,11 @@ class RoadParser(object):
             elif unit.find('sec') > -1:
                 delta = datetime.timedelta(0, int(value))
             else:
+                print 'time not recognized'
                 continue
             # Ignore updates 2 hrs ago
             if delta > datetime.timedelta(0, 2 * 60 * 60):
+                print 'too old', delta, datetime.timedelta(0, 2 * 60 * 60)
                 continue
             time = now - delta
             # Get sections & nodes
@@ -128,7 +131,7 @@ class RoadParser(object):
                 #print rate, sections
                 pass
             else:
-                #print name
+                print 'No sections', rate, name
                 pass
             for section in sections:
                 self.section_status.add(section, rate, time)
@@ -148,12 +151,14 @@ class RoadParser(object):
             situation.save()
             situation.status_at = time
             situation.save()
+            return (rate, time, section)
 
     def scrape(self, content):
         self.content = content.decode('latin')
         for pattern in patterns:
             data = scrape(pattern, html=self.content)
             self.lines = self.lines + data['line']
+        return self.lines
 
 
 def parse_site():
@@ -173,7 +178,6 @@ def parse_site():
         for slug in slugs:
             url = url_tmp % slug.decode('latin')
             resp, content = h.request(url, 'GET')
-            parser.scrape(content)
             parser.scrape(content)
             parser.parse_lines()
             result = parser.post_situations()
