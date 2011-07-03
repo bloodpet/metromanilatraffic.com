@@ -131,7 +131,7 @@ class RoadParser(object):
                 #print rate, sections
                 pass
             else:
-                print 'No sections', rate, name
+                print 'No sections', rate, name.encode('latin')
                 pass
             for section in sections:
                 self.section_status.add(section, rate, time)
