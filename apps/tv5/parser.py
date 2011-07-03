@@ -182,7 +182,9 @@ def parse_site():
             parser.parse_lines()
             situations = parser.post_situations()
             if situations:
-                result = '\n'.join('%s' % s for s in situations)
+                result = 'success', slug
+                print situations
+                #result = '\n'.join('%s' % s for s in situations)
             else:
                 result = 'None'
             yield result
