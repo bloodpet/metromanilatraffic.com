@@ -101,7 +101,7 @@ class RoadParser(object):
                     direction = tmp_dir
                     break
             name = line['name']
-            print name
+            #print name.encode('latin')
             # Get time
             update_ago = line['update_ago%s' % ind]
             value, unit, _ = update_ago.split(' ')
