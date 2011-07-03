@@ -151,7 +151,7 @@ class RoadParser(object):
             situation.save()
             situation.status_at = time
             situation.save()
-            return (rate, time, section)
+            yield (rate, time, section)
 
     def scrape(self, content):
         self.content = content.decode('latin')
