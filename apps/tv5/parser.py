@@ -180,7 +180,11 @@ def parse_site():
             resp, content = h.request(url, 'GET')
             parser.scrape(content)
             parser.parse_lines()
-            result = '\n'.join('%s' % s for s in parser.post_situations())
+            situations = parser.post_situations()
+            if situations:
+                result = '\n'.join('%s' % s for s in situations)
+            else:
+                result 'None'
             yield result
 
 if __name__ == '__main__':
