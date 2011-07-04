@@ -182,7 +182,10 @@ def parse_site(road_slugs, verbosity):
     options['verbosity'] = int(verbosity)
     #h = httplib2.Http()
     h = httplib2.Http('.cache')
-    roads = Road.objects.filter(slug__in=road_slugs)
+    if road_slugs:
+        roads = Road.objects.filter(slug__in=road_slugs)
+    else:
+        roads = Road.objects.all()
     for road_id, slugs in road_urls:
         road = Road.objects.get(id=road_id)
         if road not in roads:
