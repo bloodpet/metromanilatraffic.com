@@ -11,6 +11,8 @@ from scrapemark import scrape
 from fuzzy import Soundex
 from core.models import Road, Situation
 
+options = {}
+
 soundex = Soundex(6)
 
 patterns = [
@@ -82,6 +84,8 @@ class SectionStatus(object):
         return mean
 
     def get_rates(self):
+        if options['verbosity'] > 2:
+            print self.d.keys()
         for section in self.d.keys():
             yield section, self.get_middle(section), self.d[section]['time']
 
@@ -115,11 +119,13 @@ class RoadParser(object):
             elif unit.find('sec') > -1:
                 delta = datetime.timedelta(0, int(value))
             else:
-                print 'time not recognized'
+                if options['verbosity'] > 1:
+                    print 'time not recognized'
                 continue
             # Ignore updates 2 hrs ago
             if delta > datetime.timedelta(0, 2 * 60 * 60):
-                print 'too old', delta, datetime.timedelta(0, 2 * 60 * 60)
+                if options['verbosity'] > 1:
+                    print 'too old', delta, datetime.timedelta(0, 2 * 60 * 60)
                 continue
             time = now - delta
             # Get sections & nodes
@@ -131,12 +137,16 @@ class RoadParser(object):
             for node in nodes:
                 sections.update(section_query.filter(start=node), section_query.filter(end=node))
             if sections:
-                #print rate, sections
+                if options['verbosity'] > 2:
+                    print rate, sections
                 pass
             else:
-                print 'No sections for', self.road.name, rate, name.encode('latin')
+                if options['verbosity'] > 1:
+                    print 'No sections for', self.road.name, rate, name.encode('latin')
                 pass
             for section in sections:
+                if options['verbosity'] > 2:
+                    print 'add to section_status', section, rate, time
                 self.section_status.add(section, rate, time)
 
     def parse_lines(self):
@@ -144,6 +154,7 @@ class RoadParser(object):
             self.parse_line(line)
 
     def post_situations(self):
+        situations = []
         for section, rate, time in self.section_status.get_rates():
             situation = Situation(
                 section = section,
@@ -154,7 +165,10 @@ class RoadParser(object):
             situation.save()
             situation.status_at = time
             situation.save()
-            yield (rate, time, section)
+            if options['verbosity'] > 2:
+                print (rate, time, section)
+            situations.append(situation)
+        return situations
 
     def scrape(self, content):
         self.content = content.decode('latin')
@@ -164,19 +178,17 @@ class RoadParser(object):
         return self.lines
 
 
-def parse_site():
-    #road = Road.objects.get(id=1)
-    #parser = RoadParser(road)
-    #content = open('line-view-edsa.php.htm').read()
-    #parser.scrape(content)
-    #parser.parse_lines()
-    #parser.post_situations()
-    ##print parser.section_status
-    #return
-    h = httplib2.Http()
-    #h = httplib2.Http('.cache')
+def parse_site(road_slugs, verbosity):
+    options['verbosity'] = int(verbosity)
+    #h = httplib2.Http()
+    h = httplib2.Http('.cache')
+    roads = Road.objects.filter(slug__in=road_slugs)
     for road_id, slugs in road_urls:
         road = Road.objects.get(id=road_id)
+        if road not in roads:
+            if options['verbosity'] > 1:
+                print road, 'not in', roads, road_slugs
+            continue
         parser = RoadParser(road)
         for slug in slugs:
             url = url_tmp % slug.decode('latin')
@@ -185,8 +197,9 @@ def parse_site():
             parser.parse_lines()
             situations = parser.post_situations()
             if situations:
-                result = 'success', slug
-                print situations
+                result = 'success', slug, situations
+                if options['verbosity'] > 2:
+                    print situations
                 #result = '\n'.join('%s' % s for s in situations)
             else:
                 result = 'None'
