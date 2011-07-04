@@ -14,7 +14,10 @@ class Command(NoArgsCommand):
     )
 
     def handle_noargs(self, **options):
-        road_slugs = options.get('roads', '').split(',')
+        if options.get('roads'):
+            road_slugs = options.get('roads', '').split(',')
+        else:
+            road_slugs = []
         verbosity = options['verbosity']
         results = parse_site(road_slugs, verbosity)
         return '\n'.join(['%s' % (result,) for result in results]) + '\n'
