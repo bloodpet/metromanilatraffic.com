@@ -43,6 +43,9 @@ url_tmp = u'http://mmdatraffic.interaksyon.com/line-view-%s.php'
 status_rate = dict(
     # Heavy
     ls1 = 7,
+    ls4 = 7,
+    ls5 = 7,
+    ls6 = 7,
     # Light
     ls2 = 3,
     # Moderate
