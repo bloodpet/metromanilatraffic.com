@@ -1,4 +1,5 @@
 import datetime
+import math
 from django.db import models
 from django.template.defaultfilters import slugify
 
@@ -103,10 +104,27 @@ class Road(models.Model):
         median = rates[len(rates)/2]
         return median
 
+    def get_rate_mean(self):
+        rates = []
+        for section in self.section_set.all():
+            try:
+                rate_obj = section.get_latest_rate()
+            except models.exceptions.ObjectDoesNotExist:
+                continue
+            rate = rate_obj.rating
+            if rate > 0:
+                rates.append(rate)
+        # Get the upper mean
+        if len(rates) == 0:
+            return None
+        mean = int(math.ceil( 1.0 * sum(rates) / len(rates) ))
+        return mean
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         return super(Road, self).save(*args, **kwargs)
 
+    get_rate_average = get_rate_mean
 
 class Node(models.Model):
     road = models.ForeignKey(Road)
