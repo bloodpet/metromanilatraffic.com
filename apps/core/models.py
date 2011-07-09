@@ -126,6 +126,17 @@ class Road(models.Model):
 
     get_rate_average = get_rate_mean
 
+    # Directions:
+    def northbound(self):
+        return self.section_set.filter(direction='n')
+    def southbound(self):
+        return self.section_set.filter(direction='s')
+    def eastbound(self):
+        return self.section_set.filter(direction='e')
+    def westbound(self):
+        return self.section_set.filter(direction='w')
+
+
 class Node(models.Model):
     road = models.ForeignKey(Road)
     name = models.CharField(max_length=128)
