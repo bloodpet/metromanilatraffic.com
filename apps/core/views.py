@@ -10,6 +10,39 @@ from core.forms import *
 from core.backend import generate_sections, get_statuses
 
 NONCAPS = re.compile('[^A-Z]')
+BASE_TEMPLATE = 'base.html'
+
+
+class ThemeView(TemplateView):
+    base_template = 'base.html'
+    theme = None
+
+    def get(self, request, *args, **kwargs):
+        if 'theme' in request.GET:
+            self.theme = request.GET['theme']
+            self.template_name = '%s/%s' % (self.theme, self.template_name)
+        return super(ThemeView, self).get(request, *args, **kwargs)
+
+    def get_base_template(self):
+        if self.theme is not None:
+            return '%s/%s' % (self.theme, self.base_template)
+        else:
+            return self.base_template
+
+    def get_context_data(self, **kwargs):
+        result = super(ThemeView, self).get_context_data(**kwargs)
+        result['base_template'] = self.get_base_template()
+        result['theme'] = self.theme
+        if self.theme is not None:
+            result['section_template'] = '%s/%s' % (self.theme, 'section.html')
+        else:
+            result['section_template'] = 'section.html'
+        return result
+
+    def get_template_name(self):
+        print 'get_template_name'
+        if self.theme is not False:
+            return '%s/%s' % (self.theme, self.template_name)
 
 
 class MobileBase(object):
@@ -22,8 +55,9 @@ class MobileBase(object):
                 self.template_name = 'mobile/' + self.template_name
 
 
-class HomeView(TemplateView, MobileBase):
+class HomeView(ThemeView, MobileBase):
     template_name = 'home.html'
+    get_template_name = ThemeView.get_template_name
 
     def dispatch(self, request, *args, **kwargs):
         self.check_for_mobile(request)
@@ -36,7 +70,7 @@ class HomeView(TemplateView, MobileBase):
         return result
 
 
-class RoadView(TemplateView, MobileBase):
+class RoadView(ThemeView, MobileBase):
     template_name = 'road.html'
 
     def get(self, request, *args, **kwargs):
@@ -62,7 +96,7 @@ class RoadView(TemplateView, MobileBase):
         return result
 
 
-class EditRoad(TemplateView, MobileBase):
+class EditRoad(ThemeView, MobileBase):
     template_name = 'edit.html'
 
     def get(self, request, *args, **kwargs):
@@ -121,7 +155,7 @@ class EditRoad(TemplateView, MobileBase):
         return simple.redirect_to(request, request.get_full_path())
 
 
-class GenerateSections(TemplateView):
+class GenerateSections(ThemeView):
     template_name = 'generate_sections.html'
 
     @method_decorator(require_login)
@@ -145,7 +179,7 @@ class GenerateSections(TemplateView):
             return super(GenerateSections, self).get(request, *args, **kwargs)
 
 
-class CreateRoad(TemplateView, MobileBase):
+class CreateRoad(ThemeView, MobileBase):
     template_name = 'create-road.html'
     form_class = CreateRoadForm
     data = {}
