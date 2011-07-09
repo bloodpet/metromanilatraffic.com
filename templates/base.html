@@ -41,11 +41,11 @@
 </head>
 
 <body>
-	<div id="header-container" class="container_16 topnav">
+	<div id="header-container" class="container_16 topnav ui-widget-header ui-corner-bottom">
 		<header>
-			<div class="grid_6">
-				<a href="{% url home %}" title="Metro Manila Traffic Home">Roads</a>
-				<a href="{% url mobile-home %}" title="Mobile Home">Mobile</a>
+			<div class="grid_6 left">
+				<a class="fg-button ui-state-default ui-corner-all" href="{% url home %}" title="Metro Manila Traffic Home"><div class="ui-icon ui-icon-home"></div>Roads</a>
+				<a class="fg-button ui-state-default ui-corner-all"  href="{% url mobile-home %}" title="Mobile Home"><div class="ui-icon ui-icon-signal-diag"></div>Mobile</a>
 			</div>
 			<div class="grid_4 center">
 				<h2>
@@ -54,13 +54,13 @@
 			</div>
 			<div class="grid_6 right">
 				{% if user.is_anonymous %}
-				<a href="{% url accounts-login %}?next={{ request.path }}" title="Login">Login</a></li>
+				<a class="fg-button ui-state-default ui-corner-all"  href="{% url accounts-login %}?next={{ request.path }}" title="Login"><div class="ui-icon ui-icon-person"></div>Login</a></li>
 				{% else %}
 				{% if road %}
-				<a href="{% url edit_road road.slug %}" title="Update Traffic">Update</a></li>
+				<a class="fg-button ui-state-default ui-corner-all"  href="{% url edit_road road.slug %}" title="Update Traffic"><div class="ui-icon ui-icon-pencil"></div>Update</a></li>
 				{% endif %}
-				<a href="{% url accounts-edit %}" title="Profile for {{ user }}">Profile</a></li>
-				<a href="{% url accounts-logout %}?next={{ request.path }}" title="Logout">Logout</a></li>
+				<a class="fg-button ui-state-default ui-corner-all"  href="{% url accounts-edit %}" title="Profile for {{ user }}"><div class="ui-icon ui-icon-person"></div>Profile</a></li>
+				<a class="fg-button ui-state-default ui-corner-all"  href="{% url accounts-logout %}?next={{ request.path }}" title="Logout"><div class="ui-icon ui-icon-power"></div>Logout</a></li>
 				{% endif %}
 			</div>
 			<div class="clear">&nbsp;</div>
@@ -167,6 +167,16 @@
 				$('#messages').fadeOut();
 				return false;
 			});
+
+			$('a.ui-state-default').hover(
+				function(){ 
+					$(this).addClass("ui-state-hover"); 
+				},
+				function(){ 
+					$(this).removeClass("ui-state-hover"); 
+				}
+			)
+
 			$('li.message a').click(function () {
 				var parent_li = $(this).parent();
 				var parent_ul = parent_li.parent();

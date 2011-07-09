@@ -311,16 +311,16 @@ nav {
 
 .topnav {
 	background-color: #cccccc;
-	border: 1px solid #333333;
-	border-top: 0;
-	border-bottom-left-radius: 8px;
-	border-bottom-right-radius: 8px;
+	/*border: 1px solid #333333;*/
+	/*border-top: 0;*/
+	/*border-bottom-left-radius: 8px;*/
+	/*border-bottom-right-radius: 8px;*/
 	margin-bottom: 4px;
 }
 .topnav a {
 	background-color: #ffffff;
-	border: 1px solid #333333;
-	border-radius: 4px;
+	/*border: 1px solid #333333;*/
+	/*border-radius: 4px;*/
 	display: inline-table;
 	height: 32px;
 	line-height: 32px;
@@ -356,9 +356,9 @@ nav {
 	color: #000;
 	border: 1px solid #000;
 	margin: 4px 4px 4px 4px;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
-	border-radius: 8px;
+	/*-moz-border-radius: 8px;*/
+	/*-webkit-border-radius: 8px;*/
+	/*border-radius: 8px;*/
 }
 .road-link:link, .road-link:visited, .road-link:active, .road-link:hover {
 	color: #000;
@@ -530,4 +530,20 @@ nav {
 
 .about {
 	font-size: 13pt;
+}
+
+
+/*
+ * customize jquery ui elements
+ *
+ */
+#header-container .ui-icon {
+	margin-top: 8px;
+}
+
+.left .ui-icon {
+	float: left;
+}
+.right .ui-icon {
+	float: right;
 }

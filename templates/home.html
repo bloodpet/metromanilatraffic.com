@@ -13,7 +13,7 @@ Metro Manila Traffic
         <p>Choose a road.</p>
 		<div class="road-block">
 			{% for road in roads %}
-			<a class="road-link rate{{ road.get_rate_average }}" href="{% url show_road road.slug %}">
+			<a class="road-link rate{{ road.get_rate_average }} ui-corner-all" href="{% url show_road road.slug %}">
 				{{ road.name }}
 				{% if road.get_latest_status %}
 				as of {{ road.get_latest_status.status_at|time }}
