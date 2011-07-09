@@ -1,0 +1,95 @@
+{% extends base_template %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block page_title %}
+Metro Manila Traffic
+{% endblock %}
+
+{% block content %}
+	{% for road in roads %}
+	<div class="roads">
+		<h3>
+			<a href="#">
+			{{ road.name }}
+			{% if road.get_latest_status %}
+			as of {{ road.get_latest_status.status_at|time }}
+			{% endif %}
+			</a>
+		</h3>
+		<div class="road-block">
+			{% if road.northbound %}
+			<div class="road">
+				<h4>Northbound</h4>
+				<div class="traffic">
+					{% for section in road.northbound %}
+					{% include section_template %}
+					{% endfor %}
+				</div>
+			</div>
+			{% endif %}
+			{% if road.southbound %}
+			<div class="road">
+				<h4>Southbound</h4>
+				<div class="traffic">
+					{% for section in road.southbound %}
+					{% include section_template %}
+					{% endfor %}
+				</div>
+			</div>
+			{% endif %}
+			{% if road.eastbound %}
+			<div class="road">
+				<h4>Eastbound</h4>
+				<div class="traffic">
+					{% for section in road.eastbound %}
+					{% include section_template %}
+					{% endfor %}
+				</div>
+			</div>
+			{% endif %}
+			{% if road.westbound %}
+			<div class="road">
+				<h4>Westbound</h4>
+				<div class="traffic">
+					{% for section in road.westbound %}
+					{% include section_template %}
+					{% endfor %}
+				</div>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+	{% endfor %}
+{% endblock %}
+
+{% block legend %}
+{% endblock legend %}
+
+{% block extrascripts %}
+	{% if not request.GET.full %}
+	<script type="text/javascript">
+		if (Modernizr.touch){
+			// bind to touchstart, touchmove, etc and watch `event.streamId`
+			window.location = '{% url mobile-home %}';
+		} else {
+			// bind to normal click, mousemove, etc
+		}
+		$(document).ready(function () {
+			$('.roads').accordion({
+				active: 0,
+				autoHeight: false,
+				collapsible: true,
+				navigation: true
+			});
+			$('.traffic').draggable({
+				grid: [76, 32],
+				axis: 'x'
+			});
+		});
+	</script>
+	{% endif %}
+{% endblock %}
+
