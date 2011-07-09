@@ -33,11 +33,11 @@ patterns = [
 ]
 
 road_urls = [
-    (1, ['edsa', ]),
-    (6, ['quezon-ave', 'españa',]),
-    (2, ['c5', ]),
     (4, ['roxas-blvd', ]),
+    (6, ['quezon-ave', 'españa',]),
     (5, ['slex', ]),
+    (2, ['c5', ]),
+    (1, ['edsa', ]),
 ]
 
 url_tmp = u'http://mmdatraffic.interaksyon.com/line-view-%s.php'
