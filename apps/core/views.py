@@ -40,7 +40,6 @@ class ThemeView(TemplateView):
         return result
 
     def get_template_name(self):
-        print 'get_template_name'
         if self.theme is not False:
             return '%s/%s' % (self.theme, self.template_name)
 
