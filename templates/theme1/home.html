@@ -66,14 +66,15 @@ Metro Manila Traffic
 {% endblock %}
 
 {% block extrascripts %}
-	{% if not request.GET.full %}
 	<script type="text/javascript">
+		{% if not request.GET.full %}
 		if (Modernizr.touch){
 			// bind to touchstart, touchmove, etc and watch `event.streamId`
 			window.location = '{% url mobile-home %}';
 		} else {
 			// bind to normal click, mousemove, etc
 		}
+		{% endif %}
 		$(document).ready(function () {
 			$('.roads').accordion({
 				active: 0,
@@ -88,6 +89,5 @@ Metro Manila Traffic
 			$('#content-container').sortable();
 		});
 	</script>
-	{% endif %}
 {% endblock %}
 
