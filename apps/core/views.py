@@ -20,7 +20,6 @@ class ThemeView(TemplateView):
     def get(self, request, *args, **kwargs):
         if 'theme' in request.GET:
             self.theme = request.GET['theme']
-            self.template_name = '%s/%s' % (self.theme, self.template_name)
         return super(ThemeView, self).get(request, *args, **kwargs)
 
     def get_base_template(self):
@@ -39,9 +38,12 @@ class ThemeView(TemplateView):
             result['section_template'] = 'section.html'
         return result
 
-    def get_template_name(self):
+    def get_template_names(self):
+        templates = []
         if self.theme is not False:
-            return '%s/%s' % (self.theme, self.template_name)
+            templates.append('%s/%s' % (self.theme, self.template_name))
+        templates.append(self.template_name)
+        return templates
 
 
 class MobileBase(object):
@@ -56,7 +58,6 @@ class MobileBase(object):
 
 class HomeView(ThemeView, MobileBase):
     template_name = 'home.html'
-    get_template_name = ThemeView.get_template_name
 
     def dispatch(self, request, *args, **kwargs):
         self.check_for_mobile(request)
