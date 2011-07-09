@@ -78,6 +78,7 @@ Metro Manila Traffic
 {% endblock %}
 
 {% block extrascripts %}
+	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery.mousewheel.js"></script>
 	<script type="text/javascript">
 		{% if not request.GET.full %}
 		if (Modernizr.touch){
@@ -101,10 +102,6 @@ Metro Manila Traffic
 				collapsible: true,
 				navigation: true
 			});
-			$('.traffic').draggable({
-				grid: [76, 32],
-				axis: 'x'
-			});
 			$('#content-container').sortable({
 				distance: 32
 			});
@@ -112,18 +109,50 @@ Metro Manila Traffic
 				//scrollpane parts
 				var scrollPane = $( this ),
 				scrollContent = scrollPane.find( ".traffic" );
+				// function for mousewheel
+				var moveScrollContent = function(e, delta) {
+					// Scroll twice as fast
+					delta = delta * 2
+					scrollbar.slider("value", scrollbar.slider("value") - delta);
+					if ( scrollContent.width() > scrollPane.width() ) {
+						var orig_margin = scrollContent.css( "margin-left");
+						if (isNaN(orig_margin)) {
+							orig_margin = parseInt(orig_margin.replace('px', ''));
+						};
+						var margin = orig_margin + Math.round(
+							(0-delta) / 100 * ( scrollPane.width() - scrollContent.width() )
+						);
+						//TODO calculate the correct value/values for when to stop
+						// 850 was used from observation.
+						if (scrollContent.width() + margin <= 850) {
+							return false;
+						};
+						if (margin > 0) {
+							return false;
+						};
+						scrollContent.css( "margin-left",  margin + "px" );
+					} else {
+						scrollContent.css( "margin-left", 0 );
+					}
+					return false;
+				};
+				var slideContent = function( event, ui ) {
+					if ( scrollContent.width() > scrollPane.width() ) {
+						scrollContent.css( "margin-left", Math.round(
+							ui.value / 100 * ( scrollPane.width() - scrollContent.width() )
+						) + "px" );
+					} else {
+						scrollContent.css( "margin-left", 0 );
+					}
+				};
 				//build slider
 				var scrollbar = scrollPane.find( ".scroll-bar" ).slider({
-					slide: function( event, ui ) {
-						if ( scrollContent.width() > scrollPane.width() ) {
-							scrollContent.css( "margin-left", Math.round(
-								ui.value / 100 * ( scrollPane.width() - scrollContent.width() )
-							) + "px" );
-						} else {
-							scrollContent.css( "margin-left", 0 );
-						}
-					}
-				});
+					slide: slideContent
+				}).bind("slide slidechange", function(e, ui) {
+					var val = ui.value;
+					// Handle the slider event here
+				}).mousewheel(moveScrollContent);
+				scrollPane.mousewheel(moveScrollContent);
 				//append icon to handle
 				var handleHelper = scrollbar.find( ".ui-slider-handle" )
 				.mousedown(function() {
