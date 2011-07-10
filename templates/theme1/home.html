@@ -31,7 +31,7 @@ Metro Manila Traffic
 			</div>
 			{% endif %}
 			{% if road.southbound %}
-			<div class="road" count="{{ road.northbound.count }}">
+			<div class="road" count="{{ road.southbound.count }}">
 				<h4>Southbound</h4>
 				<div class="traffic">
 					{% for section in road.southbound %}
@@ -41,7 +41,7 @@ Metro Manila Traffic
 			</div>
 			{% endif %}
 			{% if road.eastbound %}
-			<div class="road" count="{{ road.northbound.count }}">
+			<div class="road" count="{{ road.eastbound.count }}">
 				<h4>Eastbound</h4>
 				<div class="traffic">
 					{% for section in road.eastbound %}
@@ -51,7 +51,7 @@ Metro Manila Traffic
 			</div>
 			{% endif %}
 			{% if road.westbound %}
-			<div class="road" count="{{ road.northbound.count }}">
+			<div class="road" count="{{ road.westbound.count }}">
 				<h4>Westbound</h4>
 				<div class="traffic">
 					{% for section in road.westbound %}
@@ -100,11 +100,11 @@ Metro Manila Traffic
 					};
 					delta = delta * 76;
 					var new_left = orig_left + delta;
-					if (new_left > 76) {
-						//alert('stop at ' + new_left)
+					if (delta > 0 && new_left > (76/2)) {
+						//alert('stop at ' + new_left + ' added ' + delta);
 						return false;
 					};
-					if (width + new_left <= parent_width) {
+					if (delta < 0 && width + new_left <= parent_width) {
 						//alert((width + new_left) + ' stop ' + parent_width);
 						return false;
 					};
@@ -120,8 +120,9 @@ Metro Manila Traffic
 				navigation: true
 			});
 			$('.traffic').draggable({
-				grid: [76, 32],
-				axis: 'x'
+				axis: 'x',
+				refreshPositions: true,
+				grid: [76, 32]
 			});
 			/* Activate roads with updates
 			$('.active-road').accordion({
