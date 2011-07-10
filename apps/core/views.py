@@ -48,6 +48,19 @@ class ThemeView(TemplateView):
         return templates
 
 
+class HomeThemeView(ThemeView):
+    template_name = 'home.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        return super(HomeThemeView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        result = super(HomeThemeView, self).get_context_data(**kwargs)
+        result['roads'] = Road.objects.annotate(latest_order=models.Max('section__situation__status_at')).order_by('-latest_order')
+        result['ratings'] = TRAFFIC_RATINGS[3:]
+        return result
+
+
 class MobileBase(object):
 
     def check_for_mobile(self, request):
@@ -58,7 +71,7 @@ class MobileBase(object):
                 self.template_name = 'mobile/' + self.template_name
 
 
-class HomeView(ThemeView, MobileBase):
+class HomeView(TemplateView, MobileBase):
     template_name = 'home.html'
 
     def dispatch(self, request, *args, **kwargs):
@@ -72,7 +85,7 @@ class HomeView(ThemeView, MobileBase):
         return result
 
 
-class RoadView(ThemeView, MobileBase):
+class RoadView(TemplateView, MobileBase):
     template_name = 'road.html'
 
     def get(self, request, *args, **kwargs):
@@ -98,7 +111,7 @@ class RoadView(ThemeView, MobileBase):
         return result
 
 
-class EditRoad(ThemeView, MobileBase):
+class EditRoad(TemplateView, MobileBase):
     template_name = 'edit.html'
 
     def get(self, request, *args, **kwargs):
@@ -157,7 +170,7 @@ class EditRoad(ThemeView, MobileBase):
         return simple.redirect_to(request, request.get_full_path())
 
 
-class GenerateSections(ThemeView):
+class GenerateSections(TemplateView):
     template_name = 'generate_sections.html'
 
     @method_decorator(require_login)
@@ -181,7 +194,7 @@ class GenerateSections(ThemeView):
             return super(GenerateSections, self).get(request, *args, **kwargs)
 
 
-class CreateRoad(ThemeView, MobileBase):
+class CreateRoad(TemplateView, MobileBase):
     template_name = 'create-road.html'
     form_class = CreateRoadForm
     data = {}
