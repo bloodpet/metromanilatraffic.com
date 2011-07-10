@@ -66,6 +66,7 @@ Metro Manila Traffic
 {% endblock %}
 
 {% block extrascripts %}
+	<script type="text/javascript" src="{{ STATIC_URL }}js/libs/jquery.mousewheel.js"></script>
 	<script type="text/javascript">
 		{% if not request.GET.full %}
 		if (Modernizr.touch){
@@ -84,6 +85,33 @@ Metro Manila Traffic
 			});
 			$('#content-container').sortable({
 				distance: 32
+			});
+			$('.traffic').each(function () {
+				$(this).mousewheel(function (e, delta) {
+					var orig_left = $(this).css('left');
+					var width = $(this).css('width');
+					// Assume the parent width
+					var parent_width = 836;
+					if (isNaN(width)) {
+						width = parseInt(width.replace('px', ''));
+					};
+					if (isNaN(orig_left)) {
+						orig_left = parseInt(orig_left.replace('px', ''));
+					};
+					delta = delta * 76;
+					var new_left = orig_left + delta;
+					if (new_left > 76) {
+						//alert('stop at ' + new_left)
+						return false;
+					};
+					if (width + new_left <= parent_width) {
+						//alert((width + new_left) + ' stop ' + parent_width);
+						return false;
+					};
+					//alert(width + new_left);
+					$(this).css('left', new_left);
+					return false;
+				});
 			});
 			$('.roads').accordion({
 				active: 1,
