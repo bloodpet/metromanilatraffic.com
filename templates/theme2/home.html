@@ -112,7 +112,7 @@ Metro Manila Traffic
 				// function for mousewheel
 				var moveScrollContent = function(e, delta) {
 					// Scroll twice as fast
-					delta = delta * 2
+					delta = delta * 2;
 					scrollbar.slider("value", scrollbar.slider("value") - delta);
 					if ( scrollContent.width() > scrollPane.width() ) {
 						var orig_margin = scrollContent.css( "margin-left");
@@ -133,7 +133,7 @@ Metro Manila Traffic
 						scrollContent.css( "margin-left",  margin + "px" );
 					} else {
 						scrollContent.css( "margin-left", 0 );
-					}
+					};
 					return false;
 				};
 				var slideContent = function( event, ui ) {
