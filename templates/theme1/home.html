@@ -10,7 +10,7 @@ Metro Manila Traffic
 
 {% block content %}
 	{% for road in roads %}
-	<div class="roads">
+	<div class="roads ui-widget{% if road.get_latest_status %} active-road{% endif %}">
 		<h3>
 			<a href="#">
 			{{ road.name }}
@@ -82,6 +82,9 @@ Metro Manila Traffic
 				var width = parseInt(el.attr('count')) * (148 + 4);
 				el.find('.traffic').css({width: width + 'px'});
 			});
+			$('#content-container').sortable({
+				distance: 32
+			});
 			$('.roads').accordion({
 				active: 1,
 				autoHeight: false,
@@ -92,7 +95,11 @@ Metro Manila Traffic
 				grid: [76, 32],
 				axis: 'x'
 			});
-			$('#content-container').sortable();
+			/* Activate roads with updates
+			$('.active-road').accordion({
+				active: 0
+			});
+			*/
 		});
 	</script>
 {% endblock %}
