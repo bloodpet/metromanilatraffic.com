@@ -95,15 +95,15 @@ Metro Manila Traffic
 				var width = parseInt(el.attr('count')) * (148 + 4);
 				el.find('.traffic').css({width: width + 'px'});
 			});
+			$('#content-container').sortable({
+				distance: 32
+			});
 			$('.roads').accordion({
 				// Expanding everything because of the error on getting the scrollbar size for the slider
 				active: 0,
 				autoHeight: false,
 				collapsible: true,
 				navigation: true
-			});
-			$('#content-container').sortable({
-				distance: 32
 			});
 			$('.road').each(function (){
 				//scrollpane parts
@@ -202,6 +202,14 @@ Metro Manila Traffic
 				//init scrollbar size
 				setTimeout( sizeScrollbar, 10 );//safari wants a timeout
 			});
+			$('.roads').accordion({
+				active: 1
+			});
+			/* Activate roads with updates
+			$('.active-road').accordion({
+				active: 0
+			});
+			*/
 		});
 	</script>
 {% endblock %}
