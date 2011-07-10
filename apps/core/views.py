@@ -18,9 +18,8 @@ class ThemeView(TemplateView):
     theme = None
 
     def get(self, request, *args, **kwargs):
-        data = {}
+        data = request.GET.copy()
         data.update(kwargs)
-        data.update(request.GET)
         if 'theme' in data:
             self.theme = data['theme']
         return super(ThemeView, self).get(request, *args, **kwargs)
