@@ -21,7 +21,7 @@ Metro Manila Traffic
 		</h3>
 		<div class="road-block">
 			{% if road.northbound %}
-			<div class="road">
+			<div class="road" count="{{ road.northbound.count }}">
 				<h4>Northbound</h4>
 				<div class="traffic">
 					{% for section in road.northbound %}
@@ -31,7 +31,7 @@ Metro Manila Traffic
 			</div>
 			{% endif %}
 			{% if road.southbound %}
-			<div class="road">
+			<div class="road" count="{{ road.northbound.count }}">
 				<h4>Southbound</h4>
 				<div class="traffic">
 					{% for section in road.southbound %}
@@ -41,7 +41,7 @@ Metro Manila Traffic
 			</div>
 			{% endif %}
 			{% if road.eastbound %}
-			<div class="road">
+			<div class="road" count="{{ road.northbound.count }}">
 				<h4>Eastbound</h4>
 				<div class="traffic">
 					{% for section in road.eastbound %}
@@ -51,7 +51,7 @@ Metro Manila Traffic
 			</div>
 			{% endif %}
 			{% if road.westbound %}
-			<div class="road">
+			<div class="road" count="{{ road.northbound.count }}">
 				<h4>Westbound</h4>
 				<div class="traffic">
 					{% for section in road.westbound %}
@@ -76,6 +76,12 @@ Metro Manila Traffic
 		}
 		{% endif %}
 		$(document).ready(function () {
+			$('.road').each(function () {
+				// Resize element that contains all the sections
+				var el = $(this);
+				var width = parseInt(el.attr('count')) * (148 + 4);
+				el.find('.traffic').css({width: width + 'px'});
+			});
 			$('.roads').accordion({
 				active: 1,
 				autoHeight: false,
