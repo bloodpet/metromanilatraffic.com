@@ -50,35 +50,24 @@ class ThemeView(TemplateView):
 
 class HomeThemeView(TemplateView):
     template_name = 'home.html'
-    base_template = 'base.html'
-    theme = None
-
-    def dispatch(self, request, *args, **kwargs):
-        data = request.GET.copy()
-        data.update(kwargs)
-        if 'theme' in data:
-            self.theme = data['theme']
-        return super(HomeThemeView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
+        base_template = 'base.html'
+        theme = None
         result = super(HomeThemeView, self).get_context_data(**kwargs)
+        if 'theme' in kwargs:
+            theme = kwargs['theme']
+            self.template_name = '%s/%s' % (theme, self.template_name)
         result['roads'] = Road.objects.annotate(latest_order=models.Max('section__situation__status_at')).order_by('-latest_order')
         result['ratings'] = TRAFFIC_RATINGS[3:]
-        result['theme'] = self.theme
-        if self.theme is not None:
-            result['section_template'] = '%s/%s' % (self.theme, 'section.html')
-            result['base_template'] = '%s/%s' % (self.theme, self.base_template)
+        result['theme'] = theme
+        if theme is not None:
+            result['section_template'] = '%s/%s' % (theme, 'section.html')
+            result['base_template'] = '%s/%s' % (theme, base_template)
         else:
             result['section_template'] = 'section.html'
-            result['base_template'] = self.base_template
+            result['base_template'] = base_template
         return result
-
-    def get_template_names(self):
-        templates = []
-        if self.theme is not False:
-            templates.append('%s/%s' % (self.theme, self.template_name))
-        templates.append(self.template_name)
-        return templates
 
 
 class MobileBase(object):
