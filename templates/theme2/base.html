@@ -44,8 +44,8 @@
 	<div id="header-container" class="container_16 topnav ui-widget-header ui-corner-bottom">
 		<header>
 			<div class="grid_6 left">
-				<a class="fg-button ui-state-default ui-corner-all" href="{% url home %}" title="Metro Manila Traffic Home"><div class="ui-icon ui-icon-home"></div>Roads</a>
 				<a class="fg-button ui-state-default ui-corner-all"  href="{% url mobile-home %}" title="Mobile Home"><div class="ui-icon ui-icon-signal-diag"></div>Mobile</a>
+				<a class="fg-button ui-state-default ui-corner-all"  href="{{ STATIC_URL }}about.html" title="About Us" id="about-link"><div class="ui-icon ui-icon-help"></div>About</a>
 			</div>
 			<div class="grid_4 center">
 				<h2>
@@ -115,7 +115,7 @@
 			<div class="clear">&nbsp;</div>
 		</footer>
 	</div> <!--! end of #footer-container -->
-
+	<div id="about-dialog" title="About Metro Manila Traffic"></div>
 
 	<!-- Javascript at the bottom for fast page loading -->
 
@@ -164,6 +164,21 @@
 
 	<script type="text/javascript">
 		$(document).ready(function () {
+			$('#clear-all-messages a').click(function () {
+				$('#messages').fadeOut();
+				return false;
+			});
+			$('#about-dialog').load($('#about-link').attr('href'));
+			$('#about-dialog').dialog({
+				autoOpen: false,
+				show: "blind",
+				hide: "explode",
+				modal: true
+			});
+			$('#about-link').click(function () {
+				$('#about-dialog').dialog('open');
+				return false;
+			});
 			$('a.ui-state-default').hover(
 				function(){ 
 					$(this).addClass("ui-state-hover"); 
@@ -172,10 +187,6 @@
 					$(this).removeClass("ui-state-hover"); 
 				}
 			);
-			$('#clear-all-messages a').click(function () {
-				$('#messages').fadeOut();
-				return false;
-			});
 			$('li.message a').click(function () {
 				var parent_li = $(this).parent();
 				var parent_ul = parent_li.parent();
