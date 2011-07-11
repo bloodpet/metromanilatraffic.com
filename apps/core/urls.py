@@ -3,7 +3,7 @@ from django.conf.urls.defaults import *
 from core.views import *
 
 urlpatterns = patterns('core.views',
-    url(r'^(?P<theme>theme[a-zA-Z0-9\-]+)/$', HomeThemeView.as_view(), name='theme-home'),
+    #url(r'^(?P<theme>theme[a-zA-Z0-9\-]+)/$', HomeThemeView.as_view(), name='theme-home'),
     # Mobile versions
     url(r'^m/$', HomeView.as_view(template_name='mobile/home.html'), name='mobile-home'),
     url(r'^m/(?P<road>[a-zA-Z0-9\-]+)/$', RoadView.as_view(template_name='mobile/road.html'), name='mobile-show_road'),

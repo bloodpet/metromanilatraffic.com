@@ -12,54 +12,14 @@ Metro Manila Traffic
 	{% for road in roads %}
 	<div class="roads ui-widget{% if road.get_latest_status %} active-road{% endif %}">
 		<h3>
-			<a href="#">
+			<a href="/{{ theme }}/{{ road.slug }}/">
 			{{ road.name }}
 			{% if road.get_latest_status %}
 			as of {{ road.get_latest_status.status_at|time }}
 			{% endif %}
 			</a>
 		</h3>
-		<div class="road-block">
-			{% if road.northbound %}
-			<div class="road" count="{{ road.northbound.count }}">
-				<h4>Northbound</h4>
-				<div class="traffic">
-					{% for section in road.northbound %}
-					{% include section_template %}
-					{% endfor %}
-				</div>
-			</div>
-			{% endif %}
-			{% if road.southbound %}
-			<div class="road" count="{{ road.southbound.count }}">
-				<h4>Southbound</h4>
-				<div class="traffic">
-					{% for section in road.southbound %}
-					{% include section_template %}
-					{% endfor %}
-				</div>
-			</div>
-			{% endif %}
-			{% if road.eastbound %}
-			<div class="road" count="{{ road.eastbound.count }}">
-				<h4>Eastbound</h4>
-				<div class="traffic">
-					{% for section in road.eastbound %}
-					{% include section_template %}
-					{% endfor %}
-				</div>
-			</div>
-			{% endif %}
-			{% if road.westbound %}
-			<div class="road" count="{{ road.westbound.count }}">
-				<h4>Westbound</h4>
-				<div class="traffic">
-					{% for section in road.westbound %}
-					{% include section_template %}
-					{% endfor %}
-				</div>
-			</div>
-			{% endif %}
+		<div class="road-block" id="road-{{ road.id }}">
 		</div>
 	</div>
 	{% endfor %}
@@ -77,41 +37,8 @@ Metro Manila Traffic
 		}
 		{% endif %}
 		$(document).ready(function () {
-			$('.road').each(function () {
-				// Resize element that contains all the sections
-				var el = $(this);
-				var width = parseInt(el.attr('count')) * (148 + 4);
-				el.find('.traffic').css({width: width + 'px'});
-			});
 			$('#content-container').sortable({
 				distance: 32
-			});
-			$('.traffic').each(function () {
-				$(this).mousewheel(function (e, delta) {
-					var orig_left = $(this).css('left');
-					var width = $(this).css('width');
-					// Assume the parent width
-					var parent_width = 836;
-					if (isNaN(width)) {
-						width = parseInt(width.replace('px', ''));
-					};
-					if (isNaN(orig_left)) {
-						orig_left = parseInt(orig_left.replace('px', ''));
-					};
-					delta = delta * 76;
-					var new_left = orig_left + delta;
-					if (delta > 0 && new_left > (76/2)) {
-						//alert('stop at ' + new_left + ' added ' + delta);
-						return false;
-					};
-					if (delta < 0 && width + new_left <= parent_width) {
-						//alert((width + new_left) + ' stop ' + parent_width);
-						return false;
-					};
-					//alert(width + new_left);
-					$(this).css('left', new_left);
-					return false;
-				});
 			});
 			$('.roads').accordion({
 				active: 1,
@@ -119,16 +46,62 @@ Metro Manila Traffic
 				collapsible: true,
 				navigation: true
 			});
-			$('.traffic').draggable({
-				axis: 'x',
-				refreshPositions: true,
-				grid: [76, 32]
-			});
 			/* Activate roads with updates
 			$('.active-road').accordion({
 				active: 0
 			});
 			*/
+			// Load road sections
+			// This is delayed to avoid having timeouts on the server
+			$('.roads').each(function () {
+				var el = $(this);
+				var link = el.find('h3 a');
+				var url = link.attr('href');
+				var block = el.find('.road-block');
+				block.load(url, 
+					function () {
+						//el.accordion('resize');
+						$('.road').each(function () {
+							// Resize element that contains all the sections
+							var el = $(this);
+							var width = parseInt(el.attr('count')) * (148 + 4);
+							el.find('.traffic').css({width: width + 'px'});
+						});
+						$('.traffic').each(function () {
+							$(this).mousewheel(function (e, delta) {
+								var orig_left = $(this).css('left');
+								var width = $(this).css('width');
+								// Assume the parent width
+								var parent_width = 836;
+								if (isNaN(width)) {
+									width = parseInt(width.replace('px', ''));
+								};
+								if (isNaN(orig_left)) {
+									orig_left = parseInt(orig_left.replace('px', ''));
+								};
+								delta = delta * 76;
+								var new_left = orig_left + delta;
+								if (delta > 0 && new_left > (76/2)) {
+									//alert('stop at ' + new_left + ' added ' + delta);
+									return false;
+								};
+								if (delta < 0 && width + new_left <= parent_width) {
+									//alert((width + new_left) + ' stop ' + parent_width);
+									return false;
+								};
+								//alert(width + new_left);
+								$(this).css('left', new_left);
+								return false;
+							});
+						});
+						$('.traffic').draggable({
+							axis: 'x',
+							refreshPositions: true,
+							grid: [76, 32]
+						});
+					}
+				);
+			});
 		});
 	</script>
 {% endblock %}

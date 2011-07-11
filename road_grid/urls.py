@@ -29,7 +29,7 @@ urlpatterns = patterns('',
 
     url(r'^accounts/', include('accounts.urls')),
     url(r'^road_grid/', include('core.generator.urls')),
-    #url(r'^(?P<theme>theme[a-zA-Z0-9\-]+)/', include('core.urls')),
+    url(r'^(?P<theme>theme[a-zA-Z0-9\-]+)/', include('core.urls')),
     url(r'^', include('core.urls')),
 )
 

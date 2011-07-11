@@ -80,7 +80,7 @@ class MobileBase(object):
                 self.template_name = 'mobile/' + self.template_name
 
 
-class HomeView(TemplateView, MobileBase):
+class HomeView(ThemeView, MobileBase):
     template_name = 'home.html'
 
     def dispatch(self, request, *args, **kwargs):
@@ -94,7 +94,7 @@ class HomeView(TemplateView, MobileBase):
         return result
 
 
-class RoadView(TemplateView, MobileBase):
+class RoadView(ThemeView, MobileBase):
     template_name = 'road.html'
 
     def get(self, request, *args, **kwargs):
@@ -120,7 +120,7 @@ class RoadView(TemplateView, MobileBase):
         return result
 
 
-class EditRoad(TemplateView, MobileBase):
+class EditRoad(ThemeView, MobileBase):
     template_name = 'edit.html'
 
     def get(self, request, *args, **kwargs):
@@ -179,7 +179,7 @@ class EditRoad(TemplateView, MobileBase):
         return simple.redirect_to(request, request.get_full_path())
 
 
-class GenerateSections(TemplateView):
+class GenerateSections(ThemeView):
     template_name = 'generate_sections.html'
 
     @method_decorator(require_login)
@@ -203,7 +203,7 @@ class GenerateSections(TemplateView):
             return super(GenerateSections, self).get(request, *args, **kwargs)
 
 
-class CreateRoad(TemplateView, MobileBase):
+class CreateRoad(ThemeView, MobileBase):
     template_name = 'create-road.html'
     form_class = CreateRoadForm
     data = {}
