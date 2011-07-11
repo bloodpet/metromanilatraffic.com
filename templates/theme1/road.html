@@ -1,3 +1,7 @@
+			<a href="{% url show_road theme road.slug %}" class="refresh-link" style="float: right;">
+				<span class="ui-icon ui-icon-refresh">
+				</span>
+			</a>
 			{% if road.northbound %}
 			<div class="road" count="{{ road.northbound.count }}">
 				<h4>Northbound</h4>
@@ -8,21 +12,25 @@
 				</div>
 			</div>
 			{% endif %}
-			{% if road.southbound %}
-			<div class="road" count="{{ road.southbound.count }}">
-				<h4>Southbound</h4>
-				<div class="traffic">
-					{% for section in road.southbound %}
-					{% include section_template %}
-					{% endfor %}
-				</div>
-			</div>
-			{% endif %}
 			{% if road.eastbound %}
 			<div class="road" count="{{ road.eastbound.count }}">
 				<h4>Eastbound</h4>
 				<div class="traffic">
 					{% for section in road.eastbound %}
+					{% include section_template %}
+					{% endfor %}
+				</div>
+			</div>
+			{% endif %}
+			<a href="{% url show_road theme road.slug %}" class="refresh-link" style="float: right;">
+				<span class="ui-icon ui-icon-refresh">
+				</span>
+			</a>
+			{% if road.southbound %}
+			<div class="road" count="{{ road.southbound.count }}">
+				<h4>Southbound</h4>
+				<div class="traffic">
+					{% for section in road.southbound %}
 					{% include section_template %}
 					{% endfor %}
 				</div>
