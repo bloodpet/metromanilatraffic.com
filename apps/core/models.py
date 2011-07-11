@@ -26,7 +26,7 @@ DIRECTION_DICT = dict(DIRECTIONS)
 DIRECTIONS_CHOICES = [(d[0][0]+d[1][0], d[0][1]+'-'+d[1][1]) for d in DIRECTION_SETS]
 
 # Number of hours to accept updates from
-EARLIEST_HOUR = 2
+EARLIEST_HOUR = 3
 
 TRAFFIC_RATINGS = (
     (0, 'No Update'),
