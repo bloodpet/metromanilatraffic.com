@@ -1,5 +1,6 @@
 			{% if road.northbound %}
 			<div class="road" count="{{ road.northbound.count }}">
+				<a href="{% url show_road theme road.slug %}" class="refresh-link" style="float: left;"><span class="ui-icon ui-icon-refresh">Refresh</span></a>
 				<h4 class="ui-widget">Northbound</h4>
 				<div class="traffic">
 					{% for section in road.northbound %}
@@ -11,21 +12,9 @@
 				</div>
 			</div>
 			{% endif %}
-			{% if road.southbound %}
-			<div class="road" count="{{ road.southbound.count }}">
-				<h4>Southbound</h4>
-				<div class="traffic">
-					{% for section in road.southbound %}
-					{% include section_template %}
-					{% endfor %}
-				</div>
-				<div class="scroll-bar-wrap ui-widget-content ui-corner-bottom">
-					<div class="scroll-bar"></div>
-				</div>
-			</div>
-			{% endif %}
 			{% if road.eastbound %}
 			<div class="road" count="{{ road.eastbound.count }}">
+				<a href="{% url show_road theme road.slug %}" class="refresh-link" style="float: left;"><span class="ui-icon ui-icon-refresh">Refresh</span></a>
 				<h4>Eastbound</h4>
 				<div class="traffic">
 					{% for section in road.eastbound %}
@@ -37,8 +26,23 @@
 				</div>
 			</div>
 			{% endif %}
+			{% if road.southbound %}
+			<div class="road" count="{{ road.southbound.count }}">
+				<a href="{% url show_road theme road.slug %}" class="refresh-link" style="float: left;"><span class="ui-icon ui-icon-refresh">Refresh</span></a>
+				<h4>Southbound</h4>
+				<div class="traffic">
+					{% for section in road.southbound %}
+					{% include section_template %}
+					{% endfor %}
+				</div>
+				<div class="scroll-bar-wrap ui-widget-content ui-corner-bottom">
+					<div class="scroll-bar"></div>
+				</div>
+			</div>
+			{% endif %}
 			{% if road.westbound %}
 			<div class="road" count="{{ road.westbound.count }}">
+				<a href="{% url show_road theme road.slug %}" class="refresh-link" style="float: left;"><span class="ui-icon ui-icon-refresh">Refresh</span></a>
 				<h4>Westbound</h4>
 				<div class="traffic">
 					{% for section in road.westbound %}
