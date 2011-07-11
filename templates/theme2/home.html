@@ -12,7 +12,7 @@ Metro Manila Traffic
 	{% for road in roads %}
 	<div class="roads ui-widget">
 		<h3 class="ui-widget-header">
-			<a href="#">
+			<a href="/{{ theme }}/{{ road.slug }}/">
 			{{ road.name }}
 			{% if road.get_latest_status %}
 			as of {{ road.get_latest_status.status_at|time }}
@@ -20,58 +20,7 @@ Metro Manila Traffic
 			</a>
 		</h3>
 		<div class="road-block">
-			{% if road.northbound %}
-			<div class="road" count="{{ road.northbound.count }}">
-				<h4 class="ui-widget">Northbound</h4>
-				<div class="traffic">
-					{% for section in road.northbound %}
-					{% include section_template %}
-					{% endfor %}
-				</div>
-				<div class="scroll-bar-wrap ui-widget-content ui-corner-bottom">
-					<div class="scroll-bar"></div>
-				</div>
-			</div>
-			{% endif %}
-			{% if road.southbound %}
-			<div class="road" count="{{ road.southbound.count }}">
-				<h4>Southbound</h4>
-				<div class="traffic">
-					{% for section in road.southbound %}
-					{% include section_template %}
-					{% endfor %}
-				</div>
-				<div class="scroll-bar-wrap ui-widget-content ui-corner-bottom">
-					<div class="scroll-bar"></div>
-				</div>
-			</div>
-			{% endif %}
-			{% if road.eastbound %}
-			<div class="road" count="{{ road.eastbound.count }}">
-				<h4>Eastbound</h4>
-				<div class="traffic">
-					{% for section in road.eastbound %}
-					{% include section_template %}
-					{% endfor %}
-				</div>
-				<div class="scroll-bar-wrap ui-widget-content ui-corner-bottom">
-					<div class="scroll-bar"></div>
-				</div>
-			</div>
-			{% endif %}
-			{% if road.westbound %}
-			<div class="road" count="{{ road.westbound.count }}">
-				<h4>Westbound</h4>
-				<div class="traffic">
-					{% for section in road.westbound %}
-					{% include section_template %}
-					{% endfor %}
-				</div>
-				<div class="scroll-bar-wrap ui-widget-content ui-corner-bottom">
-					<div class="scroll-bar"></div>
-				</div>
-			</div>
-			{% endif %}
+			<p class="progress-bar">Loading...</p>
 		</div>
 	</div>
 	{% endfor %}
@@ -89,12 +38,7 @@ Metro Manila Traffic
 		}
 		{% endif %}
 		$(document).ready(function () {
-			$('.road').each(function () {
-				// Resize element that contains all the sections
-				var el = $(this);
-				var width = parseInt(el.attr('count')) * (148 + 4);
-				el.find('.traffic').css({width: width + 'px'});
-			});
+			$('.progress-bar').progressbar({value: 25});
 			$('#content-container').sortable({
 				distance: 32
 			});
@@ -105,111 +49,132 @@ Metro Manila Traffic
 				collapsible: true,
 				navigation: true
 			});
-			$('.road').each(function (){
-				//scrollpane parts
-				var scrollPane = $( this ),
-				scrollContent = scrollPane.find( ".traffic" );
-				// function for mousewheel
-				var moveScrollContent = function(e, delta) {
-					// Scroll twice as fast
-					delta = delta * 2;
-					scrollbar.slider("value", scrollbar.slider("value") - delta);
-					if ( scrollContent.width() > scrollPane.width() ) {
-						var orig_margin = scrollContent.css( "margin-left");
-						if (isNaN(orig_margin)) {
-							orig_margin = parseInt(orig_margin.replace('px', ''));
-						};
-						var margin = orig_margin + Math.round(
-							(0-delta) / 100 * ( scrollPane.width() - scrollContent.width() )
-						);
-						//TODO calculate the correct value/values for when to stop
-						// 850 was used from observation.
-						if (scrollContent.width() + margin <= 850) {
-							return false;
-						};
-						if (margin > 0) {
-							return false;
-						};
-						scrollContent.css( "margin-left",  margin + "px" );
-					} else {
-						scrollContent.css( "margin-left", 0 );
-					};
-					return false;
-				};
-				var slideContent = function( event, ui ) {
-					if ( scrollContent.width() > scrollPane.width() ) {
-						scrollContent.css( "margin-left", Math.round(
-							ui.value / 100 * ( scrollPane.width() - scrollContent.width() )
-						) + "px" );
-					} else {
-						scrollContent.css( "margin-left", 0 );
-					}
-				};
-				//build slider
-				var scrollbar = scrollPane.find( ".scroll-bar" ).slider({
-					slide: slideContent
-				}).bind("slide slidechange", function(e, ui) {
-					var val = ui.value;
-					// Handle the slider event here
-				}).mousewheel(moveScrollContent);
-				scrollPane.mousewheel(moveScrollContent);
-				//append icon to handle
-				var handleHelper = scrollbar.find( ".ui-slider-handle" )
-				.mousedown(function() {
-					scrollbar.width( handleHelper.width() );
-				})
-				.mouseup(function() {
-					scrollbar.width( "100%" );
-				})
-				.append( "<span class='ui-icon ui-icon-grip-dotted-vertical'></span>" )
-				.wrap( "<div class='ui-handle-helper-parent'></div>" ).parent();
-				//change overflow to hidden now that slider handles the scrolling
-				scrollPane.css( "overflow", "hidden" );
-				//size scrollbar and handle proportionally to scroll distance
-				function sizeScrollbar() {
-					//TODO Assign a default width when the widths are 0
-					var remainder = scrollContent.width() - scrollPane.width();
-					var proportion = remainder / scrollContent.width();
-					var handleSize = scrollPane.width() - ( proportion * scrollPane.width() );
-					scrollbar.find( ".ui-slider-handle" ).css({
-						width: handleSize,
-						"margin-left": -handleSize / 2
-					});
-					handleHelper.width( "" ).width( scrollbar.width() - handleSize );
-				}
-				//reset slider value based on scroll content position
-				function resetValue() {
-					var remainder = scrollPane.width() - scrollContent.width();
-					var leftVal = scrollContent.css( "margin-left" ) === "auto" ? 0 :
-						parseInt( scrollContent.css( "margin-left" ) );
-					var percentage = Math.round( leftVal / remainder * 100 );
-					scrollbar.slider( "value", percentage );
-				}
-				//if the slider is 100% and window gets larger, reveal content
-				function reflowContent() {
-						var showing = scrollContent.width() + parseInt( scrollContent.css( "margin-left" ), 10 );
-						var gap = scrollPane.width() - showing;
-						if ( gap > 0 ) {
-							scrollContent.css( "margin-left", parseInt( scrollContent.css( "margin-left" ), 10 ) + gap );
-						}
-				}
-				//change handle position on window resize
-				$( window ).resize(function() {
-					resetValue();
-					sizeScrollbar();
-					reflowContent();
-				});
-				//init scrollbar size
-				setTimeout( sizeScrollbar, 10 );//safari wants a timeout
-			});
-			$('.roads').accordion({
-				active: 1
-			});
 			/* Activate roads with updates
 			$('.active-road').accordion({
 				active: 0
 			});
 			*/
+			// Load road sections
+			// This is delayed to avoid having timeouts on the server
+			$('.roads').each(function () {
+				var el = $(this);
+				var progress = el.find('.progress-bar');
+				var link = el.find('h3 a');
+				var url = link.attr('href');
+				var block = el.find('.road-block');
+				progress.progressbar({value: 50});
+				block.load(url, 
+					function () {
+						//el.accordion('resize');
+						el.find('.road').each(function () {
+							// Resize element that contains all the sections
+							var el1 = $(this);
+							var width = parseInt(el1.attr('count')) * (148 + 4);
+							el1.find('.traffic').css({width: width + 'px'});
+						});
+						el.find('.road').each(function (){
+							//scrollpane parts
+							var scrollPane = $( this ),
+							scrollContent = scrollPane.find( ".traffic" );
+							// function for mousewheel
+							var moveScrollContent = function(e, delta) {
+								// Scroll twice as fast
+								delta = delta * 2;
+								scrollbar.slider("value", scrollbar.slider("value") - delta);
+								if ( scrollContent.width() > scrollPane.width() ) {
+									var orig_margin = scrollContent.css( "margin-left");
+									if (isNaN(orig_margin)) {
+										orig_margin = parseInt(orig_margin.replace('px', ''));
+									};
+									var margin = orig_margin + Math.round(
+										(0-delta) / 100 * ( scrollPane.width() - scrollContent.width() )
+									);
+									//TODO calculate the correct value/values for when to stop
+									// 850 was used from observation.
+									if (scrollContent.width() + margin <= 850) {
+										return false;
+									};
+									if (margin > 0) {
+										return false;
+									};
+									scrollContent.css( "margin-left",  margin + "px" );
+								} else {
+									scrollContent.css( "margin-left", 0 );
+								};
+								return false;
+							};
+							var slideContent = function( event, ui ) {
+								if ( scrollContent.width() > scrollPane.width() ) {
+									scrollContent.css( "margin-left", Math.round(
+										ui.value / 100 * ( scrollPane.width() - scrollContent.width() )
+									) + "px" );
+								} else {
+									scrollContent.css( "margin-left", 0 );
+								}
+							};
+							//build slider
+							var scrollbar = scrollPane.find( ".scroll-bar" ).slider({
+								slide: slideContent
+							}).bind("slide slidechange", function(e, ui) {
+								var val = ui.value;
+								// Handle the slider event here
+							}).mousewheel(moveScrollContent);
+							scrollPane.mousewheel(moveScrollContent);
+							//append icon to handle
+							var handleHelper = scrollbar.find( ".ui-slider-handle" )
+							.mousedown(function() {
+								scrollbar.width( handleHelper.width() );
+							})
+							.mouseup(function() {
+								scrollbar.width( "100%" );
+							})
+							.append( "<span class='ui-icon ui-icon-grip-dotted-vertical'></span>" )
+							.wrap( "<div class='ui-handle-helper-parent'></div>" ).parent();
+							//change overflow to hidden now that slider handles the scrolling
+							scrollPane.css( "overflow", "hidden" );
+							//size scrollbar and handle proportionally to scroll distance
+							function sizeScrollbar() {
+								//TODO Assign a default width when the widths are 0
+								var remainder = scrollContent.width() - scrollPane.width();
+								var proportion = remainder / scrollContent.width();
+								var handleSize = scrollPane.width() - ( proportion * scrollPane.width() );
+								scrollbar.find( ".ui-slider-handle" ).css({
+									width: handleSize,
+									"margin-left": -handleSize / 2
+								});
+								handleHelper.width( "" ).width( scrollbar.width() - handleSize );
+							}
+							//reset slider value based on scroll content position
+							function resetValue() {
+								var remainder = scrollPane.width() - scrollContent.width();
+								var leftVal = scrollContent.css( "margin-left" ) === "auto" ? 0 :
+									parseInt( scrollContent.css( "margin-left" ) );
+								var percentage = Math.round( leftVal / remainder * 100 );
+								scrollbar.slider( "value", percentage );
+							}
+							//if the slider is 100% and window gets larger, reveal content
+							function reflowContent() {
+									var showing = scrollContent.width() + parseInt( scrollContent.css( "margin-left" ), 10 );
+									var gap = scrollPane.width() - showing;
+									if ( gap > 0 ) {
+										scrollContent.css( "margin-left", parseInt( scrollContent.css( "margin-left" ), 10 ) + gap );
+									}
+							}
+							//change handle position on window resize
+							$( window ).resize(function() {
+								resetValue();
+								sizeScrollbar();
+								reflowContent();
+							});
+							//init scrollbar size
+							setTimeout( sizeScrollbar, 10 );//safari wants a timeout
+						});
+						el.accordion({
+							active: 1
+						});
+					}
+				);
+			});
 		});
 	</script>
 {% endblock %}
