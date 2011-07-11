@@ -20,6 +20,7 @@ Metro Manila Traffic
 			</a>
 		</h3>
 		<div class="road-block" id="road-{{ road.id }}">
+			<p class="progress-bar">Loading...</p>
 		</div>
 	</div>
 	{% endfor %}
@@ -37,6 +38,7 @@ Metro Manila Traffic
 		}
 		{% endif %}
 		$(document).ready(function () {
+			$('.progress-bar').progressbar({value: 25});
 			$('#content-container').sortable({
 				distance: 32
 			});
@@ -55,9 +57,11 @@ Metro Manila Traffic
 			// This is delayed to avoid having timeouts on the server
 			$('.roads').each(function () {
 				var el = $(this);
+				var progress = el.find('.progress-bar');
 				var link = el.find('h3 a');
 				var url = link.attr('href');
 				var block = el.find('.road-block');
+				progress.progressbar({value: 50});
 				block.load(url, 
 					function () {
 						//el.accordion('resize');
