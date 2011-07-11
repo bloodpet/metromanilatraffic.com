@@ -19,7 +19,7 @@ Metro Manila Traffic
 			{% endif %}
 			</a>
 		</h3>
-		<div class="road-block" id="road-{{ road.id }}">
+		<div class="road-block">
 			<p class="progress-bar">Loading...</p>
 		</div>
 	</div>
@@ -65,13 +65,13 @@ Metro Manila Traffic
 				block.load(url, 
 					function () {
 						//el.accordion('resize');
-						$('.road').each(function () {
+						el.find('.road').each(function () {
 							// Resize element that contains all the sections
-							var el = $(this);
-							var width = parseInt(el.attr('count')) * (148 + 4);
-							el.find('.traffic').css({width: width + 'px'});
+							var el1 = $(this);
+							var width = parseInt(el1.attr('count')) * (148 + 4);
+							el1.find('.traffic').css({width: width + 'px'});
 						});
-						$('.traffic').each(function () {
+						el.find('.traffic').each(function () {
 							$(this).mousewheel(function (e, delta) {
 								var orig_left = $(this).css('left');
 								var width = $(this).css('width');
@@ -98,7 +98,7 @@ Metro Manila Traffic
 								return false;
 							});
 						});
-						$('.traffic').draggable({
+						el.find('.traffic').draggable({
 							axis: 'x',
 							refreshPositions: true,
 							grid: [76, 32]
