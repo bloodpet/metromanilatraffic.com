@@ -37,7 +37,6 @@ Metro Manila Traffic
 		}
 		{% endif %}
 		$(document).ready(function () {
-			$('.progress-bar').progressbar({value: 25});
 			$('#content-container').sortable({
 				distance: 32
 			});
@@ -63,7 +62,7 @@ Metro Manila Traffic
 				var p_value = 0;
 				block.prepend(progress);
 				var updateProgress = function () {
-					p_value = p_value + 5;
+					p_value = p_value + 2.5;
 					progress.progressbar({value: p_value});
 					if (p_value >= 100) {
 						return;

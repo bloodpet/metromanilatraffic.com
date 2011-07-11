@@ -1,5 +1,5 @@
 			<a href="{% url show_road theme road.slug %}" class="refresh-link" style="float: right;">
-				<span class="ui-icon ui-icon-refresh">Refresh</span>
+				<span class="ui-icon ui-icon-refresh" title="Reload">Refresh</span>
 			</a>
 			{% if road.northbound %}
 			<div class="road" count="{{ road.northbound.count }}">
@@ -22,7 +22,7 @@
 			</div>
 			{% endif %}
 			<a href="{% url show_road theme road.slug %}" class="refresh-link" style="float: right;">
-				<span class="ui-icon ui-icon-refresh">Refresh</span>
+				<span class="ui-icon ui-icon-refresh" title="Reload">Refresh</span>
 			</a>
 			{% if road.southbound %}
 			<div class="road" count="{{ road.southbound.count }}">
