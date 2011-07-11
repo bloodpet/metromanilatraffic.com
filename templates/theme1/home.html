@@ -15,12 +15,11 @@ Metro Manila Traffic
 			<a href="{% url show_road theme road.slug %}">
 			{{ road.name }}
 			{% if road.get_latest_status %}
-			as of {{ road.get_latest_status.status_at|time }}
+			as of <span class="road-status">{{ road.get_latest_status.status_at|time }}</span>
 			{% endif %}
 			</a>
 		</h3>
 		<div class="road-block">
-			<p class="progress-bar">Loading...</p>
 		</div>
 	</div>
 	{% endfor %}
@@ -55,11 +54,22 @@ Metro Manila Traffic
 			*/
 			// Load road sections
 			reloadBlock = function (el) {
-				var progress = el.find('.progress-bar');
+				var progress = $('<p class="progress-bar"></p>Loading...<br />');
 				var link = el.find('h3 a');
 				var url = link.attr('href');
 				var block = el.find('.road-block');
-				progress.progressbar({value: 50});
+				var road_status = el.find('.road-status');
+				var p_value = 0;
+				block.prepend(progress);
+				var updateProgress = function () {
+					p_value = p_value + 5;
+					progress.progressbar({value: p_value});
+					if (p_value >= 100) {
+						return;
+					};
+					setTimeout(updateProgress, 100);
+				};
+				setTimeout(updateProgress, 100);
 				block.load(url, 
 					function () {
 						//el.accordion('resize');
@@ -67,6 +77,8 @@ Metro Manila Traffic
 							reloadBlock(el);
 							return false;
 						});
+						road_status.text(el.find('.latest-road-status').text());
+						el.find('.latest-road-status').hide();
 						el.find('.road').each(function () {
 							// Resize element that contains all the sections
 							var el1 = $(this);
