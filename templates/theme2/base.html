@@ -91,6 +91,12 @@
 		</nav>
 	</div> <!--! end of #nav-container -->
 	<div id="content-container" class="container_16">
+		{% block legend %}
+		<div class="grid_16" id="legend">
+			{% include 'legend.html' %}
+		</div>
+		{% endblock legend %}
+		<div class="clear">&nbsp;</div>
 		{% block main %}
 		{% block content %}
 		{% endblock %}
@@ -100,11 +106,6 @@
 	</div> <!--! end of #content-container -->
 	<div id="footer-container" class="container_16">
 		<footer>
-			{% block legend %}
-			<div class="grid_16" id="legend">
-				{% include 'legend.html' %}
-			</div>
-			{% endblock legend %}
 			<div class="grid_12" id="footer">
 			{% block footer %}
 			{% endblock %}
