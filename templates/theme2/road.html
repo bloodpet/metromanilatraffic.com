@@ -26,6 +26,7 @@
 				</div>
 			</div>
 			{% endif %}
+			<div class="clear">&nbsp;</div>
 			{% if road.southbound %}
 			<div class="road" count="{{ road.southbound.count }}">
 				<a href="{% url show_road theme road.slug %}" class="refresh-link" style="float: left;"><span class="ui-icon ui-icon-refresh" title="Reload">Refresh</span></a>

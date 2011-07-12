@@ -54,13 +54,15 @@ Metro Manila Traffic
 			*/
 			// Load road sections
 			reloadBlock = function (el, retract) {
+				var div_clear = $('<div class="clear">&nbsp;</div>');
 				var progress = $('<p class="progress-bar"></p>Loading...<br />');
 				var link = el.find('h3 a');
 				var url = link.attr('href');
 				var block = el.find('.road-block');
 				var road_status = el.find('.road-status');
 				var p_value = 0;
-				block.prepend(progress);
+				block.append(div_clear);
+				block.append(progress);
 				var updateProgress = function () {
 					p_value = p_value + 2.5;
 					progress.progressbar({value: p_value});
