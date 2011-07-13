@@ -56,5 +56,5 @@
 			</div>
 			{% endif %}
 			{% if road.get_latest_status %}
-			<span class="latest-road-status">{{ road.get_latest_status.status_at|time }}</span>
+			<span class="latest-road-status">as of {{ road.get_latest_status.status_at|time }}</span>
 			{% endif %}

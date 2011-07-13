@@ -14,9 +14,7 @@ Metro Manila Traffic
 		<h3>
 			<a href="{% url show_road theme road.slug %}">
 			{{ road.name }}
-			{% if road.get_latest_status %}
-			as of <span class="road-status">{{ road.get_latest_status.status_at|time }}</span>
-			{% endif %}
+			<span class="road-status"></span>
 			</a>
 		</h3>
 		<div class="road-block">

@@ -14,12 +14,11 @@ Metro Manila Traffic
 		<h3 class="ui-widget-header">
 			<a href="{% url show_road theme road.slug %}">
 			{{ road.name }}
-			{% if road.get_latest_status %}
-			as of <span class="road-status">{{ road.get_latest_status.status_at|time }}</span>
-			{% endif %}
+			<span class="road-status"></span>
 			</a>
 		</h3>
 		<div class="road-block">
+			Waiting for update.
 		</div>
 	</div>
 	{% endfor %}
@@ -37,9 +36,6 @@ Metro Manila Traffic
 		}
 		{% endif %}
 		$(document).ready(function () {
-			$('#content-container').sortable({
-				distance: 32
-			});
 			$('.roads').accordion({
 				// Expanding everything because of the error on getting the scrollbar size for the slider
 				active: 0,
@@ -52,6 +48,9 @@ Metro Manila Traffic
 				active: 0
 			});
 			*/
+			$('#content-container').sortable({
+				distance: 32
+			});
 			// Load road sections
 			reloadBlock = function (el, retract) {
 				var div_clear = $('<div class="clear">&nbsp;</div>');
