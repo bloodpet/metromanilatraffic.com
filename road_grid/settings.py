@@ -4,7 +4,7 @@ PARENT_DIR = os.path.dirname(PROJECT_DIR)
 
 # Django settings for road_grid project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -164,6 +164,8 @@ LOGGING = {
         },
     }
 }
+
+CACHE_BACKEND = 'memcached://unix:/home/egcalso/memcached.sock'
 
 try:
     from local_settings import *
