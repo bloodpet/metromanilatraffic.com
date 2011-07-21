@@ -168,6 +168,9 @@ LOGGING = {
 }
 
 CACHE_BACKEND = 'memcached://unix:/home/egcalso/memcached.sock'
+CACHE_MIDDLEWARE_SECONDS = 60 * 5
+CACHE_MIDDLEWARE_KEY_PREFIX = ''
+#CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 try:
     from local_settings import *
