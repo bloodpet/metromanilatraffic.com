@@ -58,7 +58,8 @@ class HomeThemeView(TemplateView):
         if 'theme' in kwargs:
             theme = kwargs['theme']
             self.template_name = '%s/%s' % (theme, self.template_name)
-        result['roads'] = Road.objects.annotate(latest_order=models.Max('section__situation__status_at')).order_by('-latest_order')
+        #result['roads'] = Road.objects.annotate(latest_order=models.Max('section__situation__status_at')).order_by('-latest_order')
+        result['roads'] = Road.objects.all().order_by('pk')
         result['ratings'] = TRAFFIC_RATINGS[3:]
         result['theme'] = theme
         if theme is not None:
@@ -89,7 +90,8 @@ class HomeView(ThemeView, MobileBase):
 
     def get_context_data(self, **kwargs):
         result = super(HomeView, self).get_context_data(**kwargs)
-        result['roads'] = Road.objects.annotate(latest_order=models.Max('section__situation__status_at')).order_by('-latest_order')
+        #result['roads'] = Road.objects.annotate(latest_order=models.Max('section__situation__status_at')).order_by('-latest_order')
+        result['roads'] = Road.objects.all().order_by('pk')
         result['ratings'] = TRAFFIC_RATINGS[3:]
         return result
 
