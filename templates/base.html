@@ -163,6 +163,14 @@
 	</script>
 	-->
 
+	<script type="text/javascript">
+		$(document).ready(function () {
+			var loadDonate = function () {
+				$('#donate').load('{{ STATIC_URL }}donate.html');
+			};
+			setTimeout(loadDonate, 100);
+		});
+	</script>
 	{% block extrascripts %}
 	{% endblock %}
 </body>
