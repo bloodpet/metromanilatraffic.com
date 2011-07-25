@@ -13,11 +13,15 @@ Metro Manila Traffic
         <p>Choose a road.</p>
 		<div class="road-block">
 			{% for road in roads %}
-			<a class="road-link rate{{ road.get_rate_average }} ui-corner-all" href="{% url show_road road.slug %}">
+			<a class="road-link ui-corner-all" id="road-{{ road.pk }}" href="{% url show_road road.slug %}">
 				{{ road.name }}
+				<span class="latest-status">
+				{% comment %}
 				{% if road.get_latest_status %}
 				as of {{ road.get_latest_status.status_at|time }}
 				{% endif %}
+				{% endcomment %}
+				</span>
 			</a>
 			{% endfor %}
 		</div>
@@ -28,15 +32,36 @@ Metro Manila Traffic
 {% endblock legend %}
 
 {% block extrascripts %}
-	{% if not request.GET.full %}
 	<script type="text/javascript">
+		{% if not request.GET.full %}
 		if (Modernizr.touch){
 			// bind to touchstart, touchmove, etc and watch `event.streamId`
 			window.location = '{% url mobile-home %}';
 		} else {
 			// bind to normal click, mousemove, etc
 		}
+		{% endif %}
+		$(document).ready(function () {
+			var getRoadSummary = function () {
+				var url = '/road_summary/';
+				$.get(url, function (data) {
+					$.each(data, function (i, item) {
+						$.each(item.roads, function (j, road) {
+							var el = $('#road-' + road.pk);
+							for (k=3; k<=8; k++) {
+								el.removeClass('rate' + k);
+							};
+							if (road.average) {
+								el.addClass('rate' + road.average);
+							};
+							$(el).children('.latest-status').text(road.latest_status);
+						});
+					});
+					setTimeout(getRoadSummary, 1000);
+				});
+			};
+			setTimeout(getRoadSummary, 100);
+		});
 	</script>
-	{% endif %}
 {% endblock %}
 

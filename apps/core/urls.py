@@ -10,6 +10,7 @@ urlpatterns = patterns('core.views',
     url(r'^m/(?P<road>[a-zA-Z0-9\-]+)/edit/$', EditRoad.as_view(template_name='mobile/edit.html'), name='mobile-edit_road'),
     # Desktop versions
     url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^road_summary/$', RoadSummary.as_view(), name='road_summary'),
     url(r'^grid/$', TemplateView.as_view(template_name='grid.html'), name='grid'),
     url(r'^grid/sections/$', GenerateSections.as_view(), name='generate_sections'),
     url(r'^grid/create_road/$', CreateRoad.as_view(), name='create_road'),
