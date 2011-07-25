@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+404: Not Found
+{% endblock %}
+
+{% block page_title %}
+404: Page Not Found
+{% endblock %}
+
+{% block content %}
+	<div class="grid_16 road">
+		The page ( {{ request.path_info }}{% if request.META.QUERY_STRING %}?{{ request.META.QUERY_STRING }}{% endif %} ) you requested could not be found.
+	</div>
+{% endblock %}
+
+{% block legend %}
+{% endblock legend %}
