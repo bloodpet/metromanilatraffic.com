@@ -37,6 +37,5 @@
 				}
 				return false;
 			});
-            $('#donate').load('{{ STATIC_URL }}donate.html');
 		});
 
