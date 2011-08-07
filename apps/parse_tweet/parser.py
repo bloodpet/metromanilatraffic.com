@@ -211,6 +211,9 @@ def parse_entry(entry):
                     situation.save()
                     situation.status_at = actual_update
                     situation.save()
+                    road_section.latest_rating = rate
+                    road_section.latest_status_at = actual_update
+                    road_section.save()
                 if road_sections:
                     entry.is_verified = True
             #print entry.road, section_data
