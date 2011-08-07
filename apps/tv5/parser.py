@@ -156,6 +156,9 @@ class RoadParser(object):
     def post_situations(self):
         situations = []
         for section, rate, time in self.section_status.get_rates():
+            saction.latest_rating = rate
+            saction.status_at = time
+            saction.save()
             situation = Situation(
                 section = section,
                 rating = rate,
