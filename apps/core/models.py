@@ -161,6 +161,8 @@ class Section(models.Model):
     direction = models.CharField(max_length=1, choices=DIRECTIONS)
     position = models.PositiveSmallIntegerField()
     alias = generic.GenericRelation(Alias)
+    latest_rating = models.SmallIntegerField(choices=TRAFFIC_RATINGS, default=0)
+    latest_status_at = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
 
     class Meta:
         ordering = ['road', 'position', ]
