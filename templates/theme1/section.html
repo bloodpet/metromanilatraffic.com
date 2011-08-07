@@ -1,39 +1,16 @@
 		<span>
-			<a class="section rate{{ section.get_latest_rate.rating }}" relid="{{ section.id }}">
+			<a class="section rate{{ section.latest_rating }}" relid="{{ section.id }}">
 				{% if forloop.first %}
 				{{ section.start.name }}
 				{% endif %}
 				to {{ section.end.name }}
 				<p class="rate-info">
-					{% if section.get_latest_rate %}
-					{{ section.get_latest_rate.get_rate_name }} at
-					{{ section.get_latest_rate.status_at|time }}
+					{% if section.latest_rating %}
+					{{ section.get_rate_name }} at
+					{{ section.latest_status_at|time }}
 					{% else %}
 					No recent updates.
 					{% endif %}
 				</p>
 			</a>
-			<div class="section-info" id="section-info-{{ section.id }}">
-				{% if section.get_latest_rate %}
-				<p class="rate-info">
-					{{ section.get_latest_rate.get_rate_name }} at
-					{{ section.get_latest_rate.status_at|time }}
-				</p>
-				<p>
-					{{ section.get_latest_rate.reason }}
-				</p>
-				{% if section.get_latest_rate.user %}
-				<p>
-					Updated by
-					{% if section.get_latest_rate.user.get_full_name %}
-					{{ section.get_latest_rate.user.get_full_name }}
-					{% else %}
-					{{ section.get_latest_rate.user }}
-					{% endif %}
-				</p>
-				{% endif %}
-				{% else %}
-				No recent updates.
-				{% endif %}
-			</div>
 		</span>

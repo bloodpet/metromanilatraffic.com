@@ -186,6 +186,9 @@ class Section(models.Model):
         else:
             raise Situation.DoesNotExist
 
+    def get_rate_name(self):
+        return TRAFFIC_DICT[self.latest_rating]
+
 
 class Situation(models.Model):
     section = models.ForeignKey(Section)

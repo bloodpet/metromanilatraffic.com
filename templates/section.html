@@ -1,10 +1,10 @@
 			<li>
-			<a class="section rate{{ section.get_latest_rate.rating }}" relid="{{ section.id }}">
+			<a class="section rate{{ section.latest_rating }}" relid="{{ section.id }}">
 				{{ section.name }}
 				<p class="rate-info">
-					{% if section.get_latest_rate %}
-					{{ section.get_latest_rate.get_rate_name }} at
-					{{ section.get_latest_rate.status_at|time }}
+					{% if section.latest_rating %}
+					{{ section.get_rate_name }} at
+					{{ section.latest_status_at|time }}
 					{% else %}
 					No recent updates.
 					{% endif %}
