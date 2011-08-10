@@ -162,7 +162,7 @@ class Section(models.Model):
     position = models.PositiveSmallIntegerField()
     alias = generic.GenericRelation(Alias)
     latest_rating = models.SmallIntegerField(choices=TRAFFIC_RATINGS, default=0)
-    latest_status_at = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
+    latest_status_at = models.DateTimeField()
 
     class Meta:
         ordering = ['road', 'position', ]
