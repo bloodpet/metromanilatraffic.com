@@ -159,6 +159,8 @@ class RoadParser(object):
             section.latest_rating = rate
             section.status_at = time
             section.save()
+            section.status_at = time
+            section.save()
             situation = Situation(
                 section = section,
                 rating = rate,
