@@ -4,7 +4,9 @@
 				<p class="rate-info">
 					{% if section.latest_rating %}
 					{{ section.get_rate_name }} at
+					{% comment %}
 					{{ section.latest_status_at|time }}
+					{% endcomment %}
 					{% else %}
 					No recent updates.
 					{% endif %}
